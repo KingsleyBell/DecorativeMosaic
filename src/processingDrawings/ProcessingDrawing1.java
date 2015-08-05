@@ -1,4 +1,6 @@
-package main;
+package processingDrawings;
+
+import java.io.File;
 
 import processing.core.PApplet;
 
@@ -28,7 +30,7 @@ public class ProcessingDrawing1 extends PApplet{
 	  for (int a=50; a<1000;a+=(int)(random(200,220))){
 	    dessineCloture(a);
 	  }
-	  save("im"+millis()+".png");
+	  save("/img" + File.separator + "im"+millis()+".png");
 	    noLoop();
 	}
 
