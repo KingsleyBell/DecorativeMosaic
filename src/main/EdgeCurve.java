@@ -9,7 +9,7 @@ public class EdgeCurve {
 		points = new ArrayList <>();
 	}
 	
-	public TwoDVector getClosestPoint (TwoDVector P) {
+	public String getClosestPoint (TwoDVector P) {
 		double distance = TwoDVector.distance(points.get(0), P);
 		int posOfClosestPoint = 0;
 		for(int i = 1; i < points.size(); i++) {
@@ -19,7 +19,8 @@ public class EdgeCurve {
 				posOfClosestPoint = i;
 			}
 		}
-		return points.get(posOfClosestPoint);
+		
+		return points.get(posOfClosestPoint) + "-" + distance;
 	}
 	
 	public void addPoint (TwoDVector e) {
