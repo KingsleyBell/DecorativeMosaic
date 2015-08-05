@@ -1,4 +1,4 @@
-package processingDrawings;
+package main;
 
 import processing.core.PApplet;
 

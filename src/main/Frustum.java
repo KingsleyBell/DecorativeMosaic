@@ -10,7 +10,7 @@ public class Frustum extends PApplet {
 	
 	public void setup() {
 
-		img = loadImage("img/example.jpg");		
+		img = loadImage("apple.jpg");		
 		
 		size(640, 640, P3D);
 		ortho(0,width,0,height);
