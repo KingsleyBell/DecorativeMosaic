@@ -44,7 +44,17 @@ public class VectorField {
 		this.imageHeight = imageHeight;
 	}
 	
+	public TwoDVector getClosestPointOnEdge(TwoDVector P) {
+		TwoDVector Cs = new TwoDVector();  //The point on edge closest to P
+		
+		return Cs;
+	}
+	
+	public double d(TwoDVector P, TwoDVector S) {
+		return TwoDVector.distance(P, S);
+	}
+	
 	public static void main (String[] args) {
-		System.out.println("ASDASDASD");
+		
 	}
 }
