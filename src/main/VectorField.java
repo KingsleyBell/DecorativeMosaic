@@ -55,6 +55,13 @@ public class VectorField {
 	}
 	
 	public static void main (String[] args) {
+		TwoDVector P = new TwoDVector(3,0);
+		EdgeCurve E = new EdgeCurve();
+		for (int i = 0; i < 10; i++) {
+			E.addPoint(new TwoDVector(1*i, 5*i));
+		}
 		
+		System.out.println(E);
+		System.out.println(E.getClosestPoint(P));
 	}
 }
