@@ -44,21 +44,21 @@ public class VectorField {
 		this.imageHeight = imageHeight;
 	}
 	
-	public TwoDVector getClosestPointOnEdge(TwoDVector P) {
-		TwoDVector Cs = new TwoDVector();  //The point on edge closest to P
+	public PVector getClosestPointOnEdge(PVector P) {
+		PVector Cs = new PVector();  //The point on edge closest to P
 		
 		return Cs;
 	}
 	
-	public double d(TwoDVector P, TwoDVector S) {
-		return TwoDVector.distance(P, S);
+	public double d(PVector P, PVector S) {
+		return PVector.distance(P, S);
 	}
 	
 	public static void main (String[] args) {
-		TwoDVector P = new TwoDVector(3,0);
+		PVector P = new PVector(3,0);
 		EdgeCurve E = new EdgeCurve();
 		for (int i = 0; i < 10; i++) {
-			E.addPoint(new TwoDVector(1*i, 5*i));
+			E.addPoint(new PVector(1*i, 5*i));
 		}
 		
 		System.out.println(E);

@@ -33,7 +33,7 @@ public class OrthoTest extends PApplet {
 			fill(0);
 			line(mouseX, mouseY, pmouseX, pmouseY);
 			if((mouseX != pmouseX)&&(mouseY != pmouseY)) {
-				E.addPoint(new TwoDVector(mouseX, mouseY));
+				E.addPoint(new PVector(mouseX, mouseY));
 			}
 		} 		
 	}

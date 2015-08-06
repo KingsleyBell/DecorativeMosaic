@@ -2,18 +2,20 @@ package main;
 
 import java.util.ArrayList;
 
+import processing.core.PVector;
+
 public class EdgeCurve {
-	ArrayList <TwoDVector> points;
+	ArrayList <PVector> points;
 	
 	public EdgeCurve () {
 		points = new ArrayList <>();
 	}
 	
-	public String getClosestPoint (TwoDVector P) {
-		double distance = TwoDVector.distance(points.get(0), P);
+	public String getClosestPoint (PVector P) {
+		double distance = PVector.dist(points.get(0), P);
 		int posOfClosestPoint = 0;
 		for(int i = 1; i < points.size(); i++) {
-			double tempDist = TwoDVector.distance(points.get(i), P);
+			double tempDist = PVector.dist(points.get(i), P);
 			if(tempDist < distance) {
 				distance = tempDist;
 				posOfClosestPoint = i;
@@ -23,13 +25,13 @@ public class EdgeCurve {
 		return points.get(posOfClosestPoint) + "-" + distance;
 	}
 	
-	public void addPoint (TwoDVector e) {
+	public void addPoint (PVector e) {
 		points.add(e);
 	}
 	
 	public String toString() {
 		String returnString = "";
-		for (TwoDVector twoDVector : points) {
+		for (PVector twoDVector : points) {
 			returnString += twoDVector.toString() + "\n";
 		}
 		
