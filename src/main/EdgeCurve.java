@@ -62,11 +62,11 @@ public class EdgeCurve {
 				String line = inputStream.nextLine();
 				line = line.substring(2, line.length() - 2);
 				String [] elements = line.split(", ");
-				float [] coords = new float [elements.length];
+				float [] coords = new float [2];
 				for (int i = 0; i < coords.length; i++) {
 					coords[i] = Float.parseFloat(elements[i]);
-					points.add(new PVector(coords[0], coords[1]));
 				}
+				points.add(new PVector(coords[0], coords[1]));
 //				points.add(e)
 			}
 			inputStream.close();
