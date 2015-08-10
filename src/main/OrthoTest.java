@@ -4,6 +4,7 @@ import java.nio.Buffer;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
+import processing.core.PVector;
 import processing.data.FloatList;
 
 public class OrthoTest extends PApplet {
@@ -28,19 +29,30 @@ public class OrthoTest extends PApplet {
 	}
 
 	public void draw() {
-		if (mousePressed) {
-			strokeWeight(3);
-			fill(0);
-			line(mouseX, mouseY, pmouseX, pmouseY);
-			if((mouseX != pmouseX)&&(mouseY != pmouseY)) {
-				E.addPoint(new PVector(mouseX, mouseY));
-			}
-		} 		
+//		if ((mousePressed)&&(E.getSize() > 0)) {
+//			PVector clickPos = new PVector(mouseX, mouseY);
+//			PVector centre = new PVector(width/2, height/2);
+//			PVector r = PVector.sub(clickPos, centre);
+//			String [] closestPointData = E.getClosestPoint(new PVector(mouseX, mouseY)).split("-");
+//			PVector s = E.getVector(Integer.parseInt(closestPointData[0]));
+//			translate(width/2, height/2);
+//			line(r.x, r.y, s.x, s.y);
+//		} 	
+		
 	}
 	
 	public void mouseReleased() {
-		println(E);
+//		System.out.println(E);
+//		E.store();
+		E.loadEdgeCurve("edgeCurveCoords.txt");
 	}
 	
-	
+	public void mouseDragged() {
+		strokeWeight(3);
+		fill(0);
+		line(mouseX, mouseY, pmouseX, pmouseY);
+		if((mouseX != pmouseX)&&(mouseY != pmouseY)) {
+			E.addPoint(new PVector(mouseX, mouseY));
+		}
+	}
 }

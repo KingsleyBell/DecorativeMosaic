@@ -1,5 +1,7 @@
 package main;
 
+import processing.core.PVector;
+
 /*
  * Class that handles the calculation of the vector field given a set of points (x,y) 
  * on an edge line
@@ -51,7 +53,7 @@ public class VectorField {
 	}
 	
 	public double d(PVector P, PVector S) {
-		return PVector.distance(P, S);
+		return PVector.dist(P, S);
 	}
 	
 	public static void main (String[] args) {
