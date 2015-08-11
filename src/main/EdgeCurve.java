@@ -54,6 +54,10 @@ public class EdgeCurve {
 		}
 	}
 	
+	public boolean containsPoint (PVector p) {
+		return points.contains(p);
+	}
+	
 	public void loadEdgeCurve (String fileLoc) {
 		Scanner inputStream = null;
 		try {
