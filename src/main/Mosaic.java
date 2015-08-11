@@ -1,7 +1,9 @@
 package main;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -38,7 +40,7 @@ public class Mosaic extends PApplet {
 
 	public void setup() {
 
-		numTiles = 10;
+		numTiles = 100;
 		frustums = new PShape[numTiles][numTiles];
 		img = loadImage("img/example.jpg");
 
@@ -46,21 +48,35 @@ public class Mosaic extends PApplet {
 		img.resize(width, height);
 		ortho(0, width, 0, height);
 		// makeBackground(img);
+		
+		//Get random points
+		VoronoiDiagram v = new VoronoiDiagram(width/numTiles, 10, width, height,null);
+		ArrayList<Point> points = v.getRandomPoints();
 
 		Frustum tempFrust;
-		for (int i = 0; i < numTiles; i++) {
-			for (int j = 0; j < numTiles; j++) {
-				tempFrust = new Frustum((width / numTiles) * i
-						+ (width / (numTiles * 2)), (height / numTiles) * j
-						+ (height / (numTiles * 2)),
-						(int) (width / (numTiles * 1.5)), width
-								/ (numTiles * 4), 5, 201);				
-				PShape s = createShape();
-				tempFrust.makeFrustum(s);
-				shape(s);
-				frustums[i][j] = s;
-			}
+		for (int i = 0; i < points.size(); i++) {
+			tempFrust = new Frustum(points.get(i).x, points.get(i).y,
+					width/numTiles, (int)(width/(numTiles*1.5)),
+					5, 201);
+			PShape s = createShape();
+			tempFrust.makeFrustum(s);
+			shape(s);
 		}
+		
+//		// Square array of frustums
+//		for (int i = 0; i < numTiles; i++) {
+//			for (int j = 0; j < numTiles; j++) {
+//				tempFrust = new Frustum((width / numTiles) * i
+//						+ (width / (numTiles * 2)), (height / numTiles) * j
+//						+ (height / (numTiles * 2)),
+//						(int) (width / (numTiles * 1.5)), width
+//								/ (numTiles * 4), 5, 201);				
+//				PShape s = createShape();
+//				tempFrust.makeFrustum(s);
+//				shape(s);
+//				frustums[i][j] = s;
+//			}
+//		}
 
 	}
 

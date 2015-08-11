@@ -12,22 +12,21 @@ public class VoronoiDiagram {
 	private int height;
 	private int numTiles;
 	private ArrayList<Point> points;
-	private ArrayList<Frustum> frustums;
+	private ArrayList<Frustum> frustums; // Need this?
 	private Vector<Float>[] gradientMap;
 
 	public VoronoiDiagram(int tileSize, int iterations, int width, int height,
-			ArrayList<Frustum> frustums, Vector<Float>[] gradientMap) {
-		super();
+			Vector<Float>[] gradientMap) {		
 		this.tileSize = tileSize;
 		this.iterations = iterations;
 		this.width = width;
 		this.height = height;
-		this.numTiles = Math.round((width / tileSize) * (height / tileSize));		
-		this.frustums = frustums;
+		this.numTiles = Math.round((width / (tileSize*1.5F)) * (height / (tileSize*1.5F)));				
 		this.gradientMap = gradientMap;
+		points = new ArrayList<Point>();
 	}
 
-	public void getRandomPoints() {
+	public ArrayList<Point> getRandomPoints() {
 		boolean alreadyThere;
 		Point newPoint;
 		for (int i = 0; i < numTiles; i++) {
@@ -43,6 +42,11 @@ public class VoronoiDiagram {
 				}
 			}			
 		}
+		return points;
+	}
+	
+	public ArrayList<Point> getPoints() {
+		return points;
 	}
 
 }
