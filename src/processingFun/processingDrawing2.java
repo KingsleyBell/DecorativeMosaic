@@ -1,4 +1,4 @@
-package main;
+package processingFun;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
