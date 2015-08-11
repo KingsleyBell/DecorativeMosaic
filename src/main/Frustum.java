@@ -6,25 +6,40 @@ import processing.core.PShape;
 
 public class Frustum extends PApplet {
 
-	PImage img;	
+	private int x;
+	private int y;
+	private int baseWidth;
+	private int topWidth;
+	private int h;
+	int numTiles;
+	private PImage img;	
+	
+	public Frustum() { 
+		// Default contructor
+	}
+	
+	public Frustum(int x, int y, int baseWidth, int topWidth,
+			int h) {
+		this.x = x;
+		this.y = y;
+		this.baseWidth = baseWidth;
+		this.topWidth = topWidth;
+		this.h = h;
+	}
 	
 	public void setup() {
 
+		numTiles = 50;
 		img = loadImage("img/example.jpg");		
 		
 		size(640, 640, P3D);
+		img.resize(width, height);
 		ortho(0,width,0,height);
 		makeBackground(img);
 		
-//		int x=width/2;
-//		int y = height/2;
-//		int baseWidth = 100;
-//		int topWidth = 50;
-//		int h = 20;
-		
-		for(int i = 1; i < 10; i++){
-			for(int j = 1; j < 10; j++){						
-				makeFrustum((width/10)*i, (height/10)*j, width/16, width/32, 5);
+		for(int i = 0; i < numTiles; i++){
+			for(int j = 0; j < numTiles; j++){						
+				makeFrustum((width/numTiles)*i + (width/numTiles)*2, (height/numTiles)*j + (height/numTiles)*2, (int)(width/(numTiles*1.2)), width/(numTiles*4), 5);				
 			}
 		}			
 		
@@ -32,11 +47,12 @@ public class Frustum extends PApplet {
 
 	public void makeFrustum(int x, int y, int baseWidth, int topWidth,
 			int h) {			
+		PShape s = new PShape();		
+		int colour = img.get(x, y);		
 		
-		noFill();
-				
-		beginShape();				
+		fill(colour);
 		
+		beginShape();						
 		vertex(x - (baseWidth / 2), y - (baseWidth / 2), 0);
 		vertex(x + (baseWidth / 2), y - (baseWidth / 2), 0);
 		vertex(x + (baseWidth / 2), y + (baseWidth / 2), 0);
@@ -57,9 +73,9 @@ public class Frustum extends PApplet {
 		vertex(x - baseWidth / 2, y + baseWidth / 2, 0);
 		vertex(x - topWidth / 2, y + topWidth / 2, h);
 
-		vertex(x - topWidth / 2, y - topWidth / 2, h);
-		
+		vertex(x - topWidth / 2, y - topWidth / 2, h);		
 		endShape();
+		
 	}
 	
 	public void makeBackground(PImage img) {
