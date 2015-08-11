@@ -11,6 +11,7 @@ public class Mosaic extends PApplet {
 
 	private PImage img;
 	private int numTiles;
+	private PShape[][] frustums;
 
 	// public void setup() {
 	//
@@ -38,6 +39,7 @@ public class Mosaic extends PApplet {
 	public void setup() {
 
 		numTiles = 10;
+		frustums = new PShape[numTiles][numTiles];
 		img = loadImage("img/example.jpg");
 
 		size(640, 640, P3D);
@@ -45,14 +47,18 @@ public class Mosaic extends PApplet {
 		ortho(0, width, 0, height);
 		// makeBackground(img);
 
+		Frustum tempFrust;
 		for (int i = 0; i < numTiles; i++) {
 			for (int j = 0; j < numTiles; j++) {
-				Frustum frust = new Frustum((width / numTiles) * i
+				tempFrust = new Frustum((width / numTiles) * i
 						+ (width / (numTiles * 2)), (height / numTiles) * j
 						+ (height / (numTiles * 2)),
 						(int) (width / (numTiles * 1.5)), width
-								/ (numTiles * 4), 5);
-				frust.makeFrustum(this);
+								/ (numTiles * 4), 5, 201);				
+				PShape s = createShape();
+				tempFrust.makeFrustum(s);
+				shape(s);
+				frustums[i][j] = s;
 			}
 		}
 
