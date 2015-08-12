@@ -1,10 +1,27 @@
 package main;
 
-import processing.core.*;
+import java.nio.Buffer;
+import java.util.ArrayList;
+
+import processing.core.PApplet;
 import processing.core.PVector;
+import processing.data.FloatList;
 
 public class OrthoTest extends PApplet {
 
+	// public void draw() {
+	//// size(100, 100, P3D);
+	//// noFill();
+	//// ortho(0, width, 0, height); // same as ortho()
+	//// translate(width/2, height/2, 0);
+	//// rotateX(-PI/6);
+	//// rotateY(PI/3);
+	//// box(45);
+	//
+	// size(300,300);
+	// noFill();
+	//
+	// }
 	EdgeCurve E = new EdgeCurve();
 	int clickCount = 0;
 	PVector centre;
