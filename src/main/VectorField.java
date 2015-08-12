@@ -29,12 +29,14 @@ public class VectorField {
 	public void createMesh() {
 		float dx = imageWidth/numOfXPoints;
 		float dy = imageHeight/numOfYPoints;
-		//Initialize blank mesh
-		for (int y = 0; y < numOfYPoints; y++) {
-			for (int x = 0; x < numOfXPoints; x++) {
-				mesh.add(new PVector(0 + x*dx, 0 + y*dy));
+		
+		for (int y = 0; y < imageHeight + dy; y+= dy) {
+			for (int x = 0; x < imageWidth + dx; x+= dx) {
+				mesh.add(new PVector(x, y));
+//				System.out.println(xCoords[x] + "," + yCoords[y]);
 			}
 		}
+		System.out.println(mesh.size());
 	}
 	
 	public PVector getVector(int index) {
@@ -62,13 +64,13 @@ public class VectorField {
 	}
 	
 	public static void main (String[] args) {
-		PVector P = new PVector(3,0);
-		EdgeCurve E = new EdgeCurve();
-		for (int i = 0; i < 10; i++) {
-			E.addPoint(new PVector(1*i, 5*i));
-		}
-		
-		System.out.println(E);
-		System.out.println(E.getClosestPoint(P));
+//		PVector P = new PVector(3,0);
+//		EdgeCurve E = new EdgeCurve();
+//		for (int i = 0; i < 10; i++) {
+//			E.addPoint(new PVector(1*i, 5*i));
+//		}
+//		
+//		System.out.println(E);
+//		System.out.println(E.getClosestPoint(P));
 	}
 }
