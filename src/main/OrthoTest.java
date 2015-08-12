@@ -1,11 +1,7 @@
 package main;
 
-import java.nio.Buffer;
-import java.util.ArrayList;
-
-import processing.core.PApplet;
+import processing.core.*;
 import processing.core.PVector;
-import processing.data.FloatList;
 
 public class OrthoTest extends PApplet {
 
