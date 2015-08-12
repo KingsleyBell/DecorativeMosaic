@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 import processing.core.PVector;
 
 /*
@@ -7,49 +9,52 @@ import processing.core.PVector;
  * on an edge line
  */
 public class VectorField {
-	double [][] xy;
+	ArrayList <PVector> fieldElements;
+	ArrayList <PVector> mesh;
 	int imageWidth;
 	int imageHeight;
+	int numOfXPoints;
+	int numOfYPoints;
 	
-	public VectorField () {
-		
-	}
-
-	public VectorField(double[][] xy, int imageWidth, int imageHeight) {
-		super();
-		this.xy = xy;
+	public VectorField(int imageWidth, int imageHeight, int numOfXPoints, int numOfYPoints) {
 		this.imageWidth = imageWidth;
 		this.imageHeight = imageHeight;
+		this.numOfXPoints = numOfXPoints;
+		this.numOfYPoints = numOfYPoints;
+		fieldElements = new ArrayList<>(numOfXPoints*numOfYPoints);
+		mesh = new ArrayList<>(numOfXPoints*numOfYPoints);
+		createMesh();
+	}
+	
+	public void createMesh() {
+		float dx = imageWidth/numOfXPoints;
+		float dy = imageHeight/numOfYPoints;
+		//Initialize blank mesh
+		for (int y = 0; y < numOfYPoints; y++) {
+			for (int x = 0; x < numOfXPoints; x++) {
+				mesh.add(new PVector(0 + x*dx, 0 + y*dy));
+			}
+		}
+	}
+	
+	public PVector getVector(int index) {
+		return mesh.get(index);
 	}
 
-	private double[][] getXy() {
-		return xy;
-	}
-
-	private void setXy(double[][] xy) {
-		this.xy = xy;
-	}
-
-	private int getImageWidth() {
+	public int getImageWidth() {
 		return imageWidth;
 	}
 
-	private void setImageWidth(int imageWidth) {
+	public void setImageWidth(int imageWidth) {
 		this.imageWidth = imageWidth;
 	}
 
-	private int getImageHeight() {
+	public int getImageHeight() {
 		return imageHeight;
 	}
 
-	private void setImageHeight(int imageHeight) {
+	public void setImageHeight(int imageHeight) {
 		this.imageHeight = imageHeight;
-	}
-	
-	public PVector getClosestPointOnEdge(PVector P) {
-		PVector Cs = new PVector();  //The point on edge closest to P
-		
-		return Cs;
 	}
 	
 	public double d(PVector P, PVector S) {
