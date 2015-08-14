@@ -6,7 +6,6 @@ import java.util.Vector;
 
 public class VoronoiDiagram {
 
-	private int tileSize;
 	private int iterations;
 	private int width;
 	private int height;
@@ -15,13 +14,12 @@ public class VoronoiDiagram {
 	private ArrayList<Frustum> frustums; // Need this?
 	private Vector<Float>[] gradientMap;
 
-	public VoronoiDiagram(int tileSize, int iterations, int width, int height,
-			Vector<Float>[] gradientMap) {		
-		this.tileSize = tileSize;
+	public VoronoiDiagram(int numTiles, int iterations, int width, int height,
+			Vector<Float>[] gradientMap) {
 		this.iterations = iterations;
 		this.width = width;
 		this.height = height;
-		this.numTiles = Math.round((width / (tileSize*1.5F)) * (height / (tileSize*1.5F)));				
+		this.numTiles = numTiles;
 		this.gradientMap = gradientMap;
 		points = new ArrayList<Point>();
 	}
@@ -30,21 +28,23 @@ public class VoronoiDiagram {
 		boolean alreadyThere;
 		Point newPoint;
 		for (int i = 0; i < numTiles; i++) {
-			alreadyThere = true; // To check if random point is already in
-									// points array
-			while (alreadyThere) {
-				int x = (int) (Math.random() * width);
-				int y = (int) (Math.random() * height);
-				newPoint = new Point(x,y);
-				if(!points.contains(newPoint)) {
-					points.add(newPoint);
-					alreadyThere = false;
-				}
-			}			
+			for (int j = 0; j < numTiles; j++) {
+
+				int x = (int) ((width / numTiles) * (i + 0.5 + 0.25*(Math
+						.random()*2 - 1)));
+				int y = (int) ((width / numTiles) * (j + 0.5 + 0.25*(Math
+						.random()*2 - 1)));
+				newPoint = new Point(x, y);
+
+				points.add(newPoint);
+				// System.out.println(x + " , " + y);
+
+			}
+			// System.out.println(i);
 		}
 		return points;
 	}
-	
+
 	public ArrayList<Point> getPoints() {
 		return points;
 	}

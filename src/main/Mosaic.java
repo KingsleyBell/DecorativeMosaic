@@ -12,8 +12,10 @@ import processing.core.PShape;
 public class Mosaic extends PApplet {
 
 	private PImage img;
-	private int numTiles;
-	private PShape[][] frustums;
+	private int numTiles;	
+	private Frustum[] frustums;
+	private Integer[][] points;
+	
 
 	// public void setup() {
 	//
@@ -40,44 +42,96 @@ public class Mosaic extends PApplet {
 
 	public void setup() {
 
-		numTiles = 100;
-		frustums = new PShape[numTiles][numTiles];
+		numTiles = 10;				
+		frustums = new Frustum[numTiles*numTiles];		
 		img = loadImage("img/example.jpg");
-
 		size(640, 640, P3D);
 		img.resize(width, height);
 		ortho(0, width, 0, height);
+		points = new Integer[width][height];
 		// makeBackground(img);
 		
-		//Get random points
-		VoronoiDiagram v = new VoronoiDiagram(width/numTiles, 10, width, height,null);
-		ArrayList<Point> points = v.getRandomPoints();
+		getInitialFrustums();
+		
+		for(int i = 0; i < 20; i++){
+			getMoreFrustums();
+		}
 
-		Frustum tempFrust;
-		for (int i = 0; i < points.size(); i++) {
-			tempFrust = new Frustum(points.get(i).x, points.get(i).y,
-					width/numTiles, (int)(width/(numTiles*1.5)),
-					5, 201);
-			PShape s = createShape();
-			tempFrust.makeFrustum(s);
-			shape(s);
+	}
+
+
+	private void getInitialFrustums() {
+		//Get random points
+				VoronoiDiagram v = new VoronoiDiagram(numTiles, 10, width, height,null);
+				ArrayList<Point> points = v.getRandomPoints();
+				Frustum tempFrust;
+				int x;
+				int y;
+				for (int i = 0; i < points.size(); i++) {
+					x = points.get(i).x;
+					y = points.get(i).y;
+					Integer colour = img.get(x, y);					
+					tempFrust = new Frustum(x, y,
+							(int)(width), 0,
+							5, colour);
+					PShape s = createShape();
+					s = tempFrust.makeFrustum(s);										
+					frustums[i]=tempFrust;
+					fill(colour);
+					tint(255, 255);
+					noStroke();
+					shape(s);			
+				}
+		
+	}
+	
+	private void getMoreFrustums() {
+		loadPixels();		
+		for(int i = 0; i < width; i++){
+			for(int j = 0; j < height; j++){
+				Integer c = pixels[i+width*j];
+				Integer index = findFrustumByColour(c);
+				if(index != null) {							
+					frustums[index].addToX(i);
+					frustums[index].addToY(j);
+				}
+				
+			}			
+			
 		}
 		
-//		// Square array of frustums
-//		for (int i = 0; i < numTiles; i++) {
-//			for (int j = 0; j < numTiles; j++) {
-//				tempFrust = new Frustum((width / numTiles) * i
-//						+ (width / (numTiles * 2)), (height / numTiles) * j
-//						+ (height / (numTiles * 2)),
-//						(int) (width / (numTiles * 1.5)), width
-//								/ (numTiles * 4), 5, 201);				
-//				PShape s = createShape();
-//				tempFrust.makeFrustum(s);
-//				shape(s);
-//				frustums[i][j] = s;
-//			}
+//		for(Frustum m: frustums) {
+//			System.out.println(m.getXSum() + " , " + m.getYSum());
 //		}
+		
+		background(255);
+		for(Frustum f: frustums) {
+			Point centroid = f.getCentroid();
+			Integer x = centroid.x;
+			Integer y = centroid.y;
+			
+			Integer colour = img.get(x, y);
+			f.setX(x);
+			f.setY(y);
+			f.setColour(colour);
+			PShape s = createShape();
+			s = f.makeFrustum(s);									
+			fill(colour);	
+			tint(255, 255);
+			noStroke();
+			shape(s);			
+		}
+	}
 
+
+	private Integer findFrustumByColour(Integer c) {
+//		System.out.println(c);
+		for(int i=0; i<frustums.length; i++){				
+			if(Math.abs(frustums[i].getColour())==Math.abs(c)) {					
+				return i;
+			}
+		}
+		return null;
 	}
 
 }
