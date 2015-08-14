@@ -30,7 +30,6 @@ public class VectorField {
 		mesh = new ArrayList<>(numOfXPoints*numOfYPoints);
 		E = new EdgeCurve();
 		E.loadEdgeCurve(fileLoc);
-		System.out.println(E);
 		createMesh();
 		createSurface();
 	}
