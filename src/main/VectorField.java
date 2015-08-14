@@ -54,7 +54,7 @@ public class VectorField {
 			String [] details = E.getClosestPoint(pVector).split("-");
 			float zVal = Float.parseFloat(details[1]);
 			surfaceValue[count] = zVal;
-			mesh.get(count).set(pVector.x, pVector.y, zVal);
+			mesh.get(count).set(pVector.x, pVector.y, -zVal);
 			count++;
 		}
 	}

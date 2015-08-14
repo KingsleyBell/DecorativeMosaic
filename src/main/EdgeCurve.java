@@ -70,7 +70,7 @@ public class EdgeCurve {
 	public void store() {
 		PrintWriter outputStream = null;
 		try {
-			outputStream = new PrintWriter(new FileOutputStream("edgeCurveCoords.txt"));
+			outputStream = new PrintWriter(new FileOutputStream("edgeCurveCoords.txt", true));
 			for (PVector pVector : points) {
 				outputStream.println(pVector.toString());
 			}

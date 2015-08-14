@@ -20,23 +20,23 @@ public class OrthoTest extends PApplet {
 	}
 	
 	public void mouseReleased() {
-		if(clickCount == 0) {
+//		if(clickCount == 0) {
 //			System.out.println(E);
 			E.store();
 			//drawEdgeCurve();
-			clickCount ++;
-		}
-		else {
-			PVector clickPos = new PVector(mouseX, mouseY);
-			PVector rClick = getPositionVector(clickPos);
-			String [] closestPointData = E.getClosestPoint(clickPos).split("-");
-			PVector s = E.getVector(Integer.parseInt(closestPointData[0]));
-			PVector rClosest = getPositionVector(s);
-			PVector d = PVector.sub(rClosest, rClick);
-			translate(width/2, height/2);
-			line(rClick.x, rClick.y, rClick.x + d.x, rClick.y + d.y);
-			clickCount ++;
-		}
+//			clickCount ++;
+//		}
+//		else {
+//			PVector clickPos = new PVector(mouseX, mouseY);
+//			PVector rClick = getPositionVector(clickPos);
+//			String [] closestPointData = E.getClosestPoint(clickPos).split("-");
+//			PVector s = E.getVector(Integer.parseInt(closestPointData[0]));
+//			PVector rClosest = getPositionVector(s);
+//			PVector d = PVector.sub(rClosest, rClick);
+//			translate(width/2, height/2);
+//			line(rClick.x, rClick.y, rClick.x + d.x, rClick.y + d.y);
+//			clickCount ++;
+//		}
 	}
 	
 	public void mouseDragged() {
