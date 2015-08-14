@@ -10,11 +10,11 @@ public class Frustum extends PApplet {
 	
 	public void setup() {
 
-		img = loadImage("img/example.jpg");		
+//		img = loadImage("img/example.jpg");		
 		
 		size(640, 640, P3D);
 		ortho(0,width,0,height);
-		makeBackground(img);
+//		makeBackground(img);
 		
 //		int x=width/2;
 //		int y = height/2;
