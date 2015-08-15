@@ -19,13 +19,17 @@ public class VectorField {
 	int numOfYPoints;
 	EdgeCurve E;
 	float [] surfaceValue;
-	private int numOfPoints;
+	int numOfPoints;
+	int dx;
+	int dy;
 	
 	public VectorField(int imageWidth, int imageHeight, int numOfXPoints, int numOfYPoints, String fileLoc) {
 		this.imageWidth = imageWidth;
 		this.imageHeight = imageHeight;
 		this.numOfXPoints = numOfXPoints;
 		this.numOfYPoints = numOfYPoints;
+		dx = imageWidth/numOfXPoints;
+		dy = imageHeight/numOfYPoints;
 		fieldElements = new ArrayList<>(numOfXPoints*numOfYPoints);
 		mesh = new ArrayList<>(numOfXPoints*numOfYPoints);
 		E = new EdgeCurve();
@@ -35,15 +39,19 @@ public class VectorField {
 	}
 	
 	public void createMesh() {
-		float dx = imageWidth/numOfXPoints;
-		float dy = imageHeight/numOfYPoints;
-		numOfPoints = 0;
 		
+		numOfPoints = 0;
+		int yC = 1;
+		int xC = 1;
 		for (int y = 0; y < imageHeight + dy; y+= dy) {
 			for (int x = 0; x < imageWidth + dx; x+= dx) {
 				mesh.add(new PVector(x, y));
+				System.out.println("x"+xC + ", y" + yC);
+				xC++;
 				numOfPoints++;
 			}
+			xC = 1;
+			yC ++;
 		}
 	}
 	
@@ -56,6 +64,16 @@ public class VectorField {
 			surfaceValue[count] = zVal;
 			mesh.get(count).set(pVector.x, pVector.y, -zVal);
 			count++;
+		}
+	}
+	
+	public void gradSurface() {
+		for (int i = 1; i < surfaceValue.length; i++) {
+			float zi = surfaceValue[i];
+			float zNext = surfaceValue[i+1];
+			float zPrev = surfaceValue[i-1];
+			
+			float dzdx = (zNext - zPrev)/(2*dx);
 		}
 	}
 	
