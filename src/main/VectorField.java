@@ -18,7 +18,7 @@ public class VectorField {
 	int numOfXPoints;
 	int numOfYPoints;
 	EdgeCurve E;
-	float [] surfaceValue;
+	float [][] surfaceValue;
 	int numOfPoints;
 	int dx;
 	int dy;
@@ -35,46 +35,53 @@ public class VectorField {
 		E = new EdgeCurve();
 		E.loadEdgeCurve(fileLoc);
 		createMesh();
-		createSurface();
+		gradSurface();
 	}
 	
 	public void createMesh() {
-		
+		surfaceValue = new float[numOfXPoints + 1][numOfYPoints + 1];
 		numOfPoints = 0;
-		int yC = 1;
-		int xC = 1;
+		int yC = 0;
+		int xC = 0;
 		for (int y = 0; y < imageHeight + dy; y+= dy) {
 			for (int x = 0; x < imageWidth + dx; x+= dx) {
-				mesh.add(new PVector(x, y));
-				System.out.println("x"+xC + ", y" + yC);
+				PVector Pxy = new PVector(x,y);
+				surfaceValue[xC][yC] = getSurfaceValue(Pxy);
+				Pxy.set(x, y, surfaceValue[xC][yC]);
+				mesh.add(Pxy);
 				xC++;
 				numOfPoints++;
 			}
-			xC = 1;
+			xC = 0;
 			yC ++;
 		}
 	}
 	
-	public void createSurface () {
-		int count = 0;
-		surfaceValue = new float[numOfPoints];
-		for (PVector pVector : mesh) {
-			String [] details = E.getClosestPoint(pVector).split("-");
-			float zVal = Float.parseFloat(details[1]);
-			surfaceValue[count] = zVal;
-			mesh.get(count).set(pVector.x, pVector.y, -zVal);
-			count++;
-		}
+	public float getSurfaceValue (PVector p) {
+		String [] details = E.getClosestPoint(p).split("-");
+		float zVal = Float.parseFloat(details[1]);
+		return zVal;
 	}
 	
 	public void gradSurface() {
-		for (int i = 1; i < surfaceValue.length; i++) {
-			float zi = surfaceValue[i];
-			float zNext = surfaceValue[i+1];
-			float zPrev = surfaceValue[i-1];
-			
-			float dzdx = (zNext - zPrev)/(2*dx);
+//		for (int i = 1; i < surfaceValue.length; i++) {
+//			float zi = surfaceValue[i];
+//			float zNext = surfaceValue[i+1];
+//			float zPrev = surfaceValue[i-1];
+//			
+//			float dzdx = (zNext - zPrev)/(2*dx);
+//		}
+		int count = 0;
+		for (int j = 1; j < numOfYPoints; j++) {
+			for (int i = 1; i < numOfXPoints; i++) {
+				float dzdx = (surfaceValue[i+1][j] - surfaceValue[i-1][j])/(2*dx);
+				float dzdy = (surfaceValue[i][j+1] - surfaceValue[i][j])/(2*dx);
+				fieldElements.add(new PVector(dzdx, dzdy));
+				count++;
+//				System.out.println(new PVector(dzdx,dzdy));
+			}
 		}
+		System.out.println(count);
 	}
 	
 	public void storeZVals () {

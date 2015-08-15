@@ -10,23 +10,40 @@ public class meshTest extends PApplet {
 		background(255);
 		centre.set(width/2, height/2, 0);
 		F = new VectorField (width, height, 100, 100, "edgeCurveCoords.txt");
+//		for (PVector P : F.fieldElements) {
+//			System.out.println(P);
+//		}
+//		int count = 0;
+//		for (int i = 0; i < F.numOfXPoints + 1; i++) {
+//			for (int j = 0; j < F.numOfYPoints; j++) {
+//				System.out.println(F.surfaceValue[i][j]);
+//				count++;
+//			}
+//		}
+//		System.out.println(count);
 	}
 	
 	public void draw () {
-//		ortho();
-//		camera(width/2, height/2, (height/2) / tan(PI/6), width/2, height/2, 5, 1, 1, 0);
+////		ortho();
+////		camera(width/2, height/2, (height/2) / tan(PI/6), width/2, height/2, 5, 1, 1, 0);
 		strokeWeight(2);
 		this.pushMatrix();
-//		rotateX(PI/6);
+////		rotateX(PI/6);
 		translate(width/2, height/2,0);
-		for (PVector P : F.mesh) {
-			PVector r = getPositionVector(P);
-			point(r.x, r.y, r.z);
+		int count = 0;
+		for (PVector P : F.fieldElements) {
+			P.setMag(10);
+			PVector r = getPositionVector(F.mesh.get(count));
+//			PVector r = getPositionVector(P);
+			line(r.x, r.y, r.x + P.x, r.y + P.y);
+			count ++;
+			point(r.x, r.y);
+			
 		}
-//		drawEdgeCurve();
-		
+		drawEdgeCurve();
+//		
 		this.popMatrix();
-
+		
 	}
 	
 	public PVector getPositionVector(PVector p) {
