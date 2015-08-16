@@ -10,7 +10,7 @@ public class OrthoTest extends PApplet {
 	PVector centre;
 	
 	public void setup() {
-		size(480, 480);
+		size(480, 480, P3D);
 		background(255);
 		centre = new PVector(width/2, height/2);
 	}
@@ -39,6 +39,13 @@ public class OrthoTest extends PApplet {
 //		}
 	}
 	
+	public void keyPressed() {
+		this.clear();
+		background(255);
+		meshTest m  = new meshTest(this);
+		m.display();
+	}
+	
 	public void mouseDragged() {
 		strokeWeight(3);
 		fill(0);
@@ -54,11 +61,5 @@ public class OrthoTest extends PApplet {
 		return r;
 	}
 	
-	public void drawEdgeCurve () {
-		for (int i = 1; i < E.getSize(); i++) {
-			line(E.getVector(i - 1).x, E.getVector(i - 1).y, E.getVector(i).x, E.getVector(i).y);
-//			strokeWeight(20);
-//			point(E.getVector(i).x, E.getVector(i).y);
-		}
-	}
+	
 }

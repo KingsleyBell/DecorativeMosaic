@@ -70,10 +70,11 @@ public class EdgeCurve {
 	public void store() {
 		PrintWriter outputStream = null;
 		try {
-			outputStream = new PrintWriter(new FileOutputStream("edgeCurveCoords.txt"));
+			outputStream = new PrintWriter(new FileOutputStream("edgeCurveCoords.txt", true));
 			for (PVector pVector : points) {
 				outputStream.println(pVector.toString());
 			}
+			outputStream.println("----");
 			outputStream.close();
 		} catch (Exception e) {
 			System.out.println("Error: " + e);
@@ -103,13 +104,18 @@ public class EdgeCurve {
 			//convert the string into float components to create the vector of the point
 			while(inputStream.hasNextLine()) {
 				String line = inputStream.nextLine();
-				line = line.substring(2, line.length() - 2);
-				String [] elements = line.split(", ");
-				float [] coords = new float [2];
-				for (int i = 0; i < coords.length; i++) {
-					coords[i] = Float.parseFloat(elements[i]);
+				if(!(line.equals("----"))) {
+					line = line.substring(2, line.length() - 2);
+					String [] elements = line.split(", ");
+					float [] coords = new float [2];
+					for (int i = 0; i < coords.length; i++) {
+						coords[i] = Float.parseFloat(elements[i]);
+					}
+					points.add(new PVector(coords[0], coords[1]));
 				}
-				points.add(new PVector(coords[0], coords[1]));
+				else {
+					points.add(null);
+				}
 			}
 			inputStream.close();
 		} catch (Exception e) {
