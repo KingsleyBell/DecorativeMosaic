@@ -1,5 +1,7 @@
 package main;
 
+import java.io.File;
+
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -22,7 +24,7 @@ public class OrthoTest extends PApplet {
 	public void mouseReleased() {
 //		if(clickCount == 0) {
 //			System.out.println(E);
-			E.store();
+			
 			//drawEdgeCurve();
 //			clickCount ++;
 //		}
@@ -40,10 +42,18 @@ public class OrthoTest extends PApplet {
 	}
 	
 	public void keyPressed() {
-		this.clear();
-		background(255);
-		meshTest m  = new meshTest(this);
-		m.display();
+		if(key == ENTER) {
+			E.store();
+			this.clear();
+			background(255);
+			meshTest m  = new meshTest(this);
+			m.display();
+		}
+		else if (key == ESC) {
+			File f = new File("edgeCurveCoords.txt");
+			f.delete();
+			exit();
+		}
 	}
 	
 	public void mouseDragged() {

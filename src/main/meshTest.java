@@ -70,11 +70,17 @@ public class meshTest extends PApplet {
 				continue;
 			}
 			else {
-				parent.line(getPositionVector(F.E.getVector(i - 1)).x, getPositionVector(F.E.getVector(i - 1)).y, getPositionVector(F.E.getVector(i)).x, getPositionVector(F.E.getVector(i)).y);
+				parent.strokeWeight(5);
+				parent.stroke(255,0,0);
+//				System.out.println(i - 1 + "-" + i);
+//				parent.line(getPositionVector(F.E.getVector(i - 1)).x, getPositionVector(F.E.getVector(i - 1)).y, getPositionVector(F.E.getVector(i)).x, getPositionVector(F.E.getVector(i)).y);
+				parent.point(getPositionVector(F.E.getVector(i)).x, getPositionVector(F.E.getVector(i)).y);
 			}
 //			strokeWeight(20);
 //			ellipse(50, 50, 50,50);
 //			point(E.getVector(i).x, E.getVector(i).y);
 		}
+		parent.strokeWeight(1);
+		parent.stroke(0);
 	}
 }

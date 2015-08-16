@@ -28,10 +28,12 @@ public class EdgeCurve {
 		double distance = PVector.dist(points.get(0), P);
 		int posOfClosestPoint = 0;
 		for(int i = 1; i < points.size(); i++) {
-			double tempDist = PVector.dist(points.get(i), P);
-			if(tempDist < distance) {
-				distance = tempDist;
-				posOfClosestPoint = i;
+			if(points.get(i) != null) {
+				double tempDist = PVector.dist(points.get(i), P);
+				if(tempDist < distance) {
+					distance = tempDist;
+					posOfClosestPoint = i;
+				}
 			}
 		}
 		
@@ -70,7 +72,7 @@ public class EdgeCurve {
 	public void store() {
 		PrintWriter outputStream = null;
 		try {
-			outputStream = new PrintWriter(new FileOutputStream("edgeCurveCoords.txt", true));
+			outputStream = new PrintWriter(new FileOutputStream("edgeCurveCoords.txt"));
 			for (PVector pVector : points) {
 				outputStream.println(pVector.toString());
 			}
