@@ -3,7 +3,7 @@ package main;
 import processing.core.PApplet;
 import processing.core.PVector;
 
-public class MeshTest extends PApplet {
+public class DirectionFieldDrawer extends PApplet {
 	VectorField F;
 	PVector centre = new PVector();
 	PApplet parent;
@@ -11,7 +11,7 @@ public class MeshTest extends PApplet {
 	/*
 	 * Constructor that allows instantiation to draw to the calling class' sketch canvas
 	 */
-	public MeshTest(PApplet p) {
+	public DirectionFieldDrawer(PApplet p) {
 		this.parent = p;
 		centre.set(parent.width/2, parent.height/2, 0);
 		F = new VectorField (parent.width, parent.height, 10, 10, "edgeCurveCoords.txt");
