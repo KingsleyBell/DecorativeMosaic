@@ -9,7 +9,7 @@ public class meshTest extends PApplet {
 		size (500,500, P3D);
 		background(255);
 		centre.set(width/2, height/2, 0);
-		F = new VectorField (width, height, 100, 100, "edgeCurveCoords.txt");
+		F = new VectorField (width, height, 50, 50, "edgeCurveCoords.txt");
 //		for (PVector P : F.fieldElements) {
 //			System.out.println(P);
 //		}
@@ -26,24 +26,26 @@ public class meshTest extends PApplet {
 	public void draw () {
 ////		ortho();
 ////		camera(width/2, height/2, (height/2) / tan(PI/6), width/2, height/2, 5, 1, 1, 0);
-		strokeWeight(2);
 		this.pushMatrix();
-////		rotateX(PI/6);
+		rotateX(PI/6);
 		translate(width/2, height/2,0);
 		int count = 0;
 		for (PVector P : F.fieldElements) {
+			strokeWeight(2);
 			P.setMag(10);
 			PVector r = getPositionVector(F.mesh.get(count));
 //			PVector r = getPositionVector(P);
-			line(r.x, r.y, r.x + P.x, r.y + P.y);
+//			line(r.x, r.y, r.x + P.x, r.y + P.y);
 			count ++;
-			point(r.x, r.y);
+			strokeWeight(5);
+			point(r.x, r.y, -r.z);
 			
 		}
 		drawEdgeCurve();
 //		
 		this.popMatrix();
-		
+		for (int i = 0; i < this.displayWidth; i++) {
+		}
 	}
 	
 	public PVector getPositionVector(PVector p) {

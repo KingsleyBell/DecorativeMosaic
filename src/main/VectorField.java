@@ -71,17 +71,27 @@ public class VectorField {
 //			
 //			float dzdx = (zNext - zPrev)/(2*dx);
 //		}
-		int count = 0;
-		for (int j = 1; j < numOfYPoints; j++) {
-			for (int i = 1; i < numOfXPoints; i++) {
-				float dzdx = (surfaceValue[i+1][j] - surfaceValue[i-1][j])/(2*dx);
-				float dzdy = (surfaceValue[i][j+1] - surfaceValue[i][j])/(2*dx);
+//		int count = 0;
+//		for (int j = 1; j < numOfYPoints; j++) {
+//			for (int i = 1; i < numOfXPoints; i++) {
+//				float dzdx = (surfaceValue[i+1][j] - surfaceValue[i-1][j])/(2*dx);
+//				float dzdy = (surfaceValue[i][j+1] - surfaceValue[i][j])/(2*dx);
+//				fieldElements.add(new PVector(dzdx, dzdy));
+//				count++;
+////				System.out.println(new PVector(dzdx,dzdy));
+//			}
+//		}
+		
+		for (int j = 0; j < numOfYPoints; j++) {
+			for (int i = 0; i < numOfXPoints; i++) {
+				float dzdx = (surfaceValue[i+1][j] - surfaceValue[i][j])/(dx);
+				float dzdy = (surfaceValue[i][j+1] - surfaceValue[i][j])/(dy);
 				fieldElements.add(new PVector(dzdx, dzdy));
-				count++;
+//				count++;
 //				System.out.println(new PVector(dzdx,dzdy));
 			}
 		}
-		System.out.println(count);
+//		System.out.println(count);
 	}
 	
 	public void storeZVals () {
