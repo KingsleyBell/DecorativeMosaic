@@ -41,7 +41,7 @@ public class DirectionFieldProtoype extends PApplet {
 			E.store();
 			this.clear();
 			background(255);
-			meshTest m  = new meshTest(this);
+			MeshTest m  = new MeshTest(this);
 			m.display();
 		}
 		else if (key == ESC) {

@@ -3,82 +3,71 @@ package main;
 import processing.core.PApplet;
 import processing.core.PVector;
 
-public class meshTest extends PApplet {
+public class MeshTest extends PApplet {
 	VectorField F;
 	PVector centre = new PVector();
 	PApplet parent;
 	
-	public meshTest(PApplet p) {
+	/*
+	 * Constructor that allows instantiation to draw to the calling class' sketch canvas
+	 */
+	public MeshTest(PApplet p) {
 		this.parent = p;
 		centre.set(parent.width/2, parent.height/2, 0);
 		F = new VectorField (parent.width, parent.height, 10, 10, "edgeCurveCoords.txt");
 	}
 	
-//	public void setup () {
-//		size (500,500, P3D);
-//		background(255);
-//		
-////		for (PVector P : F.fieldElements) {
-////			System.out.println(P);
-////		}
-////		int count = 0;
-////		for (int i = 0; i < F.numOfXPoints + 1; i++) {
-////			for (int j = 0; j < F.numOfYPoints; j++) {
-////				System.out.println(F.surfaceValue[i][j]);
-////				count++;
-////			}
-////		}
-////		System.out.println(count);
-//	}
-	
+	/*
+	 * Method that handles the drawing of the direction field
+	 */
 	public void display () {
 		parent.ortho();
-////		camera(width/2, height/2, (height/2) / tan(PI/6), width/2, height/2, 5, 1, 1, 0);
 		parent.pushMatrix();
-//		rotateX(PI/6);
-		parent.translate(parent.width/2, parent.height/2,0);
+		parent.translate(parent.width/2, parent.height/2,0);  //Centre of canvas becomes the origin
 		int count = 0;
+		//Iterate through each vector in the direction field
 		for (PVector P : F.fieldElements) {
 			parent.strokeWeight(2);
-			P.setMag(10);
-			PVector r = getPositionVector(F.mesh.get(count));
-//			PVector r = getPositionVector(P);
-			parent.line(r.x, r.y, r.x + P.x, r.y + P.y);
+			P.setMag(10); //allows line representation of vector to be seen
+			PVector r = getPositionVector(F.mesh.get(count)); //get the position in the mesh of the current direction field element
+			parent.line(r.x, r.y, r.x + P.x, r.y + P.y); //draw line representing D(r) = direction field at r
 			count ++;
 			parent.strokeWeight(5);
-			parent.point(r.x, r.y);
 			
 		}
 		drawEdgeCurve();
-//		
 		parent.popMatrix();
-		for (int i = 0; i < this.displayWidth; i++) {
-		}
 	}
 	
+	/*
+	 * Method that returns the position vector for a given point
+	 * @args: PVector p => point to which position vector will point
+	 * @return PVector r => position vector for p
+	 */
 	public PVector getPositionVector(PVector p) {
 		PVector r = PVector.sub(p, centre);
 		return r;
 	}
 	
+	/*
+	 * Method that draws the points making up the edge curve.
+	 * FUTURE: to draw curves instead of points that make up curves
+	 * All commented lines will be implemented for final product
+	 */
 	public void drawEdgeCurve () {
 		for (int i = 1; i < F.E.getSize(); i++) {
-			if(F.E.getVector(i - 1) == null) {
-				continue;
-			}
-			else if (F.E.getVector(i) == null) {
-				continue;
-			}
-			else {
+//			if(F.E.getVector(i - 1) == null) {
+//				continue;
+//			}
+//			else if (F.E.getVector(i) == null) {
+//				continue;
+//			}
+//			else {
 				parent.strokeWeight(5);
 				parent.stroke(255,0,0);
-//				System.out.println(i - 1 + "-" + i);
-//				parent.line(getPositionVector(F.E.getVector(i - 1)).x, getPositionVector(F.E.getVector(i - 1)).y, getPositionVector(F.E.getVector(i)).x, getPositionVector(F.E.getVector(i)).y);
+				//F.E is the vector field's EdgeCurve attribute
 				parent.point(getPositionVector(F.E.getVector(i)).x, getPositionVector(F.E.getVector(i)).y);
-			}
-//			strokeWeight(20);
-//			ellipse(50, 50, 50,50);
-//			point(E.getVector(i).x, E.getVector(i).y);
+//			}
 		}
 		parent.strokeWeight(1);
 		parent.stroke(0);
