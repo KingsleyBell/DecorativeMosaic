@@ -1,4 +1,4 @@
-package processingFun;
+package processingFun.IgnoreThis;
 
 import processing.core.PApplet;
 

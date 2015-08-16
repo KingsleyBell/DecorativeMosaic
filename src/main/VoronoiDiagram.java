@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Vector;
 
+// Class to perform voronoi algorithm on array of frustums given direction field
 public class VoronoiDiagram {
 
 	private int iterations;
@@ -30,10 +31,10 @@ public class VoronoiDiagram {
 		for (int i = 0; i < numTiles; i++) {
 			for (int j = 0; j < numTiles; j++) {
 
-				int x = (int) ((width / numTiles) * (i + 0.5 + 0.25*(Math
-						.random()*2 - 1)));
-				int y = (int) ((width / numTiles) * (j + 0.5 + 0.25*(Math
-						.random()*2 - 1)));
+				int x = (int) ((width / numTiles) * (i + 0.5 + 0.25 * (Math
+						.random() * 2 - 1)));
+				int y = (int) ((width / numTiles) * (j + 0.5 + 0.25 * (Math
+						.random() * 2 - 1)));
 				newPoint = new Point(x, y);
 
 				points.add(newPoint);
