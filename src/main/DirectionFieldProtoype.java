@@ -5,42 +5,37 @@ import java.io.File;
 import processing.core.PApplet;
 import processing.core.PVector;
 
-public class OrthoTest extends PApplet {
+public class DirectionFieldProtoype extends PApplet {
 
 	EdgeCurve E = new EdgeCurve();
 	int clickCount = 0;
 	PVector centre;
 	
+	/*
+	 * (non-Javadoc)
+	 * @see processing.core.PApplet#setup()
+	 */
 	public void setup() {
 		size(480, 480, P3D);
 		background(255);
 		centre = new PVector(width/2, height/2);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see processing.core.PApplet#draw()
+	 */
 	public void draw() {
 
 	}
 	
-	public void mouseReleased() {
-//		if(clickCount == 0) {
-//			System.out.println(E);
-			
-			//drawEdgeCurve();
-//			clickCount ++;
-//		}
-//		else {
-//			PVector clickPos = new PVector(mouseX, mouseY);
-//			PVector rClick = getPositionVector(clickPos);
-//			String [] closestPointData = E.getClosestPoint(clickPos).split("-");
-//			PVector s = E.getVector(Integer.parseInt(closestPointData[0]));
-//			PVector rClosest = getPositionVector(s);
-//			PVector d = PVector.sub(rClosest, rClick);
-//			translate(width/2, height/2);
-//			line(rClick.x, rClick.y, rClick.x + d.x, rClick.y + d.y);
-//			clickCount ++;
-//		}
-	}
-	
+	/*
+	 * (non-Javadoc)
+	 * @see processing.core.PApplet#keyPressed()
+	 * When the enter key is pressed, the screen is cleared and the direction field is shown along
+	 * with the points that make up the edge curves
+	 * When ESC key is pressed, the textfield storing the edge curve points is deleted
+	 */
 	public void keyPressed() {
 		if(key == ENTER) {
 			E.store();
@@ -56,6 +51,10 @@ public class OrthoTest extends PApplet {
 		}
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see processing.core.PApplet#mouseDragged()
+	 */
 	public void mouseDragged() {
 		strokeWeight(3);
 		fill(0);
@@ -66,10 +65,13 @@ public class OrthoTest extends PApplet {
 		}
 	}
 	
+	/*
+	 * Method that returns the position vector for a given point
+	 * @args: PVector p => point to which position vector will point
+	 * @return PVector r => position vector for p
+	 */
 	public PVector getPositionVector(PVector p) {
 		PVector r = PVector.sub(p, centre);
 		return r;
 	}
-	
-	
 }
