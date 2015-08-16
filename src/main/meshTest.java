@@ -52,22 +52,21 @@ public class MeshTest extends PApplet {
 	/*
 	 * Method that draws the points making up the edge curve.
 	 * FUTURE: to draw curves instead of points that make up curves
-	 * All commented lines will be implemented for final product
 	 */
 	public void drawEdgeCurve () {
 		for (int i = 1; i < F.E.getSize(); i++) {
-//			if(F.E.getVector(i - 1) == null) {
-//				continue;
-//			}
-//			else if (F.E.getVector(i) == null) {
-//				continue;
-//			}
-//			else {
+			if(F.E.getVector(i - 1) == null) {
+				continue;
+			}
+			else if (F.E.getVector(i) == null) {
+				continue;
+			}
+			else {
 				parent.strokeWeight(5);
 				parent.stroke(255,0,0);
 				//F.E is the vector field's EdgeCurve attribute
 				parent.point(getPositionVector(F.E.getVector(i)).x, getPositionVector(F.E.getVector(i)).y);
-//			}
+			}
 		}
 		parent.strokeWeight(1);
 		parent.stroke(0);
