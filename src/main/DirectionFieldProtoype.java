@@ -19,6 +19,28 @@ public class DirectionFieldProtoype extends PApplet {
 		size(480, 480, P3D);
 		background(255);
 		centre = new PVector(width/2, height/2);
+		int rows = width;
+		int cols = height;
+		float [][]surfaceValue = new float[rows][cols];
+		int numOfPoints = 0;
+		int yC = 0;
+		int xC = 0;
+//		float dx = width/numOfXPoints;
+//		float dy = height/numOfYPoints;
+//		System.out.println(dx);
+		for (int y = 0; y < cols; y++) {
+			for (int x = 0; x < rows; x++) {
+//				PVector Pxy = new PVector(x,y);
+//				System.out.println(xC + "," + yC);
+//				surfaceValue[xC][yC] = getSurfaceValue(Pxy);
+//				Pxy.set(x-imageWidth/2, y-imageHeight/2, surfaceValue[xC][yC]);
+//				mesh.add(Pxy);
+//				xC++;
+//				numOfPoints++;
+			}
+			xC = 0;
+			yC ++;
+		}
 	}
 
 	/*

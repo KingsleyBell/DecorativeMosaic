@@ -38,19 +38,35 @@ public class VectorField {
 		gradSurface();
 	}
 	
+	public VectorField(int imageWidth, int imageHeight, int numOfXPoints, int numOfYPoints, EdgeCurve E) {
+		this.imageWidth = imageWidth;
+		this.imageHeight = imageHeight;
+		this.numOfXPoints = numOfXPoints;
+		this.numOfYPoints = numOfYPoints;
+		dx = imageWidth/numOfXPoints;
+		dy = imageHeight/numOfYPoints;
+		fieldElements = new ArrayList<>(numOfXPoints*numOfYPoints);
+		mesh = new ArrayList<>(numOfXPoints*numOfYPoints);
+		E = new EdgeCurve();
+		this.E = E;
+		createMesh();
+		gradSurface();
+	}
+	
 	public void createMesh() {
 		surfaceValue = new float[numOfXPoints + 1][numOfYPoints + 1];
 		numOfPoints = 0;
 		int yC = 0;
 		int xC = 0;
-		for (int y = 0; y < imageHeight + dy; y+= dy) {
-			for (int x = 0; x < imageWidth + dx; x+= dx) {
-				PVector Pxy = new PVector(x,y);
-				surfaceValue[xC][yC] = getSurfaceValue(Pxy);
-				Pxy.set(x, y, surfaceValue[xC][yC]);
-				mesh.add(Pxy);
-				xC++;
-				numOfPoints++;
+		for (int y = 0; y < imageHeight; y+= dy) {
+			for (int x = 0; x < imageWidth; x+= dx) {
+//				PVector Pxy = new PVector(x,y);
+				System.out.println(xC + "," + yC);
+//				surfaceValue[xC][yC] = getSurfaceValue(Pxy);
+//				Pxy.set(x-imageWidth/2, y-imageHeight/2, surfaceValue[xC][yC]);
+//				mesh.add(Pxy);
+//				xC++;
+//				numOfPoints++;
 			}
 			xC = 0;
 			yC ++;
@@ -84,8 +100,8 @@ public class VectorField {
 		
 		for (int j = 0; j < numOfYPoints; j++) {
 			for (int i = 0; i < numOfXPoints; i++) {
-				float dzdx = (surfaceValue[i+1][j] - surfaceValue[i][j])/(dx);
-				float dzdy = (surfaceValue[i][j+1] - surfaceValue[i][j])/(dy);
+				float dzdx = (surfaceValue[i+1][j] - surfaceValue[i][j])/(dy);
+				float dzdy = (surfaceValue[i][j+1] - surfaceValue[i][j])/(dx);
 				fieldElements.add(new PVector(dzdx, dzdy));
 //				count++;
 //				System.out.println(new PVector(dzdx,dzdy));

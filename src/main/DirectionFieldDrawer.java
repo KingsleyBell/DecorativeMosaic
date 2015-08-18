@@ -14,7 +14,7 @@ public class DirectionFieldDrawer extends PApplet {
 	public DirectionFieldDrawer(PApplet p) {
 		this.parent = p;
 		centre.set(parent.width/2, parent.height/2, 0);
-		F = new VectorField (parent.width, parent.height, 10, 10, "edgeCurveCoords.txt");
+		F = new VectorField (parent.width, parent.height, 100, 100, "edgeCurveCoords.txt");
 	}
 	
 	/*
@@ -28,8 +28,8 @@ public class DirectionFieldDrawer extends PApplet {
 		//Iterate through each vector in the direction field
 		for (PVector P : F.fieldElements) {
 			parent.strokeWeight(2);
-			P.setMag(10); //allows line representation of vector to be seen
-			PVector r = getPositionVector(F.mesh.get(count)); //get the position in the mesh of the current direction field element
+			P.setMag(4); //allows line representation of vector to be seen
+			PVector r = (F.mesh.get(count)); //get the position in the mesh of the current direction field element
 			parent.line(r.x, r.y, r.x + P.x, r.y + P.y); //draw line representing D(r) = direction field at r
 			count ++;
 			parent.strokeWeight(5);
