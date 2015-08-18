@@ -58,6 +58,18 @@ public class DirectionField {
 //		gradSurface();
 //	}
 	
+	public DirectionField(int imageWidth, int imageHeight, int dx, int dy) {
+		this.dx = dx;
+		this.dy = dy;
+		this.imageWidth = imageWidth;
+		this.imageHeight = imageHeight;
+		this.E = new EdgeCurve();
+		this.surface = new HashMap<PVector, Float>();
+		this.directionField = new HashMap<PVector, PVector>();
+//		defaultMesh();
+//		createDirectionField();
+	}
+	
 	public DirectionField(int imageWidth, int imageHeight, int dx, int dy, EdgeCurve E) {
 		this.dx = dx;
 		this.dy = dy;
