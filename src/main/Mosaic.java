@@ -104,7 +104,7 @@ public class Mosaic extends PApplet {
 				fill(colour);
 				tint(255, 255);
 				noStroke();
-				// s.rotate(random(PI));
+//				s.rotate(random(PI));
 				shape(s, x, y);
 			}
 		}
