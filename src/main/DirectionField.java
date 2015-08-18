@@ -43,22 +43,24 @@ public class DirectionField {
 		gradSurface();
 	}
 	
-	public DirectionField(int imageWidth, int imageHeight, int numOfXPoints, int numOfYPoints, EdgeCurve E) {
-		this.imageWidth = imageWidth;
-		this.imageHeight = imageHeight;
-		this.numOfXPoints = numOfXPoints;
-		this.numOfYPoints = numOfYPoints;
-		dx = imageWidth/numOfXPoints;
-		dy = imageHeight/numOfYPoints;
-		fieldElements = new ArrayList<>(numOfXPoints*numOfYPoints);
-		mesh = new ArrayList<>(numOfXPoints*numOfYPoints);
-		E = new EdgeCurve();
-		this.E = E;
-		createMesh();
-		gradSurface();
-	}
+//	public DirectionField(int imageWidth, int imageHeight, int numOfXPoints, int numOfYPoints, EdgeCurve E) {
+//		this.imageWidth = imageWidth;
+//		this.imageHeight = imageHeight;
+//		this.numOfXPoints = numOfXPoints;
+//		this.numOfYPoints = numOfYPoints;
+//		dx = imageWidth/numOfXPoints;
+//		dy = imageHeight/numOfYPoints;
+//		fieldElements = new ArrayList<>(numOfXPoints*numOfYPoints);
+//		mesh = new ArrayList<>(numOfXPoints*numOfYPoints);
+//		E = new EdgeCurve();
+//		this.E = E;
+//		createMesh();
+//		gradSurface();
+//	}
 	
-	public DirectionField(int imageWidth, int imageHeight,EdgeCurve E) {
+	public DirectionField(int imageWidth, int imageHeight, int dx, int dy, EdgeCurve E) {
+		this.dx = dx;
+		this.dy = dy;
 		this.imageWidth = imageWidth;
 		this.imageHeight = imageHeight;
 		this.E = E;
@@ -87,7 +89,9 @@ public class DirectionField {
 	}
 	
 	public void createDirectionField() {
-
+		for (PVector pVector : surface.keySet()) {
+			directionField.put(pVector, calcGradOfSurface(pVector, surface.get(pVector)));
+		}
 	}
 	
 	public void createMesh() {
@@ -147,6 +151,17 @@ public class DirectionField {
 //		System.out.println(count);
 	}
 	
+	public PVector calcGradOfSurface(PVector p, float z) {
+		PVector pNX = new PVector(p.x + dx, p.y);
+		PVector pNY = new PVector(p.x, p.y + dy);
+		float zNX = getSurfaceValue(pNX);
+		float zNY = getSurfaceValue(pNY);
+		float dzdx = (zNX - z)/dx;
+		float dzdy = (zNY - z)/dy;
+		
+		return new PVector(dzdx, dzdy);
+	}
+	
 	public void storeZVals () {
 		PrintWriter outputStream = null;
 		int count = 0;
@@ -192,8 +207,8 @@ public class DirectionField {
 	 * Creates a default mesh with a pixel spacing of 5 pixels
 	 */
 	public void defaultMesh() {
-		for (int y = 0; y < imageHeight; y+= 5) {
-			for (int x = 0; x < imageWidth; x+= 5) {
+		for (int y = 0; y < imageHeight; y+= dy) {
+			for (int x = 0; x < imageWidth; x+= dx) {
 				PVector p = new PVector(x,  y);
 				surface.put(p, getSurfaceValue(p));
 			}
