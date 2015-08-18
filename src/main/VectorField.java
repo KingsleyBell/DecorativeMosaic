@@ -1,8 +1,10 @@
 package main;
 
+import java.awt.Point;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import processing.core.PVector;
 
@@ -13,6 +15,9 @@ import processing.core.PVector;
 public class VectorField {
 	ArrayList <PVector> fieldElements;
 	ArrayList <PVector> mesh;
+	HashMap<PVector, Float> surface;
+	HashMap<PVector, PVector> directionField;
+//	HashMap<PVector, ArrayList<PVector>> nearbyPoints;
 	int imageWidth;
 	int imageHeight;
 	int numOfXPoints;
@@ -53,20 +58,40 @@ public class VectorField {
 		gradSurface();
 	}
 	
+	public VectorField(ArrayList<Point> centroids, EdgeCurve E) {
+		this.E = E;
+		this.mesh = new ArrayList<>(centroids.size());
+		this.surface = new HashMap<PVector, Float>();
+		this.directionField = new HashMap<PVector, PVector>();
+		createSurface(centroids);
+		createDirectionField();
+	}
+	
+	public void createSurface (ArrayList<Point> centroids) {
+		for (Point point : centroids) {
+			PVector Pxy = new PVector(point.x, point.y);
+			surface.put(Pxy, getSurfaceValue(Pxy));
+		}
+	}
+	
+	public void createDirectionField() {
+
+	}
+	
 	public void createMesh() {
-		surfaceValue = new float[numOfXPoints + 1][numOfYPoints + 1];
+		surfaceValue = new float[imageWidth/2][imageHeight/2];
 		numOfPoints = 0;
 		int yC = 0;
 		int xC = 0;
-		for (int y = 0; y < imageHeight; y+= dy) {
-			for (int x = 0; x < imageWidth; x+= dx) {
-//				PVector Pxy = new PVector(x,y);
-				System.out.println(xC + "," + yC);
-//				surfaceValue[xC][yC] = getSurfaceValue(Pxy);
-//				Pxy.set(x-imageWidth/2, y-imageHeight/2, surfaceValue[xC][yC]);
-//				mesh.add(Pxy);
-//				xC++;
-//				numOfPoints++;
+		for (int y = 0; y < numOfYPoints; y += 2) {
+			for (int x = 0; x < numOfXPoints; y += 2) {
+				PVector Pxy = new PVector(x,y);
+//				System.out.println(xC + "," + yC);
+				surfaceValue[xC][yC] = getSurfaceValue(Pxy);
+				Pxy.set(x-imageWidth/2, y-imageHeight/2, surfaceValue[xC][yC]);
+				mesh.add(Pxy);
+				xC++;
+				numOfPoints++;
 			}
 			xC = 0;
 			yC ++;
@@ -98,8 +123,8 @@ public class VectorField {
 //			}
 //		}
 		
-		for (int j = 0; j < numOfYPoints; j++) {
-			for (int i = 0; i < numOfXPoints; i++) {
+		for (int j = 0; j < numOfYPoints-1; j++) {
+			for (int i = 0; i < numOfXPoints-1; i++) {
 				float dzdx = (surfaceValue[i+1][j] - surfaceValue[i][j])/(dy);
 				float dzdy = (surfaceValue[i][j+1] - surfaceValue[i][j])/(dx);
 				fieldElements.add(new PVector(dzdx, dzdy));

@@ -11,7 +11,7 @@ public class PixelTest extends PApplet {
 	EdgeCurve E;
 	PVector centre = new PVector(width/2, height/2);
 	public void setup() {
-		size(500,500);
+		size(200,200);
 		background(255);
 //		noLoop();
 		E = new EdgeCurve();
