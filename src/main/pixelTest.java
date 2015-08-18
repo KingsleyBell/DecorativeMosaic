@@ -7,7 +7,7 @@ import processing.core.PImage;
 import processing.core.PVector;
 
 public class PixelTest extends PApplet {
-	VectorField F;
+	DirectionField F;
 	EdgeCurve E;
 	PVector centre = new PVector(width/2, height/2);
 	public void setup() {
@@ -71,7 +71,7 @@ public class PixelTest extends PApplet {
 		if(key == ENTER) {
 			drawEdgeCurve();
 			E.store();
-			F = new VectorField(width, height, 50, 50, "edgeCurveCoords.txt");
+			F = new DirectionField(width, height, 50, 50, "edgeCurveCoords.txt");
 			this.pushMatrix();
 //			rotateX(PI/6);
 			translate(width/2, height/2,0);

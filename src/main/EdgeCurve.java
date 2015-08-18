@@ -131,7 +131,9 @@ public class EdgeCurve {
 	public String toString() {
 		String returnString = "";
 		for (PVector twoDVector : points) {
-			returnString += twoDVector.toString() + "\n";
+			if(twoDVector != null) {
+				returnString += twoDVector.toString() + "\n";
+			}
 		}
 		
 		return returnString;

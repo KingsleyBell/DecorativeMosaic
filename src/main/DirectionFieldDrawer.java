@@ -4,7 +4,7 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 public class DirectionFieldDrawer extends PApplet {
-	VectorField F;
+	DirectionField F;
 	PVector centre = new PVector();
 	PApplet parent;
 	
@@ -14,7 +14,7 @@ public class DirectionFieldDrawer extends PApplet {
 	public DirectionFieldDrawer(PApplet p) {
 		this.parent = p;
 		centre.set(parent.width/2, parent.height/2, 0);
-		F = new VectorField (parent.width, parent.height, 100, 100, "edgeCurveCoords.txt");
+		F = new DirectionField (parent.width, parent.height, 100, 100, "edgeCurveCoords.txt");
 	}
 	
 	/*

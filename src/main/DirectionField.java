@@ -12,7 +12,7 @@ import processing.core.PVector;
  * Class that handles the calculation of the vector field given a set of points (x,y) 
  * on an edge line
  */
-public class VectorField {
+public class DirectionField {
 	ArrayList <PVector> fieldElements;
 	ArrayList <PVector> mesh;
 	HashMap<PVector, Float> surface;
@@ -28,7 +28,7 @@ public class VectorField {
 	int dx;
 	int dy;
 	
-	public VectorField(int imageWidth, int imageHeight, int numOfXPoints, int numOfYPoints, String fileLoc) {
+	public DirectionField(int imageWidth, int imageHeight, int numOfXPoints, int numOfYPoints, String fileLoc) {
 		this.imageWidth = imageWidth;
 		this.imageHeight = imageHeight;
 		this.numOfXPoints = numOfXPoints;
@@ -43,7 +43,7 @@ public class VectorField {
 		gradSurface();
 	}
 	
-	public VectorField(int imageWidth, int imageHeight, int numOfXPoints, int numOfYPoints, EdgeCurve E) {
+	public DirectionField(int imageWidth, int imageHeight, int numOfXPoints, int numOfYPoints, EdgeCurve E) {
 		this.imageWidth = imageWidth;
 		this.imageHeight = imageHeight;
 		this.numOfXPoints = numOfXPoints;
@@ -58,7 +58,19 @@ public class VectorField {
 		gradSurface();
 	}
 	
-	public VectorField(ArrayList<Point> centroids, EdgeCurve E) {
+	public DirectionField(int imageWidth, int imageHeight,EdgeCurve E) {
+		this.imageWidth = imageWidth;
+		this.imageHeight = imageHeight;
+		this.E = E;
+		this.surface = new HashMap<PVector, Float>();
+		this.directionField = new HashMap<PVector, PVector>();
+		defaultMesh();
+		createDirectionField();
+	}
+	
+	public DirectionField(int imageWidth, int imageHeight, ArrayList<Point> centroids, EdgeCurve E) {
+		this.imageWidth =imageWidth;
+		this.imageHeight = imageHeight;
 		this.E = E;
 		this.mesh = new ArrayList<>(centroids.size());
 		this.surface = new HashMap<PVector, Float>();
@@ -101,7 +113,7 @@ public class VectorField {
 	public float getSurfaceValue (PVector p) {
 		String [] details = E.getClosestPoint(p).split("-");
 		float zVal = Float.parseFloat(details[1]);
-		return zVal;
+		return -zVal;
 	}
 	
 	public void gradSurface() {
@@ -174,5 +186,17 @@ public class VectorField {
 
 	public void setImageHeight(int imageHeight) {
 		this.imageHeight = imageHeight;
+	}
+	
+	/*
+	 * Creates a default mesh with a pixel spacing of 5 pixels
+	 */
+	public void defaultMesh() {
+		for (int y = 0; y < imageHeight; y+= 5) {
+			for (int x = 0; x < imageWidth; x+= 5) {
+				PVector p = new PVector(x,  y);
+				surface.put(p, getSurfaceValue(p));
+			}
+		}
 	}
 }
