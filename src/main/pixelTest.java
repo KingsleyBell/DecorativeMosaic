@@ -6,7 +6,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
-public class PixelTest extends PApplet {
+public class pixelTest extends PApplet {
 	DirectionField F;
 	EdgeCurve E;
 	PVector centre = new PVector(width/2, height/2);

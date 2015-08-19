@@ -5,7 +5,7 @@ import java.io.File;
 import processing.core.PApplet;
 import processing.core.PVector;
 
-public class NewVectorFieldTest extends PApplet {
+public class newVectorFieldTest extends PApplet {
 	DirectionField F;
 	EdgeCurve E;
 	
