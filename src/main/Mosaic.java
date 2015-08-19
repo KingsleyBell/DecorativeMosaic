@@ -14,8 +14,9 @@ public class Mosaic extends PApplet {
 
 	private PImage img;
 	private VoronoiDiagram voronoi;
-	// private DirectionField d;
+	private DirectionField d;
 	ArrayList<PVector> directionField;
+	private EdgeCurve edgeCurve;
 	ArrayList<Float> degrees;
 	private Integer numTiles;
 	private Integer tileWidth;
@@ -37,7 +38,9 @@ public class Mosaic extends PApplet {
 
 		voronoi = new VoronoiDiagram(numTiles, 10, width, height);
 		ArrayList<Point> points = voronoi.getRandomPoints();
-		// d = new DirectionField();
+		newVectorFieldTest v = 
+		
+		d = new DirectionField(width, height, points, );
 		directionField = new ArrayList<PVector>();
 
 		for (int i = 0; i < iterations; i++) {
