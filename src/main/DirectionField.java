@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import processing.core.PVector;
 
-/*
+/**
  * Class that handles the calculation of the vector field given a set of points (x,y) 
  * on an edge line
  */
@@ -51,7 +51,7 @@ public class DirectionField {
 		createDirectionField();
 	}
 	
-	/*
+	/**
 	 * Method to map all centroids ci = (xi,yi) to a value, z(ci) = minimum Euclidian distance from edge curve
 	 * @args ArrayList<PVector> centroids => list of points representing the centroids of voronoi diagram
 	 */
@@ -61,7 +61,7 @@ public class DirectionField {
 		}
 	}
 	
-	/*
+	/**
 	 * Method to create the direction field: for every point (x,y) there is a vector associated to it
 	 * In this case, for each centroid, associate vector pi = grad(z(ci))
 	 */
@@ -71,7 +71,7 @@ public class DirectionField {
 		}
 	}
 	
-	/*
+	/**
 	 * Method that returns all the vectors in the direction field
 	 * @return ArrayList<PVector> fieldElements
 	 */
@@ -83,7 +83,7 @@ public class DirectionField {
 		return fieldElements;
 	}
 	
-	/*
+	/**
 	 * Method that calculates the minimum Euclidian distance from a point
 	 * @args PVector p => point at which distance will be calculated
 	 * @return float z = Ds(p); see Section 4 in research paper (on direction field)
@@ -95,8 +95,11 @@ public class DirectionField {
 		return -zVal;
 	}
 	
-	/*
-	 * Method 
+	/**
+	 * Method that calculates the gradient of the surface
+	 * @args PVector p => point at which gradient is calculated
+	 * @args float z => value of surface at point p
+	 * @return PVector grad(z)
 	 */
 	public PVector calcGradOfSurface(PVector p, float z) {
 		PVector pNX = new PVector(p.x + dx, p.y);
@@ -108,7 +111,7 @@ public class DirectionField {
 		
 		return new PVector(dzdx, dzdy);
 	}
-
+	
 	public int getImageWidth() {
 		return imageWidth;
 	}
@@ -125,8 +128,8 @@ public class DirectionField {
 		this.imageHeight = imageHeight;
 	}
 	
-	/*
-	 * Creates a default mesh with a pixel spacing of 5 pixels
+	/**
+	 * Creates a default mesh with a pixel spacing of dx and dy pixels
 	 */
 	public void defaultMesh() {
 		for (int y = 0; y < imageHeight; y+= dy) {
