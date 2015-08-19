@@ -1,8 +1,6 @@
 package main;
 
 import java.awt.Point;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,50 +11,13 @@ import processing.core.PVector;
  * on an edge line
  */
 public class DirectionField {
-	ArrayList <PVector> fieldElements;
-	ArrayList <PVector> mesh;
 	HashMap<PVector, Float> surface;
 	HashMap<PVector, PVector> directionField;
-//	HashMap<PVector, ArrayList<PVector>> nearbyPoints;
 	int imageWidth;
 	int imageHeight;
-	int numOfXPoints;
-	int numOfYPoints;
 	EdgeCurve E;
-	float [][] surfaceValue;
-	int numOfPoints;
 	int dx;
 	int dy;
-	
-	public DirectionField(int imageWidth, int imageHeight, int numOfXPoints, int numOfYPoints, String fileLoc) {
-		this.imageWidth = imageWidth;
-		this.imageHeight = imageHeight;
-		this.numOfXPoints = numOfXPoints;
-		this.numOfYPoints = numOfYPoints;
-		dx = imageWidth/numOfXPoints;
-		dy = imageHeight/numOfYPoints;
-		fieldElements = new ArrayList<>(numOfXPoints*numOfYPoints);
-		mesh = new ArrayList<>(numOfXPoints*numOfYPoints);
-		E = new EdgeCurve();
-		E.loadEdgeCurve(fileLoc);
-		createMesh();
-		gradSurface();
-	}
-	
-//	public DirectionField(int imageWidth, int imageHeight, int numOfXPoints, int numOfYPoints, EdgeCurve E) {
-//		this.imageWidth = imageWidth;
-//		this.imageHeight = imageHeight;
-//		this.numOfXPoints = numOfXPoints;
-//		this.numOfYPoints = numOfYPoints;
-//		dx = imageWidth/numOfXPoints;
-//		dy = imageHeight/numOfYPoints;
-//		fieldElements = new ArrayList<>(numOfXPoints*numOfYPoints);
-//		mesh = new ArrayList<>(numOfXPoints*numOfYPoints);
-//		E = new EdgeCurve();
-//		this.E = E;
-//		createMesh();
-//		gradSurface();
-//	}
 	
 	public DirectionField(int imageWidth, int imageHeight, int dx, int dy) {
 		this.dx = dx;
@@ -66,8 +27,6 @@ public class DirectionField {
 		this.E = new EdgeCurve();
 		this.surface = new HashMap<PVector, Float>();
 		this.directionField = new HashMap<PVector, PVector>();
-//		defaultMesh();
-//		createDirectionField();
 	}
 	
 	public DirectionField(int imageWidth, int imageHeight, int dx, int dy, EdgeCurve E) {
@@ -82,87 +41,63 @@ public class DirectionField {
 		createDirectionField();
 	}
 	
-	public DirectionField(int imageWidth, int imageHeight, ArrayList<Point> centroids, EdgeCurve E) {
+	public DirectionField(int imageWidth, int imageHeight, ArrayList<PVector> centroids, EdgeCurve E) {
 		this.imageWidth =imageWidth;
 		this.imageHeight = imageHeight;
 		this.E = E;
-		this.mesh = new ArrayList<>(centroids.size());
 		this.surface = new HashMap<PVector, Float>();
 		this.directionField = new HashMap<PVector, PVector>();
 		createSurface(centroids);
 		createDirectionField();
 	}
 	
-	public void createSurface (ArrayList<Point> centroids) {
-		for (Point point : centroids) {
-			PVector Pxy = new PVector(point.x, point.y);
-			surface.put(Pxy, getSurfaceValue(Pxy));
+	/*
+	 * Method to map all centroids ci = (xi,yi) to a value, z(ci) = minimum Euclidian distance from edge curve
+	 * @args ArrayList<PVector> centroids => list of points representing the centroids of voronoi diagram
+	 */
+	public void createSurface (ArrayList<PVector> centroids) {
+		for (PVector point : centroids) {
+			surface.put(point, getSurfaceValue(point));
 		}
 	}
 	
+	/*
+	 * Method to create the direction field: for every point (x,y) there is a vector associated to it
+	 * In this case, for each centroid, associate vector pi = grad(z(ci))
+	 */
 	public void createDirectionField() {
 		for (PVector pVector : surface.keySet()) {
 			directionField.put(pVector, calcGradOfSurface(pVector, surface.get(pVector)));
 		}
 	}
 	
-	public void createMesh() {
-		surfaceValue = new float[imageWidth/2][imageHeight/2];
-		numOfPoints = 0;
-		int yC = 0;
-		int xC = 0;
-		for (int y = 0; y < numOfYPoints; y += 2) {
-			for (int x = 0; x < numOfXPoints; y += 2) {
-				PVector Pxy = new PVector(x,y);
-//				System.out.println(xC + "," + yC);
-				surfaceValue[xC][yC] = getSurfaceValue(Pxy);
-				Pxy.set(x-imageWidth/2, y-imageHeight/2, surfaceValue[xC][yC]);
-				mesh.add(Pxy);
-				xC++;
-				numOfPoints++;
-			}
-			xC = 0;
-			yC ++;
+	/*
+	 * Method that returns all the vectors in the direction field
+	 * @return ArrayList<PVector> fieldElements
+	 */
+	public ArrayList<PVector> getDirectionField() {
+		ArrayList <PVector> fieldElements = new ArrayList<> (directionField.values().size());
+		for (PVector p : directionField.values()) {
+			fieldElements.add(p);
 		}
+		return fieldElements;
 	}
 	
+	/*
+	 * Method that calculates the minimum Euclidian distance from a point
+	 * @args PVector p => point at which distance will be calculated
+	 * @return float z = Ds(p); see Section 4 in research paper (on direction field)
+	 * Note: returns negative of distance so that further points are placed further down 'into' screen
+	 */
 	public float getSurfaceValue (PVector p) {
 		String [] details = E.getClosestPoint(p).split("-");
 		float zVal = Float.parseFloat(details[1]);
 		return -zVal;
 	}
 	
-	public void gradSurface() {
-//		for (int i = 1; i < surfaceValue.length; i++) {
-//			float zi = surfaceValue[i];
-//			float zNext = surfaceValue[i+1];
-//			float zPrev = surfaceValue[i-1];
-//			
-//			float dzdx = (zNext - zPrev)/(2*dx);
-//		}
-//		int count = 0;
-//		for (int j = 1; j < numOfYPoints; j++) {
-//			for (int i = 1; i < numOfXPoints; i++) {
-//				float dzdx = (surfaceValue[i+1][j] - surfaceValue[i-1][j])/(2*dx);
-//				float dzdy = (surfaceValue[i][j+1] - surfaceValue[i][j])/(2*dx);
-//				fieldElements.add(new PVector(dzdx, dzdy));
-//				count++;
-////				System.out.println(new PVector(dzdx,dzdy));
-//			}
-//		}
-		
-		for (int j = 0; j < numOfYPoints-1; j++) {
-			for (int i = 0; i < numOfXPoints-1; i++) {
-				float dzdx = (surfaceValue[i+1][j] - surfaceValue[i][j])/(dy);
-				float dzdy = (surfaceValue[i][j+1] - surfaceValue[i][j])/(dx);
-				fieldElements.add(new PVector(dzdx, dzdy));
-//				count++;
-//				System.out.println(new PVector(dzdx,dzdy));
-			}
-		}
-//		System.out.println(count);
-	}
-	
+	/*
+	 * Method 
+	 */
 	public PVector calcGradOfSurface(PVector p, float z) {
 		PVector pNX = new PVector(p.x + dx, p.y);
 		PVector pNY = new PVector(p.x, p.y + dy);
@@ -172,31 +107,6 @@ public class DirectionField {
 		float dzdy = (zNY - z)/dy;
 		
 		return new PVector(dzdx, dzdy);
-	}
-	
-	public void storeZVals () {
-		PrintWriter outputStream = null;
-		int count = 0;
-		try {
-			outputStream = new PrintWriter(new FileOutputStream("zVals.txt"));
-			for (PVector p : mesh) {
-				outputStream.println(p.x + "," + p.y + "," + surfaceValue[count]);
-				count ++;
-			}
-			outputStream.close();
-		} catch (Exception e) {
-			System.out.println("Error: " + e);
-		}
-	}
-	
-	public void getDistances() {
-		for (int i = 0; i < surfaceValue.length; i++) {
-			System.out.println(surfaceValue[i]);
-		}
-	}
-	
-	public PVector getVector(int index) {
-		return mesh.get(index);
 	}
 
 	public int getImageWidth() {
