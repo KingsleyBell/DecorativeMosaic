@@ -9,10 +9,10 @@ public class Driver
 
 public static void main(String[] args) 
 {
-	PApplet sketch = new processingDrawing2();
+	PApplet sketch = new NewVectorFieldTest();
 	sketch.init();
 	drawGUI frame = new drawGUI(sketch);
-	frame.setVisible(true);
+	//frame.setVisible(true);
 }
 
 }
