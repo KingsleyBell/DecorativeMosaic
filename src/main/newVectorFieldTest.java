@@ -1,12 +1,11 @@
 package main;
 
-import java.awt.Component;
 import java.io.File;
 
 import processing.core.PApplet;
 import processing.core.PVector;
 
-public class newVectorFieldTest extends PApplet {
+public class NewVectorFieldTest extends PApplet {
 	DirectionField F;
 	EdgeCurve E;
 	

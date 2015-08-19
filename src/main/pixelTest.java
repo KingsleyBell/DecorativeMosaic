@@ -69,31 +69,28 @@ public class PixelTest extends PApplet {
 	public void keyPressed() {
 //		loadPixels(); 
 		if(key == ENTER) {
-			drawEdgeCurve();
-			E.store();
-			F = new DirectionField(width, height, 50, 50, "edgeCurveCoords.txt");
-			this.pushMatrix();
-//			rotateX(PI/6);
-			translate(width/2, height/2,0);
-			int count = 0;
-			for (PVector P : F.fieldElements) {
-				strokeWeight(2);
-				P.setMag(10);
-				PVector r = getPositionVector(F.mesh.get(count));
-//				PVector r = getPositionVector(P);
-//				line(r.x, r.y, r.x + P.x, r.y + P.y);
-				count ++;
-				strokeWeight(5);
-				point(r.x, r.y);
-				
-			}
-			drawEdgeCurve();
-//			
-			this.popMatrix();
-			this.clear();
-			background(255);
-			DirectionFieldDrawer m  = new DirectionFieldDrawer(this);
-			m.display();
+//			drawEdgeCurve();
+//			E.store();
+//			this.pushMatrix();
+////			rotateX(PI/6);
+//			translate(width/2, height/2,0);
+//			int count = 0;
+//			for (PVector P : F.fieldElements) {
+//				strokeWeight(2);
+//				P.setMag(10);
+//				PVector r = getPositionVector(F.mesh.get(count));
+////				PVector r = getPositionVector(P);
+////				line(r.x, r.y, r.x + P.x, r.y + P.y);
+//				count ++;
+//				strokeWeight(5);
+//				point(r.x, r.y);
+//				
+//			}
+//			drawEdgeCurve();
+////			
+//			this.popMatrix();
+//			this.clear();
+//			background(255);
 		}
 		else if (key == ESC) {
 			File f = new File("edgeCurveCoords.txt");
