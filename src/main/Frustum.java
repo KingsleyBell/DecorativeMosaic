@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Point;
+import java.util.Vector;
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -14,6 +15,7 @@ public class Frustum {
 	private Integer topWidth;
 	private Integer h;
 	private Integer colour;
+	private Float orientation;
 
 	private Integer xSum;
 	private Integer ySum;
@@ -22,7 +24,7 @@ public class Frustum {
 
 	// Constructor
 	public Frustum(Integer x, Integer y, Integer baseWidth, Integer topWidth,
-			Integer h, Integer colour) {
+			Integer h, Integer colour, Vector<Integer> orientation) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -30,6 +32,7 @@ public class Frustum {
 		this.topWidth = topWidth;
 		this.h = h;
 		this.colour = colour;
+		this.orientation = calculateOrientation(orientation);
 		this.xSum = 0;
 		this.ySum = 0;
 		this.xNum = 0;
@@ -68,6 +71,15 @@ public class Frustum {
 		p.disableStyle();
 
 		return p;
+	}
+	
+	public Float getOrientation() {
+		return orientation;
+	}
+	
+	public Float calculateOrientation(Vector<Integer> vec) {
+		Float degree = (float) Math.atan2(vec.get(1), vec.get(2));
+		return degree;
 	}
 
 	public Integer getX() {
@@ -108,7 +120,7 @@ public class Frustum {
 	// that appear from this frustum
 	public Point getCentroid() {
 		if (xNum == 0 || yNum == 0) {
-			return null;
+			return new Point(-1,-1);
 		}
 		Integer x = xSum / xNum;
 		Integer y = ySum / yNum;
