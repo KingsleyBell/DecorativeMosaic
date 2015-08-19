@@ -45,6 +45,8 @@ public class DirectionField {
 		this.imageWidth =imageWidth;
 		this.imageHeight = imageHeight;
 		this.E = E;
+		this.dx = 2;
+		this.dy = 2;
 		this.surface = new HashMap<PVector, Float>();
 		this.directionField = new HashMap<PVector, PVector>();
 		createSurface(centroids);
@@ -56,8 +58,12 @@ public class DirectionField {
 	 * @args ArrayList<PVector> centroids => list of points representing the centroids of voronoi diagram
 	 */
 	public void createSurface (ArrayList<PVector> centroids) {
+		int index = 0;
 		for (PVector point : centroids) {
+//			System.out.println(index);
+			index++;
 			surface.put(point, getSurfaceValue(point));
+//			System.out.println(index + " : " + point);
 		}
 	}
 	
@@ -66,8 +72,10 @@ public class DirectionField {
 	 * In this case, for each centroid, associate vector pi = grad(z(ci))
 	 */
 	public void createDirectionField() {
-		for (PVector pVector : surface.keySet()) {
-			directionField.put(pVector, calcGradOfSurface(pVector, surface.get(pVector)));
+		for (PVector pVector : surface.keySet()) {	
+			PVector temp = calcGradOfSurface(pVector, surface.get(pVector));
+//			System.out.println(temp);
+			directionField.put(pVector, temp);
 		}
 	}
 	
@@ -76,11 +84,20 @@ public class DirectionField {
 	 * @return ArrayList<PVector> fieldElements
 	 */
 	public ArrayList<PVector> getDirectionField() {
-		ArrayList <PVector> fieldElements = new ArrayList<> (directionField.values().size());
+		ArrayList <PVector> fieldElements = new ArrayList<>();
 		for (PVector p : directionField.values()) {
 			fieldElements.add(p);
 		}
 		return fieldElements;
+	}
+	
+	public void updateDirectionField(ArrayList<PVector> centroids) {		
+		directionField.clear();
+		surface.clear();
+//		System.out.println("should be 0: " + directionField.size() + ", " + surface.size());
+		createSurface(centroids);			
+		createDirectionField();		
+		
 	}
 	
 	/*

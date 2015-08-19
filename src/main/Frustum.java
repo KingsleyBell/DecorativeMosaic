@@ -10,8 +10,8 @@ import processing.core.PVector;
 
 public class Frustum {
 
-	private Integer x;
-	private Integer y;
+	private Float x;
+	private Float y;
 	private Integer baseWidth;
 	private Integer topWidth;
 	private Integer h;
@@ -24,7 +24,7 @@ public class Frustum {
 	private Integer yNum;
 
 	// Constructor
-	public Frustum(Integer x, Integer y, Integer baseWidth, Integer topWidth,
+	public Frustum(Float x, Float y, Integer baseWidth, Integer topWidth,
 			Integer h, Integer colour, PVector orientation) {
 		super();
 		this.x = x;
@@ -33,7 +33,11 @@ public class Frustum {
 		this.topWidth = topWidth;
 		this.h = h;
 		this.colour = colour;
-		this.orientation = calculateOrientation(orientation);
+
+		if (orientation != null) {
+			this.orientation = calculateOrientation(orientation);
+		}
+
 		this.xSum = 0;
 		this.ySum = 0;
 		this.xNum = 0;
@@ -44,8 +48,8 @@ public class Frustum {
 	public PShape makeFrustum(PShape p) {
 
 		p.beginShape();
-		p.fill(colour);
-
+		p.noStroke();		
+		
 		p.vertex(-(baseWidth / 2), -(baseWidth / 2), 0);
 		p.vertex(+(baseWidth / 2), -(baseWidth / 2), 0);
 		p.vertex(+(baseWidth / 2), +(baseWidth / 2), 0);
@@ -73,29 +77,34 @@ public class Frustum {
 
 		return p;
 	}
-	
+
 	public Float getOrientation() {
 		return orientation;
 	}
-	
+
+	public void setOrientation(PVector direction) {
+		this.orientation = calculateOrientation(direction);
+//		System.out.println("set: " + orientation);
+	}
+
 	public Float calculateOrientation(PVector point) {
 		Float degree = (float) Math.atan2(point.x, point.y);
 		return degree;
 	}
 
-	public Integer getX() {
+	public Float getX() {
 		return x;
 	}
 
-	public void setX(Integer x) {
+	public void setX(Float x) {
 		this.x = x;
 	}
 
-	public Integer getY() {
+	public Float getY() {
 		return y;
 	}
 
-	public void setY(Integer y) {
+	public void setY(Float y) {
 		this.y = y;
 	}
 
@@ -119,14 +128,14 @@ public class Frustum {
 
 	// Calculate new centroid of frustum based by averaging all x and y values
 	// that appear from this frustum
-	public Point getCentroid() {
+	public PVector getCentroid() {
 		if (xNum == 0 || yNum == 0) {
-			return new Point(-1,-1);
+			return new PVector(-1, -1);
 		}
 		Integer x = xSum / xNum;
 		Integer y = ySum / yNum;
 
-		return new Point(x, y);
+		return new PVector(x, y);
 	}
 
 	public Integer getXSum() {
@@ -135,6 +144,10 @@ public class Frustum {
 
 	public Integer getYSum() {
 		return ySum;
+	}
+	
+	public String toString() {
+		return "x: " + x + ", y: " + y + ", colour: " + colour;
 	}
 
 }
