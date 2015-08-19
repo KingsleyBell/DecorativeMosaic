@@ -8,13 +8,14 @@ import java.util.Vector;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PShape;
+import processing.core.PVector;
 
 public class Mosaic extends PApplet {
 
 	private PImage img;
 	private VoronoiDiagram voronoi;
 	// private DirectionField d;
-	ArrayList<Vector<Integer>> directionField;
+	ArrayList<PVector> directionField;
 	ArrayList<Float> degrees;
 	private Integer numTiles;
 	private Integer tileWidth;
@@ -37,7 +38,7 @@ public class Mosaic extends PApplet {
 		voronoi = new VoronoiDiagram(numTiles, 10, width, height);
 		ArrayList<Point> points = voronoi.getRandomPoints();
 		// d = new DirectionField();
-		directionField = new ArrayList<Vector<Integer>>();
+		directionField = new ArrayList<PVector>();
 
 		for (int i = 0; i < iterations; i++) {
 			frustums = voronoi.placeFrustums(this, points, directionField);

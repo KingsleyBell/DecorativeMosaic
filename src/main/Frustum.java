@@ -6,6 +6,7 @@ import java.util.Vector;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PShape;
+import processing.core.PVector;
 
 public class Frustum {
 
@@ -24,7 +25,7 @@ public class Frustum {
 
 	// Constructor
 	public Frustum(Integer x, Integer y, Integer baseWidth, Integer topWidth,
-			Integer h, Integer colour, Vector<Integer> orientation) {
+			Integer h, Integer colour, PVector orientation) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -77,8 +78,8 @@ public class Frustum {
 		return orientation;
 	}
 	
-	public Float calculateOrientation(Vector<Integer> vec) {
-		Float degree = (float) Math.atan2(vec.get(1), vec.get(2));
+	public Float calculateOrientation(PVector point) {
+		Float degree = (float) Math.atan2(point.x, point.y);
 		return degree;
 	}
 

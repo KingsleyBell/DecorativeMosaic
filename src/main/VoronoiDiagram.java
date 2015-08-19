@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import processing.core.PApplet;
 import processing.core.PShape;
+import processing.core.PVector;
 
 // Class to perform voronoi algorithm on array of frustums given direction field
 public class VoronoiDiagram {
@@ -53,7 +54,7 @@ public class VoronoiDiagram {
 	}
 
 	public Frustum[] placeFrustums(PApplet p, ArrayList<Point> points,
-			ArrayList<Vector<Integer>> directionField) {
+			ArrayList<PVector> directionField) {
 		// Put frustums on those points
 		Integer x;
 		Integer y;
