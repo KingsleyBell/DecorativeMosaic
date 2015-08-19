@@ -12,7 +12,7 @@ public class GUIProcessingTest extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         JPanel pSketch = new JPanel();  //Create a region to host Processing sketch
-        pSketch.setBounds(10, 10, 600, 600); //set location of panel
+        pSketch.setBounds(10, 10, 300, 300); //set location of panel
         PApplet sketch = new newVectorFieldTest();  //Create a Processing sketch to be placed in panel
         pSketch.add(sketch);  //Add sketch to panel
         sketch.init();  //start the sketch
