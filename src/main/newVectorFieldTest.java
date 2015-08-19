@@ -8,12 +8,14 @@ import processing.core.PVector;
 public class newVectorFieldTest extends PApplet {
 	DirectionField F;
 	EdgeCurve E;
+	boolean isErase;
 	
 	public void setup() {
 		size(500,500,P3D);
 		background(255);
 		E = new EdgeCurve();
 //		F = new DirectionField(width, height, 10, 10);
+		isErase = false;
 	}
 	
 	public void draw() {
@@ -49,23 +51,34 @@ public class newVectorFieldTest extends PApplet {
 	}
 	
 	public void mouseDragged() {
-		strokeWeight(3);
-		line(mouseX, mouseY, pmouseX, pmouseY);
-		PVector currPos = new PVector(mouseX, mouseY);
-//		if(E.getSize() == 0) {
-//			E.addPoint(new PVector(mouseX, mouseY));
-//		}
-		if(!E.containsPoint(currPos)) {
-			E.addPoint(new PVector(mouseX, mouseY));
-			
-			this.clear();
+		
+		if(isErase) {
 			background(255);
-//			DirectionFieldDrawer m  = new DirectionFieldDrawer(this);
-//			m.display();
-			testDirectionField();
-//			testSurface();
+			pushMatrix();
+			  translate(mouseX, mouseY);
+			  ellipse(0, 0, 20, 20);
+			  popMatrix();
 		}
-		strokeWeight(0);
+		
+		else {
+			strokeWeight(3);
+			line(mouseX, mouseY, pmouseX, pmouseY);
+			PVector currPos = new PVector(mouseX, mouseY);
+	//		if(E.getSize() == 0) {
+	//			E.addPoint(new PVector(mouseX, mouseY));
+	//		}
+			if(!E.containsPoint(currPos)) {
+				E.addPoint(new PVector(mouseX, mouseY));
+				
+				this.clear();
+				background(255);
+	//			DirectionFieldDrawer m  = new DirectionFieldDrawer(this);
+	//			m.display();
+				testDirectionField();
+	//			testSurface();
+			}
+			strokeWeight(0);
+		}
 	}
 	
 	public void keyPressed() {
@@ -76,6 +89,9 @@ public class newVectorFieldTest extends PApplet {
 //			DirectionFieldDrawer m  = new DirectionFieldDrawer(this);
 //			m.display();
 			testDirectionField();
+		}
+		else if(key == TAB) {
+			isErase = !isErase;
 		}
 		else if (key == ESC) {
 			File f = new File("edgeCurveCoords.txt");

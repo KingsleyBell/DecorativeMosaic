@@ -11,7 +11,7 @@ import processing.core.PVector;
 public class EdgeCurve {
 	ArrayList <PVector> points;  //A list of points that lie on the curve
 	
-	/*
+	/**
 	 * Generic constructor that initiates an empty list
 	 * How to use: call constructor and then add points to list whenever needed
 	 */
@@ -19,7 +19,7 @@ public class EdgeCurve {
 		points = new ArrayList <>();
 	}
 	
-	/*
+	/**
 	 * Method to find and return the closest point on this edge curve from a given point (centroid/mouse click)
 	 * @args: PVector p => location of centroid/mouse click
 	 * @return: String => (pos of closest point in list)-(distance from closest point)
@@ -40,7 +40,7 @@ public class EdgeCurve {
 		return posOfClosestPoint + "-" + distance;
 	}
 	
-	/*
+	/**
 	 * Method to add a point to the list
 	 * @args: PVector p => location of point to be added
 	 */
@@ -48,7 +48,7 @@ public class EdgeCurve {
 		points.add(p);
 	}
 	
-	/*
+	/**
 	 * Method to return the size of the list of points on the edge curve
 	 * @return int size => size of list / number of points making up curve
 	 */
@@ -56,7 +56,7 @@ public class EdgeCurve {
 		return points.size();
 	}
 	
-	/*
+	/**
 	 * Method to return the vector at the given index in list
 	 * @args: int index => position in list wanted
 	 * @return: PVector v => vector at the index's position in list
@@ -65,7 +65,7 @@ public class EdgeCurve {
 		return points.get(index);
 	}
 	
-	/*
+	/**
 	 * Method to store all the points in the list in a textfile
 	 * TODO: find naming convention for textfile location
 	 */
@@ -83,7 +83,7 @@ public class EdgeCurve {
 		}
 	}
 	
-	/*
+	/**
 	 * Method to tell if a given point is on the edge curve i.e. in the list of points
 	 * @args: PVector p => point to check
 	 * @return: boolean b => true if p is on curve
@@ -93,7 +93,7 @@ public class EdgeCurve {
 		return points.contains(p);
 	}
 	
-	/*
+	/**
 	 * Method to load a set of previously stored points from the given textfile
 	 * @args: String fileLoc => location of textfile
 	 */
@@ -125,7 +125,9 @@ public class EdgeCurve {
 		}
 	}
 	
-	/*
+	
+	
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
