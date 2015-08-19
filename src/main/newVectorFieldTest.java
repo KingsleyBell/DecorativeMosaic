@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Component;
 import java.io.File;
 
 import processing.core.PApplet;
@@ -7,11 +8,13 @@ import processing.core.PVector;
 
 public class newVectorFieldTest extends PApplet {
 	DirectionField F;
+	EdgeCurve E;
 	
 	public void setup() {
 		size(500,500,P3D);
 		background(255);
-		F = new DirectionField(width, height, 10, 10);
+		E = new EdgeCurve();
+//		F = new DirectionField(width, height, 10, 10);
 	}
 	
 	public void draw() {
@@ -19,13 +22,14 @@ public class newVectorFieldTest extends PApplet {
 	}
 	
 	public void testSurface () {
+		F = new DirectionField(width, height, 10, 10, E);
 		strokeWeight(3);
 		// Change height of the camera with mouseY
 //		  camera((float)width/2, (float)height/2, (float)220.0, // eyeX, eyeY, eyeZ
 //				  (float)width/2, (float)height/2, (float)5.0, // centerX, centerY, centerZ
 //				  (float)0.0, (float)1.0, (float)0.0); // upX, upY, upZ
 //		this.pushMatrix();
-//		rotateX(PI/8);
+		rotateX(PI/8);
 		for (PVector p : F.surface.keySet()) {
 			point(p.x, p.y, F.surface.get(p));
 		}
@@ -34,6 +38,7 @@ public class newVectorFieldTest extends PApplet {
 	}
 	
 	public void testDirectionField() {
+		F = new DirectionField(width, height, 10, 10, E);
 		strokeWeight(2);
 		ortho();
 		for (PVector p : F.directionField.keySet()) {
@@ -48,17 +53,18 @@ public class newVectorFieldTest extends PApplet {
 		strokeWeight(3);
 		line(mouseX, mouseY, pmouseX, pmouseY);
 		PVector currPos = new PVector(mouseX, mouseY);
-		if(F.E.getSize() == 0) {
-			F.E.addPoint(new PVector(mouseX, mouseY));
-		}
-		else if(!F.E.containsPoint(currPos)) {
-			F.E.addPoint(new PVector(mouseX, mouseY));
+//		if(E.getSize() == 0) {
+//			E.addPoint(new PVector(mouseX, mouseY));
+//		}
+		if(!E.containsPoint(currPos)) {
+			E.addPoint(new PVector(mouseX, mouseY));
 			
 			this.clear();
 			background(255);
 //			DirectionFieldDrawer m  = new DirectionFieldDrawer(this);
 //			m.display();
 			testDirectionField();
+//			testSurface();
 		}
 		strokeWeight(0);
 	}
