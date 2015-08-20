@@ -88,7 +88,7 @@ public class Frustum {
 	}
 
 	public Float calculateOrientation(PVector point) {
-		Float degree = (float) Math.atan2(point.x, point.y);
+		Float degree = -(float) Math.atan2(point.x, point.y);
 		return degree;
 	}
 

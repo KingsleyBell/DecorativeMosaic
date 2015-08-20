@@ -51,15 +51,12 @@ public class VoronoiDiagram {
 				int x = random.nextInt(width);
 				int y = random.nextInt(height);
 				
-				newPoint = new PVector(x, y);
-//				System.out.println(newPoint);
+				newPoint = new PVector(x, y);				
 
-				pVectorPoints.add(newPoint);
-				// System.out.println(x + " , " + y);
+				pVectorPoints.add(newPoint);				
 
 			}
-			points = pVectorPoints;
-			// System.out.println(i);
+			points = pVectorPoints;			
 		}
 		return pVectorPoints;
 	}
@@ -76,41 +73,39 @@ public class VoronoiDiagram {
 	}
 
 	public Frustum[] placeFrustums(ArrayList<PVector> points,
-			ArrayList<PVector> directionField) {		
+			ArrayList<PVector> directionField) {	
+		if(points.size()!=directionField.size()) {			
+			System.out.println("Points size: " + points.size() + ". DirectionField size: " + directionField.size());			
+		}
 		// Put frustums on those points
 		Float x;
-		Float y;
-		double degree;
-		Frustum tempFrust;
+		Float y;		
 
 		for (int i = 0; i < points.size(); i++) {
 			x = points.get(i).x;
 			y = points.get(i).y;
-
-			// System.out.println(x);
+			
 			frustums[i].setX(x);
 			frustums[i].setY(y);
-			frustums[i].setOrientation(directionField.get(i));
-			// System.out.println("mm:" + directionField.get(i));
+			frustums[i].setOrientation(directionField.get(i));			
 
 		}
-		// System.out.println(">>>" + frustums[0].getOrientation());
 		return frustums;
 	}
 
 	public ArrayList<PVector> calculateCentroids(PApplet p) {
-
+		int l = 0;
 		p.loadPixels();
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				Integer c = p.pixels[i + width * j];
-				// System.out.println(c);
 				Integer index = findFrustumByColour(c);
 				if (index != null) {
 					frustums[index].addToX(i);
 					frustums[index].addToY(j);
 				} else {
-					// System.out.println("FRUSTUM NOT FOUND");
+					l++;					
+//					System.out.println(l + ": FRUSTUM NOT FOUND for colour: " + c);
 				}
 
 			}
@@ -133,7 +128,6 @@ public class VoronoiDiagram {
 	private Integer findFrustumByColour(Integer c) {
 
 		for (int i = 0; i < frustums.length; i++) {
-			// System.out.println(c + " ... " + frustums[i].getColour());
 			if (Math.abs(frustums[i].getColour()) == Math.abs(c)) {
 				return i;
 			}
