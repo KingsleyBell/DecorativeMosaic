@@ -21,8 +21,8 @@ public class Frustum {
 	private Integer xSum;
 	private Integer ySum;
 	private Integer xNum;
-	private Integer yNum;
-
+	private Integer yNum;	
+	
 	// Constructor
 	public Frustum(Float x, Float y, Integer baseWidth, Integer topWidth,
 			Integer h, Integer colour, PVector orientation) {

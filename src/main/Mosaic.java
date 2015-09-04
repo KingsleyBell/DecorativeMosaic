@@ -23,7 +23,7 @@ public class Mosaic extends PApplet {
 	private Integer numTiles;
 	private Integer tileWidth;
 	private Integer iterations;
-	private Frustum[] frustums;
+	private ArrayList<Frustum> frustums;
 
 	/**
 	 * Main method generates frustums and then runs voronoi algorithm on them
@@ -31,19 +31,21 @@ public class Mosaic extends PApplet {
 	public void setup() {
 
 //		background(255);
-		numTiles = 10; // total number of tiles will be numTiles squared
-		iterations = 20; // total number of voronoi iterations
+		frameRate(200);
+		
+		numTiles = 30; // total number of tiles will be numTiles squared
+		iterations = 10; // total number of voronoi iterations
 		img = loadImage("img/example.jpg");
 		size(640, 640, P3D);
 		tileWidth = width / (2 * numTiles);
 		img.resize(width, height);
 		ortho(0, width, 0, height);
 
-		voronoi = new VoronoiDiagram(numTiles, 10, width, height);
+		voronoi = new VoronoiDiagram(numTiles, iterations, width, height);
 		degrees = new ArrayList<Float>();
 		points = voronoi.getRandomPoints();
 		voronoi.getRandomColours();
-
+		
 		background(img);
 		edgeCurve = new EdgeCurve();
 		// Draw edge curve				
@@ -51,32 +53,30 @@ public class Mosaic extends PApplet {
 	}
 
 	public void draw() {
+//		frame.setTitle((int)(frameRate) + " fps");
 		// empty
 	}
 
 	public void iterate() {
 
-		clear();					
-		d = new DirectionField(width, height, points, edgeCurve);		
-		directionField = d.getDirectionField();			
-
-		for (int i = 0; i < iterations; i++) {
+		clear();										
+		d = new DirectionField(width, height, edgeCurve);		
+		directionField = d.getDirectionField();
+		
+		for (int i = 0; i < iterations; i++) {			
 			clear();		
-			frustums = voronoi.placeFrustums(points, directionField);					
+			frustums = voronoi.placeFrustums(points, directionField);
+			ForkJoinDrawer drawer = new ForkJoinDrawer(frustums,this);
+			System.out.println(frustums.size());					
 			
-			for (Frustum f : frustums) {				
-				PShape s = createShape();
-				s = f.makeFrustum(s);
-				fill(f.getColour());
-				tint(255, 255);				
-				s.rotate(f.getOrientation());				
-				shape(s, f.getX(), f.getY());				
-										
-			}			
+			drawer.compute();
+			while(!drawer.isDone()){
+				saveFrame("tst" + File.separator + "it" + (int)(Math.random()*1000) + ".jpeg");
+			}
+			this.setMatrix(drawer.getPApplet());
+			System.out.println("saving frame");
 			saveFrame("its" + File.separator + "it" + i + ".jpeg");
-			points = voronoi.calculateCentroids(this);
-			d.updateDirectionField(points);
-			directionField = d.getDirectionField();			
+			points = voronoi.calculateCentroids(this);						
 		}		
 
 		for(PVector p: edgeCurve.points) {
@@ -87,8 +87,8 @@ public class Mosaic extends PApplet {
 		
 		clear();
 
-		 for (int i = 0; i < frustums.length; i++) {
-		 degrees.add(frustums[i].getOrientation());
+		 for (int i = 0; i < frustums.size(); i++) {
+		 degrees.add(frustums.get(i).getOrientation());
 		 }
 				 
 		 placeTiles(points, img);
@@ -111,14 +111,9 @@ public class Mosaic extends PApplet {
 
 	public void keyPressed() {
 		if (key == ENTER) {
-			iterate();
-			pls();
+			iterate();			
 		}
-	}
-	
-	public void pls() {
-		this.line(10,10,200,200);
-	}
+	}	
 
 	public void placeTiles(ArrayList<PVector> points, PImage img) {
 
@@ -135,7 +130,7 @@ public class Mosaic extends PApplet {
 			y = (int)points.get(i).y;
 //			System.out.println(i + ": " + x + ", " + y);
 			orientation = degrees.get(i);
-			colour = frustums[i].getColour();
+			colour = frustums.get(i).getColour();
 			PShape tile = createShape();
 			Integer a = tileWidth/2;
 			tile.beginShape();			

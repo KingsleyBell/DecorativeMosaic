@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
 
@@ -18,7 +19,8 @@ public class VoronoiDiagram {
 	private int height;
 	private int numTiles;
 	private ArrayList<PVector> points;
-	private Frustum[] frustums; // Need this?
+	private ArrayList<Frustum> frustums;
+	private HashMap<Integer,Integer> frustumColours;
 	private Random random;
 	private Vector<Float>[] gradientMap;
 
@@ -29,10 +31,11 @@ public class VoronoiDiagram {
 		this.numTiles = numTiles;
 		this.gradientMap = gradientMap;
 		this.points = new ArrayList<PVector>();
-		this.frustums = new Frustum[numTiles * numTiles];
-		for (int i = 0; i < frustums.length; i++) {
-			frustums[i] = new Frustum(0F, 0F, width, 0, 5, 0, null);
+		this.frustums = new ArrayList<Frustum>();
+		for (int i = 0; i < numTiles*numTiles; i++) {
+			frustums.add(new Frustum(0F, 0F, width, 0, 5, 0, null));
 		}
+		this.frustumColours = new HashMap<Integer,Integer>();
 		this.random = new Random();
 	}
 
@@ -42,11 +45,6 @@ public class VoronoiDiagram {
 		PVector newPoint;
 		for (int i = 0; i < numTiles; i++) {
 			for (int j = 0; j < numTiles; j++) {
-
-//				int x = (int) ((width / numTiles) * (i + 0.5 + 0.25 * (Math
-//						.random() * 2 - 1)));
-//				int y = (int) ((width / numTiles) * (j + 0.5 + 0.25 * (Math
-//						.random() * 2 - 1)));
 				
 				int x = random.nextInt(width);
 				int y = random.nextInt(height);
@@ -61,22 +59,24 @@ public class VoronoiDiagram {
 		return pVectorPoints;
 	}
 
-	public Frustum[] getRandomColours() {
-		for (int i = 0; i < frustums.length; i++) {
+	public ArrayList<Frustum> getRandomColours() {
+		for (int i = 0; i < numTiles*numTiles; i++) {
 			PApplet p = new PApplet();
 			Integer r = random.nextInt(255);
 			Integer g = random.nextInt(255);
 			Integer b = random.nextInt(255);
-			frustums[i].setColour(p.color(r, g, b));
+			Integer colour = p.color(r, g, b);
+			frustums.get(i).setColour(colour);
+			frustumColours.put(colour,i);
 		}
 		return frustums;
 	}
 
-	public Frustum[] placeFrustums(ArrayList<PVector> points,
+	public ArrayList<Frustum> placeFrustums(ArrayList<PVector> points,
 			ArrayList<PVector> directionField) {	
-		if(points.size()!=directionField.size()) {			
-			System.out.println("Points size: " + points.size() + ". DirectionField size: " + directionField.size());			
-		}
+//		if(points.size()!=directionField.size()) {			
+//			System.out.println("Points size: " + points.size() + ". DirectionField size: " + directionField.size());			
+//		}
 		// Put frustums on those points
 		Float x;
 		Float y;		
@@ -85,11 +85,11 @@ public class VoronoiDiagram {
 			x = points.get(i).x;
 			y = points.get(i).y;
 			
-			frustums[i].setX(x);
-			frustums[i].setY(y);
-			frustums[i].setOrientation(directionField.get(i));			
+			frustums.get(i).setX(x);
+			frustums.get(i).setY(y);
+			frustums.get(i).setOrientation(directionField.get(i));			
 
-		}
+		}		
 		return frustums;
 	}
 
@@ -98,21 +98,21 @@ public class VoronoiDiagram {
 		p.loadPixels();
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				Integer c = p.pixels[i + width * j];
+				Integer c = p.pixels[i + (width * j)];
 				Integer index = findFrustumByColour(c);
 				if (index != null) {
-					frustums[index].addToX(i);
-					frustums[index].addToY(j);
+					frustums.get(index).addToX(i);
+					frustums.get(index).addToY(j);
 				} else {
 					l++;					
-//					System.out.println(l + ": FRUSTUM NOT FOUND for colour: " + c);
+//					System.out.println(l + ": FRUSTUM NOT FOUND for point: (" + i + "," + j + ")");
 				}
 
 			}
 
 		}
-		for (int i = 0; i < frustums.length; i++) {
-			PVector centroid = frustums[i].getCentroid();
+		for (int i = 0; i < frustums.size(); i++) {
+			PVector centroid = frustums.get(i).getCentroid();
 			points.set(i, centroid);
 		}
 
@@ -127,12 +127,8 @@ public class VoronoiDiagram {
 	 */
 	private Integer findFrustumByColour(Integer c) {
 
-		for (int i = 0; i < frustums.length; i++) {
-			if (Math.abs(frustums[i].getColour()) == Math.abs(c)) {
-				return i;
-			}
-		}
-		return null;
+		return frustumColours.get(c);
+		
 	}
 
 	public ArrayList<PVector> getPoints() {

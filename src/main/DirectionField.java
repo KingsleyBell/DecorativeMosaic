@@ -53,13 +53,34 @@ public class DirectionField {
 		createDirectionField();		
 	}
 	
+	public DirectionField(int imageWidth, int imageHeight, EdgeCurve E) {
+		this.imageWidth =imageWidth;
+		this.imageHeight = imageHeight;
+		this.E = E;
+		this.dx = 2;
+		this.dy = 2;
+		this.surface = new HashMap<PVector, Float>();
+		this.directionField = new HashMap<PVector, PVector>();
+		createSurface();
+		createDirectionField();	
+	}
+	
 	/*
 	 * Method to map all centroids ci = (xi,yi) to a value, z(ci) = minimum Euclidian distance from edge curve
 	 * @args ArrayList<PVector> centroids => list of points representing the centroids of voronoi diagram
 	 */
-	public void createSurface (ArrayList<PVector> centroids) {		
+	public void createSurface (ArrayList<PVector> centroids) {
 		for (PVector point : centroids) {						
 			surface.put(point, getSurfaceValue(point));
+		}
+	}
+	
+	public void createSurface() {
+		for(int x = 0; x < imageWidth; x++) {
+			for(int y = 0; y < imageHeight; y++) {
+				PVector point = new PVector(x,y);
+				surface.put(point, getSurfaceValue(point));
+			}		
 		}
 	}
 	
