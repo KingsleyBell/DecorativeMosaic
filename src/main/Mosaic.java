@@ -24,6 +24,8 @@ public class Mosaic extends PApplet {
 	private Integer tileWidth;
 	private Integer iterations;
 	private ArrayList<Frustum> frustums;
+	private Integer beginIndex;
+	private Integer endIndex;
 
 	/**
 	 * Main method generates frustums and then runs voronoi algorithm on them
@@ -66,14 +68,24 @@ public class Mosaic extends PApplet {
 		for (int i = 0; i < iterations; i++) {			
 			clear();		
 			frustums = voronoi.placeFrustums(points, directionField);
-			ForkJoinDrawer drawer = new ForkJoinDrawer(frustums,this);
-			System.out.println(frustums.size());					
-			
-			drawer.compute();
-			while(!drawer.isDone()){
-				saveFrame("tst" + File.separator + "it" + (int)(Math.random()*1000) + ".jpeg");
+//			beginIndex = 0;
+//			endIndex = frustums.size();
+//			ForkJoinDrawer drawer = new ForkJoinDrawer(frustums,this);
+//			System.out.println(frustums.size());					
+//			
+//			drawer.compute();
+//			while(!drawer.isDone()){
+//				saveFrame("tst" + File.separator + "it" + (int)(Math.random()*1000) + ".jpeg");
+//			}
+//			this.setMatrix(drawer.getPApplet());
+			for(Frustum f: frustums) {
+				PShape s = createShape();					
+				s = f.makeFrustum(s);
+				fill(f.getColour());							
+				s.rotate(f.getOrientation());												
+//				System.out.println("frustum");
+				shape(s, f.getX(), f.getY());
 			}
-			this.setMatrix(drawer.getPApplet());
 			System.out.println("saving frame");
 			saveFrame("its" + File.separator + "it" + i + ".jpeg");
 			points = voronoi.calculateCentroids(this);						
