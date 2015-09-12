@@ -1,14 +1,11 @@
 package main;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
 
 import processing.core.PApplet;
-import processing.core.PImage;
-import processing.core.PShape;
 import processing.core.PVector;
 
 // Class to perform voronoi algorithm on array of frustums given direction field
