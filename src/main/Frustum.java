@@ -1,10 +1,6 @@
 package main;
 
-import java.awt.Point;
-import java.util.Vector;
-
 import processing.core.PApplet;
-import processing.core.PImage;
 import processing.core.PShape;
 import processing.core.PVector;
 
@@ -21,7 +17,11 @@ public class Frustum {
 	private Integer xSum;
 	private Integer ySum;
 	private Integer xNum;
-	private Integer yNum;	
+	private Integer yNum;
+	
+	private PShape p;
+	
+//	private PShape
 	
 	// Constructor
 	public Frustum(Float x, Float y, Integer baseWidth, Integer topWidth,
@@ -45,8 +45,8 @@ public class Frustum {
 	}
 
 	// Return PShape representing this frustum
-	public PShape makeFrustum(PShape p) {
-
+	public PShape makeFrustum(PApplet parent) {
+		p = parent.createShape();
 		p.beginShape();
 		p.noStroke();		
 		
@@ -72,7 +72,7 @@ public class Frustum {
 
 		p.vertex(-topWidth / 2, -topWidth / 2, h);
 
-		p.endShape();
+		p.endShape(parent.CLOSE);
 		p.disableStyle();
 
 		return p;
