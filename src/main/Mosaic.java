@@ -1,10 +1,7 @@
 package main;
 
-import java.awt.Color;
-import java.awt.Point;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Vector;
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -37,10 +34,10 @@ public class Mosaic extends PApplet {
 		
 		numTiles = 30; // total number of tiles will be numTiles squared
 		iterations = 10; // total number of voronoi iterations
-		img = loadImage("img/example.jpg");
+//		img = loadImage("img/example.jpg");
 		size(640, 640, P3D);
 		tileWidth = width / (2 * numTiles);
-		img.resize(width, height);
+//		img.resize(width, height);
 		ortho(0, width, 0, height);
 
 		voronoi = new VoronoiDiagram(numTiles, iterations, width, height);
@@ -48,7 +45,7 @@ public class Mosaic extends PApplet {
 		points = voronoi.getRandomPoints();
 		voronoi.getRandomColours();
 		
-		background(img);
+//		background(img);
 		edgeCurve = new EdgeCurve();
 		// Draw edge curve				
 		
@@ -78,13 +75,26 @@ public class Mosaic extends PApplet {
 //				saveFrame("tst" + File.separator + "it" + (int)(Math.random()*1000) + ".jpeg");
 //			}
 //			this.setMatrix(drawer.getPApplet());
+			PShape frustumGrid = createShape(GROUP);
+			PVector [] positions = new PVector[frustums.size()];
+			int count = 0;
 			for(Frustum f: frustums) {
-				PShape s = createShape();					
-				s = f.makeFrustum(s);
+//				PShape s = createShape();
+//				s.endShape(CLOSE);
+				PShape s = f.makeFrustum(this);
+//				s.endShape(CLOSE);
 				fill(f.getColour());							
-				s.rotate(f.getOrientation());												
+				s.rotate(f.getOrientation());
+				frustumGrid.addChild(s);
+				positions[count] = new PVector(f.getX(), f.getY());
+				System.out.println(f.getX()+","+ f.getY());
+				count++;
 //				System.out.println("frustum");
-				shape(s, f.getX(), f.getY());
+//				 shape(s, f.getX(), f.getY());
+			}
+			for (int j = 0; j < positions.length; j++) {
+//				System.out.println(positions[j]);
+//				shape(frustumGrid.getChild(j), positions[j].x, positions[j].y);
 			}
 			System.out.println("saving frame");
 			saveFrame("its" + File.separator + "it" + i + ".jpeg");
@@ -129,7 +139,7 @@ public class Mosaic extends PApplet {
 
 	public void placeTiles(ArrayList<PVector> points, PImage img) {
 
-		background(img);
+//		background(img);
 		noStroke();
 		
 		Integer x;
