@@ -49,7 +49,7 @@ public class Frustum {
 		p = parent.createShape();
 		p.beginShape();
 		p.noStroke();		
-		
+//		p.fill(getColour());
 		p.vertex(-(baseWidth / 2), -(baseWidth / 2), 0);
 		p.vertex(+(baseWidth / 2), -(baseWidth / 2), 0);
 		p.vertex(+(baseWidth / 2), +(baseWidth / 2), 0);
@@ -71,11 +71,9 @@ public class Frustum {
 		p.vertex(-topWidth / 2, +topWidth / 2, h);
 
 		p.vertex(-topWidth / 2, -topWidth / 2, h);
-		
-		p.fill(getColour());							
+									
 		p.rotate(getOrientation());
-		
-		p.endShape(parent.CLOSE);
+		p.endShape();
 		p.disableStyle();
 
 		return p;

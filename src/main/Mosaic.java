@@ -32,8 +32,8 @@ public class Mosaic extends PApplet {
 //		background(255);
 		frameRate(200);
 		
-		numTiles = 30; // total number of tiles will be numTiles squared
-		iterations = 10; // total number of voronoi iterations
+		numTiles = 100; // total number of tiles will be numTiles squared
+		iterations = 100; // total number of voronoi iterations
 //		img = loadImage("img/example.jpg");
 		size(640, 640, P3D);
 		tileWidth = width / (2 * numTiles);
@@ -77,14 +77,16 @@ public class Mosaic extends PApplet {
 //			this.setMatrix(drawer.getPApplet());
 			PShape frustumGrid = createShape(GROUP);
 			PVector [] positions = new PVector[frustums.size()];
+			int [] colors = new int[frustums.size()];
 			int count = 0;
+//			shape(frustums.get(0).makeFrustum(this), 255,100);
 			for(Frustum f: frustums) {
-				System.out.println(f.getX());
 //				PShape s = createShape();
 //				s.beginShape();
 //				s.endShape(CLOSE);
-				System.out.println(f.makeFrustum(this).getFill(0));
-				frustumGrid.addChild(f.makeFrustum(this));
+				PShape currFrustum = f.makeFrustum(this);
+//				currFrustum.fill(f.getColour());
+				frustumGrid.addChild(currFrustum);
 //				s.endShape(CLOSE);
 //				System.out.println(f.getColour());
 //				s.fill(f.getColour());							
@@ -92,16 +94,21 @@ public class Mosaic extends PApplet {
 //				s.endShape();
 //				frustumGrid.addChild(s);
 				positions[count] = new PVector(f.getX(), f.getY());
-//				System.out.println(f.getX()+","+f.getY());
+				colors[count] = f.getColour();
+//				System.out.println(frustumGrid.getChild(0).get);
 				count++;
 //				System.out.println("frustum");
 //				 shape(s, f.getX(), f.getY());
 			}
 			for (int j = 0; j < frustumGrid.getChildCount(); j++) {
-//				System.out.println(positions[j]);
 				PShape f = frustumGrid.getChild(j);
+				fill(colors[j]);
 				shape(f, positions[j].x, positions[j].y);
 			}
+//			PShape fTest = frustumGrid.getChild(0);
+//			fill(color(255,0,0));
+//			shape(fTest, positions[0].x, positions[0].y);
+//			shape(frustumGrid.getChild(1), positions[1].x, positions[1].y);
 			System.out.println("saving frame");
 			saveFrame("its" + File.separator + "it" + i + ".jpeg");
 			points = voronoi.calculateCentroids(this);						
