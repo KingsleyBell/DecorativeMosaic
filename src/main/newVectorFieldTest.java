@@ -18,7 +18,7 @@ public class newVectorFieldTest extends PApplet {
 	}
 	
 	public void draw() {
-//		testDirectionField();
+		testDirectionField();
 	}
 	
 	public void testSurface () {

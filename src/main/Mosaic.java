@@ -33,7 +33,7 @@ public class Mosaic extends PApplet {
 		frameRate(200);
 		
 		numTiles = 50; // total number of tiles will be numTiles squared
-		iterations = 100; // total number of voronoi iterations
+		iterations = 10; // total number of voronoi iterations
 //		img = loadImage("img/example.jpg");
 		size(640, 640, P3D);
 		tileWidth = width / (2 * numTiles);
@@ -100,18 +100,18 @@ public class Mosaic extends PApplet {
 		}		
 
 		for(PVector p: edgeCurve.points) {
-			strokeWeight(5);			
+			strokeWeight(5);
+			stroke(255);
 			point(p.x, p.y,10);
 		}
 		saveFrame("voronoi.jpeg");
 		
 		clear();
-
 		 for (int i = 0; i < frustums.size(); i++) {
-		 degrees.add(frustums.get(i).getOrientation());
+			 degrees.add(frustums.get(i).getOrientation());
 		 }
 				 
-		 placeTiles(points, img);
+		 placeTiles(points);
 		 saveFrame("tiles.jpeg");
 		 System.out.println("DONE");
 		 
@@ -135,36 +135,62 @@ public class Mosaic extends PApplet {
 		}
 	}	
 
-	public void placeTiles(ArrayList<PVector> points, PImage img) {
+	public void placeTiles(ArrayList<PVector> points) {
 
 //		background(img);
 		noStroke();
 		
 		Integer x;
 		Integer y;
-		Float orientation;
-		Integer colour;		
-
-		for (int i = 0; i < points.size(); i++) {			
-			x = (int)points.get(i).x;
-			y = (int)points.get(i).y;
-//			System.out.println(i + ": " + x + ", " + y);
-			orientation = degrees.get(i);
-			colour = frustums.get(i).getColour();
+		Float orientation [] = new Float[frustums.size()];
+		PShape tiles = createShape(GROUP);
+		PVector [] positions = new PVector[frustums.size()];
+		int [] colors = new int[frustums.size()];
+		for (int i = 0; i < points.size(); i++) {	
+			positions[i] = new PVector((int)points.get(i).x,points.get(i).y);
+			orientation[i] = degrees.get(i);
+			colors[i] = frustums.get(i).getColour();
 			PShape tile = createShape();
+			tile.beginShape();
+			tile.fill(colors[i]);
 			Integer a = tileWidth/2;
 			tile.beginShape();			
 			tile.vertex(-a, -a);
 			tile.vertex(+a, -a);
 			tile.vertex(+a, +a);
 			tile.vertex(-a, +a);			
-			tile.endShape();			
-						
-			fill(colour);
-			tile.rotate(orientation);
-			shape(tile,x,y);			
+			tile.endShape(CLOSE);
+//			shape(tile, positions[i].x, positions[i].y);
+			tiles.addChild(tile);		
 		}
-
+//		this.fill(255);
+//		shape(tiles.getChild(0), positions[0].x, positions[0].y);
+//		rect(100,100,50,50);
+		for (int i = 0; i < tiles.getChildCount(); i++) {
+			PShape f = tiles.getChild(i);
+			f.rotate(orientation[i]);
+			shape(f, positions[i].x, positions[i].y);
+		}
+		drawEdgeCurve();
+	}
+	
+	public void drawEdgeCurve() {
+		strokeWeight(3);
+		for (int i = 1; i < d.E.getSize(); i++) {
+			if(d.E.getVector(i - 1) == null) {
+				continue;
+			}
+			else if (d.E.getVector(i) == null) {
+				continue;
+			}
+			else {
+				stroke(255,0,0);
+				//F.E is the vector field's EdgeCurve attribute
+				point(d.E.getVector(i).x, d.E.getVector(i).y);
+			}
+		}
+		strokeWeight(0);
+		stroke(0);
 	}
 
 }
