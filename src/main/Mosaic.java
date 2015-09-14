@@ -79,22 +79,28 @@ public class Mosaic extends PApplet {
 			PVector [] positions = new PVector[frustums.size()];
 			int count = 0;
 			for(Frustum f: frustums) {
+				System.out.println(f.getX());
 //				PShape s = createShape();
+//				s.beginShape();
 //				s.endShape(CLOSE);
-				PShape s = f.makeFrustum(this);
+				System.out.println(f.makeFrustum(this).getFill(0));
+				frustumGrid.addChild(f.makeFrustum(this));
 //				s.endShape(CLOSE);
-				fill(f.getColour());							
-				s.rotate(f.getOrientation());
-				frustumGrid.addChild(s);
+//				System.out.println(f.getColour());
+//				s.fill(f.getColour());							
+//				s.rotate(f.getOrientation());
+//				s.endShape();
+//				frustumGrid.addChild(s);
 				positions[count] = new PVector(f.getX(), f.getY());
-				System.out.println(f.getX()+","+ f.getY());
+//				System.out.println(f.getX()+","+f.getY());
 				count++;
 //				System.out.println("frustum");
 //				 shape(s, f.getX(), f.getY());
 			}
-			for (int j = 0; j < positions.length; j++) {
+			for (int j = 0; j < frustumGrid.getChildCount(); j++) {
 //				System.out.println(positions[j]);
-//				shape(frustumGrid.getChild(j), positions[j].x, positions[j].y);
+				PShape f = frustumGrid.getChild(j);
+				shape(f, positions[j].x, positions[j].y);
 			}
 			System.out.println("saving frame");
 			saveFrame("its" + File.separator + "it" + i + ".jpeg");

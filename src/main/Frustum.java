@@ -71,7 +71,10 @@ public class Frustum {
 		p.vertex(-topWidth / 2, +topWidth / 2, h);
 
 		p.vertex(-topWidth / 2, -topWidth / 2, h);
-
+		
+		p.fill(getColour());							
+		p.rotate(getOrientation());
+		
 		p.endShape(parent.CLOSE);
 		p.disableStyle();
 
