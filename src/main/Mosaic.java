@@ -32,7 +32,7 @@ public class Mosaic extends PApplet {
 //		background(255);
 		frameRate(200);
 		
-		numTiles = 100; // total number of tiles will be numTiles squared
+		numTiles = 50; // total number of tiles will be numTiles squared
 		iterations = 100; // total number of voronoi iterations
 //		img = loadImage("img/example.jpg");
 		size(640, 640, P3D);
@@ -81,34 +81,19 @@ public class Mosaic extends PApplet {
 			int count = 0;
 //			shape(frustums.get(0).makeFrustum(this), 255,100);
 			for(Frustum f: frustums) {
-//				PShape s = createShape();
-//				s.beginShape();
-//				s.endShape(CLOSE);
 				PShape currFrustum = f.makeFrustum(this);
-//				currFrustum.fill(f.getColour());
 				frustumGrid.addChild(currFrustum);
-//				s.endShape(CLOSE);
-//				System.out.println(f.getColour());
-//				s.fill(f.getColour());							
-//				s.rotate(f.getOrientation());
-//				s.endShape();
-//				frustumGrid.addChild(s);
+
 				positions[count] = new PVector(f.getX(), f.getY());
 				colors[count] = f.getColour();
-//				System.out.println(frustumGrid.getChild(0).get);
 				count++;
-//				System.out.println("frustum");
-//				 shape(s, f.getX(), f.getY());
 			}
 			for (int j = 0; j < frustumGrid.getChildCount(); j++) {
 				PShape f = frustumGrid.getChild(j);
 				fill(colors[j]);
 				shape(f, positions[j].x, positions[j].y);
 			}
-//			PShape fTest = frustumGrid.getChild(0);
-//			fill(color(255,0,0));
-//			shape(fTest, positions[0].x, positions[0].y);
-//			shape(frustumGrid.getChild(1), positions[1].x, positions[1].y);
+
 			System.out.println("saving frame");
 			saveFrame("its" + File.separator + "it" + i + ".jpeg");
 			points = voronoi.calculateCentroids(this);						
