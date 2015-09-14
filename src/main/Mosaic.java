@@ -18,12 +18,13 @@ public class Mosaic extends PApplet {
 	private DirectionField d;
 	private ArrayList<PVector> directionField;
 	private ArrayList<PVector> points;
-	private EdgeCurve edgeCurve;
-	private ArrayList<Float> degrees;
+	private EdgeCurve edgeCurve;	
 	private Integer numTiles;
 	private Integer tileWidth;
 	private Integer iterations;
 	private ArrayList<Frustum> frustums;
+	PVector [] positions;
+	Integer [] colours;
 	private Integer beginIndex;
 	private Integer endIndex;
 
@@ -35,16 +36,15 @@ public class Mosaic extends PApplet {
 //		background(255);
 		frameRate(200);
 		
-		numTiles = 30; // total number of tiles will be numTiles squared
+		numTiles = 100; // total number of tiles will be numTiles squared
 		iterations = 10; // total number of voronoi iterations
 		img = loadImage("img/example.jpg");
 		size(640, 640, P3D);
-		tileWidth = width / (2 * numTiles);
+		tileWidth = width / (numTiles);
 		img.resize(width, height);
 		ortho(0, width, 0, height);
 
-		voronoi = new VoronoiDiagram(numTiles, iterations, width, height);
-		degrees = new ArrayList<Float>();
+		voronoi = new VoronoiDiagram(numTiles, iterations, width, height);		
 		points = voronoi.getRandomPoints();
 		voronoi.getRandomColours();
 		
@@ -68,34 +68,29 @@ public class Mosaic extends PApplet {
 		for (int i = 0; i < iterations; i++) {			
 			clear();		
 			frustums = voronoi.placeFrustums(points, directionField);
-//			beginIndex = 0;
-//			endIndex = frustums.size();
-//			ForkJoinDrawer drawer = new ForkJoinDrawer(frustums,this);
-//			System.out.println(frustums.size());					
-//			
-//			drawer.compute();
-//			while(!drawer.isDone()){
-//				saveFrame("tst" + File.separator + "it" + (int)(Math.random()*1000) + ".jpeg");
-//			}
-//			this.setMatrix(drawer.getPApplet());
-			for(Frustum f: frustums) {
-				PShape s = createShape();					
-				s = f.makeFrustum(s);
-				fill(f.getColour());							
-				s.rotate(f.getOrientation());												
-//				System.out.println("frustum");
-				shape(s, f.getX(), f.getY());
+			PShape frustumShapes = createShape(GROUP);
+			positions = new PVector[frustums.size()];
+			colours = new Integer[frustums.size()];
+			
+			for(int j = 0; j < frustums.size(); j++) {									
+				Frustum tempFrust = frustums.get(j);
+				PShape tempShape = tempFrust.makeFrustum(this);
+				frustumShapes.addChild(tempShape);
+				positions[j] = new PVector(tempFrust.getX(), tempFrust.getY());
+				colours[j] = tempFrust.getColour();
+
+			}
+			for(int k = 0; k < frustumShapes.getChildCount(); k++) {
+				PShape f = frustumShapes.getChild(k);
+				fill(colours[k]);
+				shape(f, positions[k].x, positions[k].y);
 			}
 			System.out.println("saving frame");
 			saveFrame("its" + File.separator + "it" + i + ".jpeg");
 			points = voronoi.calculateCentroids(this);						
 		}				
 		
-		clear();
-
-		 for (int i = 0; i < frustums.size(); i++) {
-		 degrees.add(frustums.get(i).getOrientation());
-		 }
+		clear();	 
 				 
 		 placeTiles(points, img);
 		 saveFrame("tiles.jpeg");
@@ -123,34 +118,30 @@ public class Mosaic extends PApplet {
 
 	public void placeTiles(ArrayList<PVector> points, PImage img) {
 
-		background(img);
+		background(255);
 		noStroke();
 		
-		Integer x;
-		Integer y;
 		Float orientation;
-		Integer colour;		
 
-		for (int i = 0; i < points.size(); i++) {			
-			x = (int)points.get(i).x;
-			y = (int)points.get(i).y;
-//			System.out.println(i + ": " + x + ", " + y);
-			orientation = degrees.get(i);
-			colour = frustums.get(i).getColour();
-			PShape tile = createShape();
+		for (int i = 0; i < frustums.size(); i++) {	
+			Frustum tempFrust = frustums.get(i);					
+			orientation = tempFrust.getOrientation();						
 			Integer a = tileWidth/2;
-			tile.beginShape();			
+			Integer x = tempFrust.getX();
+			Integer y = tempFrust.getY();
+			
+			PShape tile = createShape();
+			tile.beginShape();		
+			tile.fill(img.get(x, y));
 			tile.vertex(-a, -a);
 			tile.vertex(+a, -a);
 			tile.vertex(+a, +a);
-			tile.vertex(-a, +a);			
-			tile.endShape();			
-						
-			fill(colour);
+			tile.vertex(-a, +a);
 			tile.rotate(orientation);
-			shape(tile,x,y);			
+			tile.endShape();												
+						
+			shape(tile, x, y);
 		}
-
 	}
 
 }

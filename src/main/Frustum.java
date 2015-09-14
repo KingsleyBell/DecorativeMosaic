@@ -10,8 +10,8 @@ import processing.core.PVector;
 
 public class Frustum {
 
-	private Float x;
-	private Float y;
+	private Integer x;
+	private Integer y;
 	private Integer baseWidth;
 	private Integer topWidth;
 	private Integer h;
@@ -24,7 +24,7 @@ public class Frustum {
 	private Integer yNum;	
 	
 	// Constructor
-	public Frustum(Float x, Float y, Integer baseWidth, Integer topWidth,
+	public Frustum(Integer x, Integer y, Integer baseWidth, Integer topWidth,
 			Integer h, Integer colour, PVector orientation) {
 		super();
 		this.x = x;
@@ -45,8 +45,9 @@ public class Frustum {
 	}
 
 	// Return PShape representing this frustum
-	public PShape makeFrustum(PShape p) {
-
+	public PShape makeFrustum(PApplet pApp) {
+		PShape p = pApp.createShape(); 
+		
 		p.beginShape();
 		p.noStroke();		
 		
@@ -72,6 +73,8 @@ public class Frustum {
 
 		p.vertex(-topWidth / 2, -topWidth / 2, h);
 
+		p.rotate(this.orientation);
+		
 		p.endShape();
 		p.disableStyle();
 
@@ -92,19 +95,19 @@ public class Frustum {
 		return degree;
 	}
 
-	public Float getX() {
+	public Integer getX() {
 		return x;
 	}
 
-	public void setX(Float x) {
+	public void setX(Integer x) {
 		this.x = x;
 	}
 
-	public Float getY() {
+	public Integer getY() {
 		return y;
 	}
 
-	public void setY(Float y) {
+	public void setY(Integer y) {
 		this.y = y;
 	}
 

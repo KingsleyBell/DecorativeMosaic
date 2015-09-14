@@ -33,7 +33,7 @@ public class VoronoiDiagram {
 		this.points = new ArrayList<PVector>();
 		this.frustums = new ArrayList<Frustum>();
 		for (int i = 0; i < numTiles*numTiles; i++) {
-			frustums.add(new Frustum(0F, 0F, width, 0, 5, 0, null));
+			frustums.add(new Frustum(0, 0, width, 0, 5, 0, null));
 		}
 		this.frustumColours = new HashMap<Integer,Integer>();
 		this.random = new Random();
@@ -78,12 +78,12 @@ public class VoronoiDiagram {
 //			System.out.println("Points size: " + points.size() + ". DirectionField size: " + directionField.size());			
 //		}
 		// Put frustums on those points
-		Float x;
-		Float y;		
+		Integer x;
+		Integer y;		
 
 		for (int i = 0; i < points.size(); i++) {
-			x = points.get(i).x;
-			y = points.get(i).y;
+			x = (int)points.get(i).x;
+			y = (int)points.get(i).y;
 			
 			frustums.get(i).setX(x);
 			frustums.get(i).setY(y);
