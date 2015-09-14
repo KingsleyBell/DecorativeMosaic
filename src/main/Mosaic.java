@@ -89,13 +89,7 @@ public class Mosaic extends PApplet {
 			System.out.println("saving frame");
 			saveFrame("its" + File.separator + "it" + i + ".jpeg");
 			points = voronoi.calculateCentroids(this);						
-		}		
-
-		for(PVector p: edgeCurve.points) {
-			strokeWeight(5);			
-			point(p.x, p.y,10);
-		}
-		saveFrame("voronoi.jpeg");
+		}				
 		
 		clear();
 
