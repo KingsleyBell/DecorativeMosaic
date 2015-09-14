@@ -33,7 +33,7 @@ public class Mosaic extends PApplet {
 		frameRate(200);
 		
 		numTiles = 50; // total number of tiles will be numTiles squared
-		iterations = 10; // total number of voronoi iterations
+		iterations = 50; // total number of voronoi iterations
 //		img = loadImage("img/example.jpg");
 		size(640, 640, P3D);
 		tileWidth = width / (2 * numTiles);
@@ -93,17 +93,19 @@ public class Mosaic extends PApplet {
 				fill(colors[j]);
 				shape(f, positions[j].x, positions[j].y);
 			}
+			
+			drawEdgeCurve();
 
 			System.out.println("saving frame");
 			saveFrame("its" + File.separator + "it" + i + ".jpeg");
 			points = voronoi.calculateCentroids(this);						
 		}		
-
-		for(PVector p: edgeCurve.points) {
-			strokeWeight(5);
-			stroke(255);
-			point(p.x, p.y,10);
-		}
+		drawEdgeCurve();
+//		for(PVector p: edgeCurve.points) {
+//			strokeWeight(5);
+//			stroke(255);
+//			point(p.x, p.y,10);
+//		}
 		saveFrame("voronoi.jpeg");
 		
 		clear();
@@ -175,7 +177,7 @@ public class Mosaic extends PApplet {
 	}
 	
 	public void drawEdgeCurve() {
-		strokeWeight(3);
+		strokeWeight(5);
 		for (int i = 1; i < d.E.getSize(); i++) {
 			if(d.E.getVector(i - 1) == null) {
 				continue;
@@ -184,13 +186,13 @@ public class Mosaic extends PApplet {
 				continue;
 			}
 			else {
-				stroke(255,0,0);
+				stroke(255);
 				//F.E is the vector field's EdgeCurve attribute
-				point(d.E.getVector(i).x, d.E.getVector(i).y);
+				line(d.E.getVector(i-1).x, d.E.getVector(i-1).y, 10, d.E.getVector(i).x, d.E.getVector(i).y,10);
 			}
 		}
-		strokeWeight(0);
-		stroke(0);
+//		strokeWeight(0);
+//		stroke(0);
 	}
 
 }
