@@ -1,20 +1,15 @@
 package main;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Vector;
 
 import processing.core.PApplet;
-import processing.core.PImage;
-import processing.core.PShape;
 import processing.core.PVector;
 
 // Class to perform voronoi algorithm on array of frustums given direction field
 public class VoronoiDiagram {
 
-	private int iterations;
 	private int width;
 	private int height;
 	private int numTiles;
@@ -22,32 +17,27 @@ public class VoronoiDiagram {
 	private ArrayList<Frustum> frustums;
 	private HashMap<Integer,Integer> frustumColours;
 	private Random random;
-	private Vector<Float>[] gradientMap;
-
 	public VoronoiDiagram(int numTiles, int iterations, int width, int height) {
-		this.iterations = iterations;
 		this.width = width;
 		this.height = height;
-		this.numTiles = numTiles;
-		this.gradientMap = gradientMap;
+		this.numTiles = numTiles;		
 		this.points = new ArrayList<PVector>();
 		this.frustums = new ArrayList<Frustum>();
 		for (int i = 0; i < numTiles*numTiles; i++) {
-			frustums.add(new Frustum(0, 0, width, 0, 5, 0, null));
+			frustums.add(new Frustum(0, 0, width, width/numTiles, 10, 0, null));
 		}
 		this.frustumColours = new HashMap<Integer,Integer>();
 		this.random = new Random();
 	}
 
 	public ArrayList<PVector> getRandomPoints() {
-		boolean alreadyThere;
 		ArrayList<PVector> pVectorPoints = new ArrayList<PVector>();
 		PVector newPoint;
 		for (int i = 0; i < numTiles; i++) {
 			for (int j = 0; j < numTiles; j++) {
 				
-				int x = random.nextInt(width);
-				int y = random.nextInt(height);
+				float x = ((float)width/(float)numTiles)*(i+1) - random.nextFloat()*((float)width/(float)numTiles);
+				float y = ((float)height/(float)numTiles)*(j+1) - random.nextFloat()*((float)height/(float)numTiles);
 				
 				newPoint = new PVector(x, y);				
 
@@ -97,39 +87,28 @@ public class VoronoiDiagram {
 		int l = 0;
 		p.loadPixels();
 		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				Integer c = p.pixels[i + (width * j)];
-				Integer index = findFrustumByColour(c);
+			for (int j = 0; j < height; j++) {				
+				Integer c = p.get(i, j);
+				Integer index = frustumColours.get(c);
 				if (index != null) {
 					frustums.get(index).addToX(i);
 					frustums.get(index).addToY(j);
 				} else {
 					l++;					
-//					System.out.println(l + ": FRUSTUM NOT FOUND for point: (" + i + "," + j + ")");
+//					System.out.println(l + ": FRUSTUM NOT FOUND for point: (" + i + "," + j + ") and colour: " + c);
 				}
 
 			}
 
 		}
+//		System.out.println("Points without associate frustum: " + l);		
 		for (int i = 0; i < frustums.size(); i++) {
 			PVector centroid = frustums.get(i).getCentroid();
 			points.set(i, centroid);
 		}
 
 		return points;
-	}
-
-	/**
-	 * Searches by given color for frustum in frustums array
-	 * 
-	 * @param c
-	 * @return i
-	 */
-	private Integer findFrustumByColour(Integer c) {
-
-		return frustumColours.get(c);
-		
-	}
+	}	
 
 	public ArrayList<PVector> getPoints() {
 		return points;

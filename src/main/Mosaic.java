@@ -1,10 +1,7 @@
 package main;
 
-import java.awt.Color;
-import java.awt.Point;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Vector;
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -13,6 +10,10 @@ import processing.core.PVector;
 
 public class Mosaic extends PApplet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private PImage img;
 	private VoronoiDiagram voronoi;
 	private DirectionField d;
@@ -24,9 +25,7 @@ public class Mosaic extends PApplet {
 	private Integer iterations;
 	private ArrayList<Frustum> frustums;
 	PVector [] positions;
-	Integer [] colours;
-	private Integer beginIndex;
-	private Integer endIndex;
+	Integer [] colours;	
 
 	/**
 	 * Main method generates frustums and then runs voronoi algorithm on them
@@ -34,10 +33,10 @@ public class Mosaic extends PApplet {
 	public void setup() {
 
 //		background(255);
-		frameRate(200);
+//		frameRate(200);
 		
-		numTiles = 100; // total number of tiles will be numTiles squared
-		iterations = 10; // total number of voronoi iterations
+		numTiles = 30; // total number of tiles will be numTiles squared
+		iterations = 20; // total number of voronoi iterations
 		img = loadImage("img/example.jpg");
 		size(640, 640, P3D);
 		tileWidth = width / (numTiles);
@@ -45,7 +44,7 @@ public class Mosaic extends PApplet {
 		ortho(0, width, 0, height);
 
 		voronoi = new VoronoiDiagram(numTiles, iterations, width, height);		
-		points = voronoi.getRandomPoints();
+		points = voronoi.getRandomPoints();						
 		voronoi.getRandomColours();
 		
 		background(img);
@@ -85,9 +84,9 @@ public class Mosaic extends PApplet {
 				fill(colours[k]);
 				shape(f, positions[k].x, positions[k].y);
 			}
-			System.out.println("saving frame");
+			System.out.println("saving frame " + i);
 			saveFrame("its" + File.separator + "it" + i + ".jpeg");
-			points = voronoi.calculateCentroids(this);						
+			points = voronoi.calculateCentroids(this);				
 		}				
 		
 		clear();	 

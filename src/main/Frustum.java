@@ -1,10 +1,6 @@
 package main;
 
-import java.awt.Point;
-import java.util.Vector;
-
 import processing.core.PApplet;
-import processing.core.PImage;
 import processing.core.PShape;
 import processing.core.PVector;
 
@@ -56,23 +52,19 @@ public class Frustum {
 		p.vertex(+(baseWidth / 2), +(baseWidth / 2), 0);
 		p.vertex(-(baseWidth / 2), +(baseWidth / 2), 0);
 		p.vertex(-(baseWidth / 2), -(baseWidth / 2), 0);
-
+		
 		p.vertex(-topWidth / 2, -topWidth / 2, h);
-
 		p.vertex(+topWidth / 2, -topWidth / 2, h);
-		p.vertex(+baseWidth / 2, -baseWidth / 2, 0);
-		p.vertex(+topWidth / 2, -topWidth / 2, h);
-
 		p.vertex(+topWidth / 2, +topWidth / 2, h);
-		p.vertex(+baseWidth / 2, +baseWidth / 2, 0);
-		p.vertex(+topWidth / 2, +topWidth / 2, h);
-
-		p.vertex(-topWidth / 2, +topWidth / 2, h);
-		p.vertex(-baseWidth / 2, +baseWidth / 2, 0);
 		p.vertex(-topWidth / 2, +topWidth / 2, h);
 
 		p.vertex(-topWidth / 2, -topWidth / 2, h);
-
+		p.vertex(+topWidth / 2, -topWidth / 2, h);
+		p.vertex(+topWidth / 2, +topWidth / 2, h);
+		p.vertex(-topWidth / 2, +topWidth / 2, h);
+		
+		p.vertex(-topWidth / 2, -topWidth / 2, h);
+		
 		p.rotate(this.orientation);
 		
 		p.endShape();
