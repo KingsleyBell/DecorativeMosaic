@@ -36,7 +36,7 @@ public class Mosaic extends PApplet {
 //		frameRate(200);
 		
 		numTiles = 30; // total number of tiles will be numTiles squared
-		iterations = 20; // total number of voronoi iterations
+		iterations = 100; // total number of voronoi iterations
 		img = loadImage("img/example.jpg");
 		size(640, 640, P3D);
 		tileWidth = width / (numTiles);
@@ -84,6 +84,9 @@ public class Mosaic extends PApplet {
 				fill(colours[k]);
 				shape(f, positions[k].x, positions[k].y);
 			}
+			
+			drawEdgeCurve();
+			
 			System.out.println("saving frame " + i);
 			saveFrame("its" + File.separator + "it" + i + ".jpeg");
 			points = voronoi.calculateCentroids(this);				
@@ -92,6 +95,9 @@ public class Mosaic extends PApplet {
 		clear();	 
 				 
 		 placeTiles(points, img);
+		 
+		 drawEdgeCurve();
+		 
 		 saveFrame("tiles.jpeg");
 		 System.out.println("DONE");
 		 
@@ -108,24 +114,46 @@ public class Mosaic extends PApplet {
 
 		}
 	}
+	
+	public void mouseReleased() {
+		edgeCurve.addPoint(null);
+	}
 
 	public void keyPressed() {
 		if (key == ENTER) {
 			iterate();			
 		}
 	}	
+	
+	public void drawEdgeCurve() {
+		strokeWeight(5);
+		for (int i = 1; i < d.E.getSize(); i++) {
+			if(d.E.getVector(i - 1) == null) {
+				continue;
+			}
+			else if (d.E.getVector(i) == null) {
+				continue;
+			}
+			else {
+				stroke(255);
+				//d.E is the vector field's EdgeCurve attribute
+				line(d.E.getVector(i-1).x, d.E.getVector(i-1).y, 10, d.E.getVector(i).x, d.E.getVector(i).y,10);				
+			}
+		}		
+	}
 
 	public void placeTiles(ArrayList<PVector> points, PImage img) {
 
-		background(255);
-		noStroke();
+		background(125);
+		strokeWeight(1);
+		stroke(0);
 		
 		Float orientation;
 
 		for (int i = 0; i < frustums.size(); i++) {	
 			Frustum tempFrust = frustums.get(i);					
 			orientation = tempFrust.getOrientation();						
-			Integer a = tileWidth/2;
+			Float a = tileWidth/(2.5F);
 			Integer x = tempFrust.getX();
 			Integer y = tempFrust.getY();
 			
@@ -136,6 +164,7 @@ public class Mosaic extends PApplet {
 			tile.vertex(+a, -a);
 			tile.vertex(+a, +a);
 			tile.vertex(-a, +a);
+			tile.vertex(-a, -a);
 			tile.rotate(orientation);
 			tile.endShape();												
 						
