@@ -13,10 +13,10 @@ public class GUIProcessingTest extends JFrame {
         
         JPanel pSketch = new JPanel();  //Create a region to host Processing sketch
         pSketch.setBounds(10, 10, 600, 600); //set location of panel
-        PApplet sketch = new PixelTest();  //Create a Processing sketch to be placed in panel
-        pSketch.add(sketch);  //Add sketch to panel
-        sketch.init();  //start the sketch
-        this.add(pSketch);  //add panel to JFrame
+//        PApplet sketch = new PixelTest();  //Create a Processing sketch to be placed in panel
+//        pSketch.add(sketch);  //Add sketch to panel
+//        sketch.init();  //start the sketch
+//        this.add(pSketch);  //add panel to JFrame
         this.setVisible(true);  //Set frame to be visible
 	}
 	
