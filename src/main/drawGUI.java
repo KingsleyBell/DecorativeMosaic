@@ -7,10 +7,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.sun.javafx.tk.Toolkit;
+import com.sun.org.apache.xml.internal.security.encryption.Reference;
+
+import javafx.scene.Cursor;
 import processing.core.PApplet;
 
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.Image;
+import java.awt.Point;
 
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -22,6 +28,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class drawGUI extends JFrame {
 
@@ -31,6 +39,7 @@ public class drawGUI extends JFrame {
 	
 	private PApplet sketch;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JPanel processingSketchPanel;
 	
 //OLD INIT METHOD
 //	public static void main(String[] args) {
@@ -53,21 +62,20 @@ public class drawGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
+		this.sketch=sketchy;
 		JButton nextButton = new JButton("Next");
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
 				vectorFieldGUI vfGUI = new vectorFieldGUI(sketch);
-				setVisible(false);
+				dispose();
 				vfGUI.setVisible(true);
 			}
 		});
 		nextButton.setBounds(205, 202, 144, 23);
 		getContentPane().add(nextButton);
-		
-		JPanel processingSketchPanel = new JPanel();
+		processingSketchPanel = new JPanel();
 		processingSketchPanel.setBounds(46, 11, 304, 184);
-		sketch = sketchy;
 		processingSketchPanel.add(sketch);
 		
 		sketch.setEnabled(false);
@@ -93,9 +101,11 @@ public class drawGUI extends JFrame {
 				{
 					sketch.setEnabled(true);
 					//draw mode
+					processingSketchPanel.setCursor((new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR)));
 				}
 			}
 		});
+	
 		
 		eraseRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
@@ -103,10 +113,15 @@ public class drawGUI extends JFrame {
 				if(eraseRadioButton.isSelected())
 				{
 					sketch.setEnabled(true);
-					//erase mode
+					//erase mode - custom cursor
+					java.awt.Toolkit tk = java.awt.Toolkit.getDefaultToolkit();
+					Image img = tk.getImage("C:\\Users\\SuThy\\Desktop\\DecorativeMosaic\\src\\main\\eraserCursor.png");
+					Point point = new Point(0,0);
+					java.awt.Cursor cursor = tk.createCustomCursor(img, point,"Erase");
+					processingSketchPanel.setCursor(cursor);
+
 				}
 			}
 		});
 	}
-	
 }
