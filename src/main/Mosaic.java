@@ -24,36 +24,43 @@ public class Mosaic extends PApplet {
 	private double tileWidth;
 	private Integer iterations;
 	private ArrayList<Frustum> frustums;
-	PVector [] positions;
-	Integer [] colours;	
-	int groutColor;
+	private PVector [] positions;
+	private Integer [] colours;	
+	private Integer groutColor;
+	private Integer windowHeight;
+	private Integer windowWidth;
+	
+	
+
+	public Mosaic(PImage img, EdgeCurve edgeCurve, Integer numTiles, Integer iterations, Integer groutColor,
+			Integer windowHeight, Integer windowWidth) {
+		super();
+		this.img = img;
+		this.edgeCurve = edgeCurve;
+		this.numTiles = numTiles;
+		this.iterations = iterations;
+		this.groutColor = groutColor;
+		this.windowHeight = windowHeight;
+		this.windowWidth = windowWidth;
+		this.voronoi = new VoronoiDiagram(numTiles, iterations, width, height);		
+		this.points = voronoi.getRandomPoints();						
+		voronoi.getRandomColours();
+	}
 
 	/**
 	 * Main method generates frustums and then runs voronoi algorithm on them
 	 */
 	public void setup() {
 
-//		background(255);
-//		frameRate(200);
+		size(windowWidth, windowHeight, P3D);
 		
-		numTiles = 30; // total number of tiles will be numTiles squared
-		iterations = 20; // total number of voronoi iterations
-		img = loadImage("img/example.jpg");
-		size(640, 640, P3D);
+		//Default tile size:
 		tileWidth = 0.8*(Math.sqrt((width*height) / (numTiles*numTiles)));
+		
 		img.resize(width, height);
 		ortho(0, width, 0, height);
-
-		voronoi = new VoronoiDiagram(numTiles, iterations, width, height);		
-		points = voronoi.getRandomPoints();						
-		voronoi.getRandomColours();
 		
-		background(img);
-		edgeCurve = new EdgeCurve();
-		// Draw edge curve			
-		
-		groutColor = 125;
-		
+		background(img);		
 	}
 
 	public void draw() {
@@ -122,11 +129,11 @@ public class Mosaic extends PApplet {
 		edgeCurve.addPoint(null);
 	}
 
-	public void keyPressed() {
-		if (key == ENTER) {
-			iterate();			
-		}
-	}	
+//	public void keyPressed() {
+//		if (key == ENTER) {
+//			iterate();			
+//		}
+//	}	
 	
 	public void drawEdgeCurve() {
 		strokeWeight(5);
