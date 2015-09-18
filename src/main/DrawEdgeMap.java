@@ -7,9 +7,8 @@ import processing.core.PVector;
 public class DrawEdgeMap extends PApplet {
 	private PImage image;
 	private EdgeCurve edgeCurve;
-	private DirectionField D;
-	int windowWidth;
-	int windowHeight;
+	private int windowWidth;
+	private int windowHeight;
 	
 	
 	public DrawEdgeMap() {
@@ -24,7 +23,10 @@ public class DrawEdgeMap extends PApplet {
 	}
 	
 	public void setup() {
+		this.image = loadImage("img/example.jpg");
 		size(windowWidth, windowHeight, P3D);
+		image.resize(width,  height);
+		background(image);
 	}
 	
 	public void draw() {
@@ -42,4 +44,13 @@ public class DrawEdgeMap extends PApplet {
 
 		}
 	}
+	
+	public void mouseReleased() {
+		edgeCurve.addPoint(null);
+	}
+	
+	public EdgeCurve getEdgeCurve() {
+		return edgeCurve;
+	}
+	
 }

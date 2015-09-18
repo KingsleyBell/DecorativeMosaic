@@ -26,6 +26,7 @@ public class Mosaic extends PApplet {
 	private ArrayList<Frustum> frustums;
 	PVector [] positions;
 	Integer [] colours;	
+	int groutColor;
 
 	/**
 	 * Main method generates frustums and then runs voronoi algorithm on them
@@ -49,7 +50,9 @@ public class Mosaic extends PApplet {
 		
 		background(img);
 		edgeCurve = new EdgeCurve();
-		// Draw edge curve				
+		// Draw edge curve			
+		
+		groutColor = 125;
 		
 	}
 
@@ -144,7 +147,7 @@ public class Mosaic extends PApplet {
 
 	public void placeTiles(ArrayList<PVector> points, PImage img) {
 
-		background(125);
+		background(groutColor);
 		strokeWeight(1);
 		stroke(0);
 		
