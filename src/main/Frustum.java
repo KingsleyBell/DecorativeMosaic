@@ -1,83 +1,148 @@
 package main;
 
 import processing.core.PApplet;
-import processing.core.PImage;
 import processing.core.PShape;
+import processing.core.PVector;
 
-public class Frustum extends PApplet {
+public class Frustum {
 
-	PImage img;	
+	private Integer x;
+	private Integer y;
+	private Integer baseWidth;
+	private Integer topWidth;
+	private Integer h;
+	private Integer colour;
+	private Float orientation;
+
+	private Integer xSum;
+	private Integer ySum;
+	private Integer xNum;
+	private Integer yNum;	
 	
-	public void setup() {
+	// Constructor
+	public Frustum(Integer x, Integer y, Integer baseWidth, Integer topWidth,
+			Integer h, Integer colour, PVector orientation) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.baseWidth = baseWidth;
+		this.topWidth = topWidth;
+		this.h = h;
+		this.colour = colour;
 
-		img = loadImage("img/example.jpg");		
-		
-		size(640, 640, P3D);
-		ortho(0,width,0,height);
-		makeBackground(img);
-		
-//		int x=width/2;
-//		int y = height/2;
-//		int baseWidth = 100;
-//		int topWidth = 50;
-//		int h = 20;
-		
-		for(int i = 1; i < 10; i++){
-			for(int j = 1; j < 10; j++){						
-				makeFrustum((width/10)*i, (height/10)*j, width/16, width/32, 5);
-			}
-		}			
-		
+		if (orientation != null) {
+			this.orientation = calculateOrientation(orientation);
+		}
+
+		this.xSum = 0;
+		this.ySum = 0;
+		this.xNum = 0;
+		this.yNum = 0;
 	}
 
-	public void makeFrustum(int x, int y, int baseWidth, int topWidth,
-			int h) {			
+	// Return PShape representing this frustum
+	public PShape makeFrustum(PApplet pApp) {
+		PShape p = pApp.createShape(); 
 		
-		noFill();
-				
-		beginShape();				
+		p.beginShape();
+		p.noStroke();		
 		
-		vertex(x - (baseWidth / 2), y - (baseWidth / 2), 0);
-		vertex(x + (baseWidth / 2), y - (baseWidth / 2), 0);
-		vertex(x + (baseWidth / 2), y + (baseWidth / 2), 0);
-		vertex(x - (baseWidth / 2), y + (baseWidth / 2), 0);
-		vertex(x - (baseWidth / 2), y - (baseWidth / 2), 0);
+		p.vertex(-(baseWidth / 2), -(baseWidth / 2), 0);
+		p.vertex(+(baseWidth / 2), -(baseWidth / 2), 0);
+		p.vertex(+(baseWidth / 2), +(baseWidth / 2), 0);
+		p.vertex(-(baseWidth / 2), +(baseWidth / 2), 0);
+		p.vertex(-(baseWidth / 2), -(baseWidth / 2), 0);
 		
-		vertex(x - topWidth / 2, y - topWidth / 2, h);
+		p.vertex(-topWidth / 2, -topWidth / 2, h);
+		p.vertex(+topWidth / 2, -topWidth / 2, h);
+		p.vertex(+topWidth / 2, +topWidth / 2, h);
+		p.vertex(-topWidth / 2, +topWidth / 2, h);
 
-		vertex(x + topWidth / 2, y - topWidth / 2, h);
-		vertex(x + baseWidth / 2, y - baseWidth / 2, 0);
-		vertex(x + topWidth / 2, y - topWidth / 2, h);
-
-		vertex(x + topWidth / 2, y + topWidth / 2, h);
-		vertex(x + baseWidth / 2, y + baseWidth / 2, 0);
-		vertex(x + topWidth / 2, y + topWidth / 2, h);
-
-		vertex(x - topWidth / 2, y + topWidth / 2, h);
-		vertex(x - baseWidth / 2, y + baseWidth / 2, 0);
-		vertex(x - topWidth / 2, y + topWidth / 2, h);
-
-		vertex(x - topWidth / 2, y - topWidth / 2, h);
+		p.vertex(-topWidth / 2, -topWidth / 2, h);
+		p.vertex(+topWidth / 2, -topWidth / 2, h);
+		p.vertex(+topWidth / 2, +topWidth / 2, h);
+		p.vertex(-topWidth / 2, +topWidth / 2, h);
 		
-		endShape();
+		p.vertex(-topWidth / 2, -topWidth / 2, h);
+		
+		p.rotate(this.orientation);
+		
+		p.endShape();
+		p.disableStyle();
+
+		return p;
+	}
+
+	public Float getOrientation() {
+		return orientation;
+	}
+
+	public void setOrientation(PVector direction) {
+		this.orientation = calculateOrientation(direction);
+//		System.out.println("set: " + orientation);
+	}
+
+	public Float calculateOrientation(PVector point) {
+		Float degree = -(float) Math.atan2(point.x, point.y);
+		return degree;
+	}
+
+	public Integer getX() {
+		return x;
+	}
+
+	public void setX(Integer x) {
+		this.x = x;
+	}
+
+	public Integer getY() {
+		return y;
+	}
+
+	public void setY(Integer y) {
+		this.y = y;
+	}
+
+	public Integer getColour() {
+		return colour;
+	}
+
+	public void setColour(Integer c) {
+		this.colour = c;
+	}
+
+	public void addToX(Integer x) {
+		xSum += x;
+		xNum++;
+	}
+
+	public void addToY(Integer y) {
+		ySum += y;
+		yNum++;
+	}
+
+	// Calculate new centroid of frustum based by averaging all x and y values
+	// that appear from this frustum
+	public PVector getCentroid() {
+		if (xNum == 0 || yNum == 0) {
+			return new PVector(-1, -1);
+		}
+		Integer x = xSum / xNum;
+		Integer y = ySum / yNum;
+
+		return new PVector(x, y);
+	}
+
+	public Integer getXSum() {
+		return xSum;
+	}
+
+	public Integer getYSum() {
+		return ySum;
 	}
 	
-	public void makeBackground(PImage img) {
-		
-		int imgWidth = img.width;
-		int imgHeight = img.height;
-		
-		beginShape();
-		texture(img);
-		
-		vertex(0,0,0,0,0);
-		vertex(width,0,0,imgWidth,0);
-		vertex(width,height,0,imgWidth,imgHeight);
-		vertex(0,height,0,0,imgHeight);
-		
-		endShape();
-		
-		
+	public String toString() {
+		return "x: " + x + ", y: " + y + ", colour: " + colour;
 	}
 
 }
