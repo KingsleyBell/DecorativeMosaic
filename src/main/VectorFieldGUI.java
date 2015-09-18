@@ -24,7 +24,7 @@ import java.awt.Button;
 public class VectorFieldGUI extends JFrame {
 
 	private JPanel contentPane;
-
+	private String image;
 	/**
 	 * Launch the application.
 	 */
@@ -45,10 +45,11 @@ public class VectorFieldGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VectorFieldGUI(PApplet sketch) {
+	public VectorFieldGUI(String img) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		
+		this.image = img;
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
@@ -68,11 +69,10 @@ public class VectorFieldGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel processingSketchPanel = new JPanel();
-		processingSketchPanel.setBounds(82, 11, 289, 139);
-		processingSketchPanel.add(sketch);
-		sketch.setEnabled(false);
-		getContentPane().add(processingSketchPanel);
+		JPanel psPanel = new JPanel();
+		psPanel.setBounds(82, 11, 289, 139);
+		DrawEdgeMap sketch = new DrawEdgeMap(image,psPanel.getWidth(), psPanel.getHeight());
+		getContentPane().add(psPanel);
 		
 		JButton btnGenerateMosaic = new JButton("Generate Mosaic");
 		btnGenerateMosaic.addActionListener(new ActionListener() {
@@ -86,7 +86,7 @@ public class VectorFieldGUI extends JFrame {
 		btnGenerateMosaic.setBounds(254, 205, 139, 23);
 		contentPane.add(btnGenerateMosaic);
 		
-		processingSketchPanel.addMouseListener(new MouseListener() 
+		psPanel.addMouseListener(new MouseListener() 
 		{
 		    public void mouseEntered(java.awt.event.MouseEvent evt) 
 		    {
@@ -94,12 +94,12 @@ public class VectorFieldGUI extends JFrame {
 				Image img = tk.getImage("C:\\Users\\SuThy\\Desktop\\DecorativeMosaic\\src\\main\\eraserCursor.png");
 				Point point = new Point(0,0);
 				java.awt.Cursor cursor = tk.createCustomCursor(img, point,"Erase");
-				processingSketchPanel.setCursor(cursor);
+				psPanel.setCursor(cursor);
 		    }
 
 		    public void mouseExited(java.awt.event.MouseEvent evt) 
 		    {
-		    	processingSketchPanel.setCursor((new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR)));
+		    	psPanel.setCursor((new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR)));
 		    }
 
 			@Override
