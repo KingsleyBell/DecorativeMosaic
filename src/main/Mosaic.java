@@ -21,7 +21,7 @@ public class Mosaic extends PApplet {
 	private ArrayList<PVector> points;
 	private EdgeCurve edgeCurve;	
 	private Integer numTiles;
-	private Integer tileWidth;
+	private double tileWidth;
 	private Integer iterations;
 	private ArrayList<Frustum> frustums;
 	PVector [] positions;
@@ -36,10 +36,10 @@ public class Mosaic extends PApplet {
 //		frameRate(200);
 		
 		numTiles = 30; // total number of tiles will be numTiles squared
-		iterations = 100; // total number of voronoi iterations
+		iterations = 20; // total number of voronoi iterations
 		img = loadImage("img/example.jpg");
 		size(640, 640, P3D);
-		tileWidth = width / (numTiles);
+		tileWidth = 0.8*(Math.sqrt((width*height) / (numTiles*numTiles)));
 		img.resize(width, height);
 		ortho(0, width, 0, height);
 
@@ -96,7 +96,7 @@ public class Mosaic extends PApplet {
 				 
 		 placeTiles(points, img);
 		 
-		 drawEdgeCurve();
+//		 drawEdgeCurve();
 		 
 		 saveFrame("tiles.jpeg");
 		 System.out.println("DONE");
@@ -153,7 +153,7 @@ public class Mosaic extends PApplet {
 		for (int i = 0; i < frustums.size(); i++) {	
 			Frustum tempFrust = frustums.get(i);					
 			orientation = tempFrust.getOrientation();						
-			Float a = tileWidth/(2.5F);
+			Float a = (float)tileWidth/(2.5F);
 			Integer x = tempFrust.getX();
 			Integer y = tempFrust.getY();
 			
