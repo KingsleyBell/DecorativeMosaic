@@ -1,16 +1,14 @@
 package main;
 
-import java.awt.Component;
 import java.io.File;
 
 import processing.core.PApplet;
 import processing.core.PVector;
 
-public class newVectorFieldTest extends PApplet {
+public class NewVectorFieldTest extends PApplet {
 	DirectionField F;
 	EdgeCurve E;
-	
-	public void setup() {
+	 public void setup() {
 		size(500,500,P3D);
 		background(255);
 		E = new EdgeCurve();
