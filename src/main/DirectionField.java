@@ -18,42 +18,6 @@ public class DirectionField {
 	int dx;
 	int dy;
 
-	public DirectionField(int imageWidth, int imageHeight, int dx, int dy) {
-		this.dx = dx;
-		this.dy = dy;
-		this.imageWidth = imageWidth;
-		this.imageHeight = imageHeight;
-		this.E = new EdgeCurve();
-		this.surface = new HashMap<PVector, Float>();
-		this.directionField = new HashMap<PVector, PVector>();
-	}
-
-	public DirectionField(int imageWidth, int imageHeight, int dx, int dy,
-			EdgeCurve E) {
-		this.dx = dx;
-		this.dy = dy;
-		this.imageWidth = imageWidth;
-		this.imageHeight = imageHeight;
-		this.E = E;
-		this.surface = new HashMap<PVector, Float>();
-		this.directionField = new HashMap<PVector, PVector>();
-		defaultMesh();
-		createDirectionField();
-	}
-
-	public DirectionField(int imageWidth, int imageHeight,
-			ArrayList<PVector> centroids, EdgeCurve E) {
-		this.imageWidth = imageWidth;
-		this.imageHeight = imageHeight;
-		this.E = E;
-		this.dx = 2;
-		this.dy = 2;
-		this.surface = new HashMap<PVector, Float>();
-		this.directionField = new HashMap<PVector, PVector>();
-		createSurface(centroids);
-		createDirectionField();
-	}
-
 	public DirectionField(int imageWidth, int imageHeight, EdgeCurve E) {
 		this.imageWidth = imageWidth;
 		this.imageHeight = imageHeight;
@@ -105,12 +69,8 @@ public class DirectionField {
 	 * 
 	 * @return ArrayList<PVector> fieldElements
 	 */
-	public ArrayList<PVector> getDirectionField() {
-		ArrayList<PVector> fieldElements = new ArrayList<>();
-		for (PVector p : directionField.values()) {
-			fieldElements.add(p);
-		}
-		return fieldElements;
+	public ArrayList<PVector> getDirectionField() {		
+		return (ArrayList<PVector>)(directionField.values());
 	}
 
 	public void updateDirectionField(ArrayList<PVector> centroids) {
