@@ -196,5 +196,9 @@ public class Mosaic extends PApplet {
 			shape(tile, x, y);
 		}
 	}
+		
+	public void saveMosaic(String fileLoc) {			
+		saveFrame(fileLoc);
+	}
 
 }
