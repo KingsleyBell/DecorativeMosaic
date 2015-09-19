@@ -49,8 +49,8 @@ public class VoronoiDiagramTest {
 		long start = System.currentTimeMillis();
 		voronoiDiagram.placeFrustums(points, directions);
 		long end = System.currentTimeMillis();
-		long time = end - start;
-		System.out.println(end);
+		long time = end - start;		
+		assertTrue(time < 100);
 	}
 	
 }

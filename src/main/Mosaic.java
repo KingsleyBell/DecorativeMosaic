@@ -45,10 +45,9 @@ public class Mosaic extends PApplet {
 		this.voronoi = new VoronoiDiagram(numTiles, iterations, width, height);		
 		this.points = voronoi.getRandomPoints();						
 		voronoi.getRandomColours();
-	}
-	
-	
+	}	
 
+	// Default
 	public Mosaic(PImage img, EdgeCurve edgeCurve, Integer windowHeight, Integer windowWidth) {
 		super();
 		this.img = img;
@@ -60,8 +59,6 @@ public class Mosaic extends PApplet {
 		iterations = 20;
 		groutColor = 125;
 	}
-
-
 
 	/**
 	 * Main method generates frustums and then runs voronoi algorithm on them
