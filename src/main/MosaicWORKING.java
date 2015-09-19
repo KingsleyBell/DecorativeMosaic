@@ -153,28 +153,36 @@ public class MosaicWORKING extends PApplet {
 		background(groutColour);
 		strokeWeight(1);
 		stroke(0);
-		
-		Float orientation;
-
-		for (int i = 0; i < frustums.size(); i++) {	
-			Frustum tempFrust = frustums.get(i);					
-			orientation = tempFrust.getOrientation();						
-			Float a = tileWidth/(2.5F);
-			Integer x = tempFrust.getX();
-			Integer y = tempFrust.getY();
-			
+		Integer x;
+		Integer y;
+		Float orientation [] = new Float[frustums.size()];
+		PShape tiles = createShape(GROUP);
+		PVector [] positions = new PVector[frustums.size()];
+		int [] colors = new int[frustums.size()];
+		for (int i = 0; i < points.size(); i++) {	
+			positions[i] = new PVector((int)points.get(i).x,points.get(i).y);
+			orientation[i] = frustums.get(i).getOrientation();
+			colors[i] = frustums.get(i).getColour();
 			PShape tile = createShape();
-			tile.beginShape();		
-			tile.fill(img.get(x, y));
+			tile.beginShape();
+			tile.fill(colors[i]);
+			Integer a = tileWidth/2;
+			tile.beginShape();			
 			tile.vertex(-a, -a);
 			tile.vertex(+a, -a);
 			tile.vertex(+a, +a);
-			tile.vertex(-a, +a);
-			tile.vertex(-a, -a);
-			tile.rotate(orientation);
-			tile.endShape();												
-						
-			shape(tile, x, y);
+			tile.vertex(-a, +a);			
+			tile.endShape(CLOSE);
+//			shape(tile, positions[i].x, positions[i].y);
+			tiles.addChild(tile);		
+		}
+//		this.fill(255);
+//		shape(tiles.getChild(0), positions[0].x, positions[0].y);
+//		rect(100,100,50,50);
+		for (int i = 0; i < tiles.getChildCount(); i++) {
+			PShape f = tiles.getChild(i);
+			f.rotate(orientation[i]);
+			shape(f, positions[i].x, positions[i].y);
 		}
 	}
 
