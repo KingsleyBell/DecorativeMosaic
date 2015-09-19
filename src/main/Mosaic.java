@@ -72,7 +72,8 @@ public class Mosaic extends PApplet {
 		
 		img.resize(width, height);
 		ortho(0, width, 0, height);
-		background(img);		
+		background(img);
+		iterate();
 	}
 
 	public void draw() {
@@ -82,10 +83,8 @@ public class Mosaic extends PApplet {
 
 	public void iterate() {
 
-		clear();	
 		directionFieldObject = new DirectionField(width, height, edgeCurve);		
 		directionField = directionFieldObject.getDirectionField();
-		
 		for (int i = 0; i < iterations; i++) {			
 			clear();		
 			frustums = voronoi.placeFrustums(points, directionField);
@@ -117,7 +116,6 @@ public class Mosaic extends PApplet {
 		clear();	 
 				 
 		 placeTiles(points, img);
-		 
 //		 drawEdgeCurve();
 		 
 		 saveFrame("tiles.jpeg");

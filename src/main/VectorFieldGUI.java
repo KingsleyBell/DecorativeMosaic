@@ -103,7 +103,7 @@ public class VectorFieldGUI extends JFrame {
 				
 				Mosaic mosaic = new Mosaic(pSketch.getImage(), pSketch.getEdgeCurve(),numTiles, iterations,groutColour, sketchPanel.getHeight(), sketchPanel.getWidth());
 				mosaic.init();
-				mosaic.iterate();
+				
 				MosaicGUI mGUI = new MosaicGUI(mosaic);
 				mGUI.setVisible(true);
 			}
