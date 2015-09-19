@@ -36,8 +36,8 @@ public class Mosaic extends PApplet {
 //		frameRate(200);
 		
 		numTiles = 30; // total number of tiles will be numTiles squared
-		iterations = 100; // total number of voronoi iterations
-		img = loadImage("img/example.jpg");
+		iterations = 20; // total number of voronoi iterations
+		img = loadImage("test.jpg");
 		size(640, 640, P3D);
 		tileWidth = width / (numTiles);
 		img.resize(width, height);
