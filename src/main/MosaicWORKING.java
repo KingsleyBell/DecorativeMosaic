@@ -24,8 +24,18 @@ public class MosaicWORKING extends PApplet {
 	private Integer tileWidth;
 	private Integer iterations;
 	private ArrayList<Frustum> frustums;
-	PVector [] positions;
-	Integer [] colours;	
+	private PVector [] positions;
+	private Integer [] colours;
+	private Integer groutColour;
+	
+	public MosaicWORKING(String fileLoc, int width, int height, Integer numTiles, Integer iterations, Integer groutColour) {
+		this.img = loadImage(fileLoc);
+		this.width = width;
+		this.height = height;
+		this.numTiles = numTiles;
+		this.iterations = iterations;
+		this.groutColour = groutColour;
+	}
 
 	/**
 	 * Main method generates frustums and then runs voronoi algorithm on them
@@ -34,11 +44,7 @@ public class MosaicWORKING extends PApplet {
 
 //		background(255);
 //		frameRate(200);
-		
-		numTiles = 30; // total number of tiles will be numTiles squared
-		iterations = 20; // total number of voronoi iterations
-		img = loadImage("test.jpg");
-		size(640, 640, P3D);
+		size(width, height, P3D);
 		tileWidth = width / (numTiles);
 		img.resize(width, height);
 		ortho(0, width, 0, height);
@@ -144,7 +150,7 @@ public class MosaicWORKING extends PApplet {
 
 	public void placeTiles(ArrayList<PVector> points, PImage img) {
 
-		background(125);
+		background(groutColour);
 		strokeWeight(1);
 		stroke(0);
 		
