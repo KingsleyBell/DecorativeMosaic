@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 //JUnit Suite Test
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ 
-   EdgeCurveTest.class
+   EdgeCurveTest.class,
+   DirectionFieldTest.class
 })
 public class TestSuite {
 }

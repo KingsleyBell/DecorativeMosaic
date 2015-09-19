@@ -9,15 +9,15 @@ import java.util.Scanner;
 import processing.core.PVector;
 
 public class EdgeCurve {
-	ArrayList <PVector> points;  //A list of points that lie on the curve
+	private ArrayList <PVector> points;  //A list of points that lie on the curve
 	
 	/*
 	 * Generic constructor that initiates an empty list
 	 * How to use: call constructor and then add points to list whenever needed
 	 */
 	public EdgeCurve () {
-		points = new ArrayList <>();
-	}
+		points = new ArrayList<PVector>();
+	}	
 	
 	/*
 	 * Method to find and return the closest point on this edge curve from a given point (centroid/mouse click)
@@ -25,11 +25,14 @@ public class EdgeCurve {
 	 * @return: String => (pos of closest point in list)-(distance from closest point)
 	 */
 	public String getClosestPoint (PVector P) {
-		double distance = PVector.dist(points.get(0), P);
+		if(P.x < 0 || P.y < 0){
+			throw new IndexOutOfBoundsException("Less than 0");
+		}
+		Float distance = PVector.dist(points.get(0), P);
 		int posOfClosestPoint = 0;
 		for(int i = 1; i < points.size(); i++) {
 			if(points.get(i) != null) {
-				double tempDist = PVector.dist(points.get(i), P);
+				Float tempDist = PVector.dist(points.get(i), P);
 				if(tempDist < distance) {
 					distance = tempDist;
 					posOfClosestPoint = i;
@@ -44,7 +47,7 @@ public class EdgeCurve {
 	 * Method to add a point to the list
 	 * @args: PVector p => location of point to be added
 	 */
-	public void addPoint (PVector p) {
+	public void addPoint (PVector p) {	
 		points.add(p);
 	}
 	

@@ -16,7 +16,7 @@ public class Mosaic extends PApplet {
 	private static final long serialVersionUID = 1L;
 	private PImage img;
 	private VoronoiDiagram voronoi;
-	private DirectionField d;
+	private DirectionField directionFieldObject;
 	private ArrayList<PVector> directionField;
 	private ArrayList<PVector> points;
 	private EdgeCurve edgeCurve;	
@@ -86,8 +86,8 @@ public class Mosaic extends PApplet {
 	public void iterate() {
 
 		clear();										
-		d = new DirectionField(width, height, edgeCurve);		
-		directionField = d.getDirectionField();
+		directionFieldObject = new DirectionField(width, height, edgeCurve);		
+		directionField = directionFieldObject.getDirectionField();
 		
 		for (int i = 0; i < iterations; i++) {			
 			clear();		
@@ -152,17 +152,17 @@ public class Mosaic extends PApplet {
 	
 	public void drawEdgeCurve() {
 		strokeWeight(5);
-		for (int i = 1; i < d.E.getSize(); i++) {
-			if(d.E.getVector(i - 1) == null) {
+		for (int i = 1; i < directionFieldObject.getEdgeCurveSize(); i++) {
+			if(directionFieldObject.getEdgeCurveVector(i - 1) == null) {
 				continue;
 			}
-			else if (d.E.getVector(i) == null) {
+			else if (directionFieldObject.getEdgeCurveVector(i) == null) {
 				continue;
 			}
 			else {
 				stroke(255);
 				//d.E is the vector field's EdgeCurve attribute
-				line(d.E.getVector(i-1).x, d.E.getVector(i-1).y, 10, d.E.getVector(i).x, d.E.getVector(i).y,10);				
+				line(directionFieldObject.getEdgeCurveVector(i-1).x, directionFieldObject.getEdgeCurveVector(i-1).y, 10, directionFieldObject.getEdgeCurveVector(i).x, directionFieldObject.getEdgeCurveVector(i).y,10);				
 			}
 		}		
 	}

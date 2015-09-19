@@ -20,6 +20,7 @@ public class DrawEdgeMap extends PApplet {
 		this.image = loadImage(fileLoc);
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
+		edgeCurve = new EdgeCurve();
 	}
 	
 	public void setup() {
