@@ -26,9 +26,11 @@ import java.awt.FlowLayout;
 
 public class VectorFieldGUI extends JFrame {
 	private String image;
-	/**
-	 * Launch the application.
-	 */
+	private int numTiles;
+	private int iterations;
+	private int groutColour;
+	
+	
 // THIS IS THE OLD INITIALISATION
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
@@ -50,7 +52,15 @@ public class VectorFieldGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		
+		//set default tiles, iteratios and grout colour
+		  numTiles = 30;
+		  iterations = 15;
+		  groutColour = 125;
+		
+		  //set image to what was passed in
 		this.image = img;
+		
+		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
@@ -78,15 +88,23 @@ public class VectorFieldGUI extends JFrame {
 		BtnPanel.add(clearBtn);
 		
 		JButton genMosaicBtn = new JButton("Generate Mosaic");
-		BtnPanel.add(genMosaicBtn);
 		
 		JPanel sketchPanel = new JPanel();
 		sketchPanel.setSize(new Dimension(200,200));
 		getContentPane().add(sketchPanel);
 		getContentPane().add(sketchPanel, BorderLayout.CENTER);
 		DrawEdgeMap pSketch = new DrawEdgeMap(image, sketchPanel.getWidth(), sketchPanel.getHeight());
-		System.out.println("THIS: " + sketchPanel.getWidth());
 		sketchPanel.add(pSketch);
 		pSketch.init();
+		
+		genMosaicBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				Mosaic mosaic = new Mosaic(pSketch.getImage(), pSketch.getEdgeCurve(),numTiles, iterations,groutColour, sketchPanel.getHeight(), sketchPanel.getWidth());
+				mosaic.setVisible(true);
+				mosaic.iterate();
+			}
+		});
+		BtnPanel.add(genMosaicBtn);
 	}
 }

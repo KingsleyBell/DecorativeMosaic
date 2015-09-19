@@ -16,6 +16,11 @@ public class DrawEdgeMap extends PApplet {
 		edgeCurve = new EdgeCurve();
 	}
 	
+	public PImage getImage()
+	{
+		return image;
+	}
+	
 	public DrawEdgeMap(String fileLoc, int windowWidth, int windowHeight) {
 		this.image = loadImage(fileLoc);
 		this.windowWidth = windowWidth;
@@ -24,7 +29,6 @@ public class DrawEdgeMap extends PApplet {
 	}
 	
 	public void setup() {
-		this.image = loadImage("img/example.jpg");
 		size(windowWidth, windowHeight, P3D);
 		image.resize(width,  height);
 		background(image);
