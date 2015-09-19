@@ -17,6 +17,7 @@ public class VoronoiDiagram {
 	private ArrayList<Frustum> frustums;
 	private HashMap<Integer,Integer> frustumColours;
 	private Random random;
+	
 	public VoronoiDiagram(int numTiles, int iterations, int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -52,9 +53,9 @@ public class VoronoiDiagram {
 	public ArrayList<Frustum> getRandomColours() {
 		for (int i = 0; i < numTiles*numTiles; i++) {
 			PApplet p = new PApplet();
-			Integer r = random.nextInt(255);
-			Integer g = random.nextInt(255);
-			Integer b = random.nextInt(255);
+			Integer r = (int) (Math.random()*255);
+			Integer g = (int) (Math.random()*255);
+			Integer b = (int) (Math.random()*255);
 			Integer colour = p.color(r, g, b);
 			frustums.get(i).setColour(colour);
 			frustumColours.put(colour,i);

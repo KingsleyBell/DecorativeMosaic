@@ -66,7 +66,11 @@ public class DirectionField {
 	 * @return ArrayList<PVector> fieldElements
 	 */
 	public ArrayList<PVector> getDirectionField() {		
-		return (ArrayList<PVector>)(directionField.values());
+		ArrayList<PVector> directions = new ArrayList<PVector>();
+		for(PVector p: directionField.values()) {
+			directions.add(p);
+		}
+		return directions;
 	}
 
 	/**

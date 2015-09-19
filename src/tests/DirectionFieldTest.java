@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import processing.core.PVector;
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
 public class DirectionFieldTest{
@@ -33,7 +34,8 @@ public class DirectionFieldTest{
 	}
 	
 	@Test(timeout=1000)
-	public void testCreateSurFaceTime() {
+	public void testCreateSurfaceTime() {
+		System.out.println("Inside testCreateSurfaceTime()");
 		PVector p;
 		edgeCurve = new EdgeCurve();
 		for(int i = 1; i < 500; i++){
@@ -41,7 +43,7 @@ public class DirectionFieldTest{
 			edgeCurve.addPoint(p);
 			p = new PVector(500-i, i);
 		}
-		edgeCurve.addPoint(null);
+		edgeCurve.addPoint(null);		
 		directionFieldObject = new DirectionField(500,500,edgeCurve);		
 	}
 	

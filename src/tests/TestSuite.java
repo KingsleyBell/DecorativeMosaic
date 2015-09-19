@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ 
    EdgeCurveTest.class,
-   DirectionFieldTest.class
+   DirectionFieldTest.class,
+   VoronoiDiagramTest.class
 })
 public class TestSuite {
 }
