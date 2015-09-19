@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -138,6 +139,11 @@ public class DirectionField {
 	
 	public Integer getEdgeCurveSize() {
 		return edgeCurve.getSize();
+	}
+
+	public EdgeCurve getEdgeCurve() {
+		// TODO Auto-generated method stub
+		return edgeCurve;
 	}
 	
 }
