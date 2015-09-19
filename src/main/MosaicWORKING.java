@@ -170,7 +170,7 @@ public class MosaicWORKING extends PApplet {
 			colors[i] = frustums.get(i).getColour();
 			PShape tile = createShape();
 			tile.beginShape();
-			tile.fill(colors[i]);
+			tile.fill(img.get((int)positions[i].x, (int)positions[i].y));
 			Integer a = tileWidth/2;
 			tile.beginShape();			
 			tile.vertex(-a, -a);
