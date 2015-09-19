@@ -100,9 +100,12 @@ public class VectorFieldGUI extends JFrame {
 		genMosaicBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
+				
 				Mosaic mosaic = new Mosaic(pSketch.getImage(), pSketch.getEdgeCurve(),numTiles, iterations,groutColour, sketchPanel.getHeight(), sketchPanel.getWidth());
-				mosaic.setVisible(true);
+				mosaic.init();
 				mosaic.iterate();
+				MosaicGUI mGUI = new MosaicGUI(mosaic);
+				mGUI.setVisible(true);
 			}
 		});
 		BtnPanel.add(genMosaicBtn);

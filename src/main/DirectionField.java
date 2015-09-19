@@ -66,7 +66,6 @@ public class DirectionField {
 	 * @return ArrayList<PVector> fieldElements
 	 */
 	public ArrayList<PVector> getDirectionField() {	
-		System.out.println("HEY HEY");
 		ArrayList<PVector> directions = new ArrayList<PVector>();
 		for(PVector p: directionField.values()) {
 			directions.add(p);

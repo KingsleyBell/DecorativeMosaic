@@ -64,7 +64,7 @@ public class Mosaic extends PApplet {
 	 * Main method generates frustums and then runs voronoi algorithm on them
 	 */
 	public void setup() {
-
+		
 		size(windowWidth, windowHeight, P3D);
 		
 		//Default tile size:
@@ -82,7 +82,7 @@ public class Mosaic extends PApplet {
 
 	public void iterate() {
 
-		clear();										
+		clear();	
 		directionFieldObject = new DirectionField(width, height, edgeCurve);		
 		directionField = directionFieldObject.getDirectionField();
 		
