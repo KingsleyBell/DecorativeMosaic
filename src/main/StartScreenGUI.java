@@ -4,9 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -42,8 +46,26 @@ public class StartScreenGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		
+		
 		JButton uploadImgBtn = new JButton("Upload Image");
-		uploadImgBtn.setBounds(152, 154, 112, 23);
+		uploadImgBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				JFileChooser chooser = new JFileChooser();
+			    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+			        "JPG & GIF Images", "jpg", "gif");
+			    chooser.setFileFilter(filter);
+			    int returnVal = chooser.showOpenDialog(getParent());
+			    if(returnVal == JFileChooser.APPROVE_OPTION) {
+			    	JOptionPane.showInternalMessageDialog(contentPane, "You chose to open this file: " +
+				            chooser.getSelectedFile().getAbsolutePath(),
+							"Ok", JOptionPane.INFORMATION_MESSAGE);
+			       image = chooser.getSelectedFile().getAbsolutePath();
+			    }
+			}
+		});
+		uploadImgBtn.setBounds(150, 153, 112, 23);
 		contentPane.add(uploadImgBtn);
 		
 		JButton nextBtn = new JButton("Next");
@@ -51,7 +73,17 @@ public class StartScreenGUI extends JFrame {
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				VectorFieldGUI vfGUI = new VectorFieldGUI(image);
+				if(image == null)
+				{
+					JOptionPane.showInternalMessageDialog(contentPane, "Please upload an image before proceeding",
+							"Ok", JOptionPane.INFORMATION_MESSAGE);
+					
+				}
+				else
+				{
+					VectorFieldGUI vfGUI = new VectorFieldGUI(image);
+					vfGUI.setVisible(true);
+				}
 			}
 		});
 		nextBtn.setBounds(335, 228, 89, 23);

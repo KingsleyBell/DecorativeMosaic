@@ -20,10 +20,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Button;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 public class VectorFieldGUI extends JFrame {
-
-	private JPanel contentPane;
 	private String image;
 	/**
 	 * Launch the application.
@@ -64,82 +65,28 @@ public class VectorFieldGUI extends JFrame {
 		
 		JMenuItem mntmNumberOfIterations = new JMenuItem("Number of Iterations");
 		mnFile.add(mntmNumberOfIterations);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel psPanel = new JPanel();
-		psPanel.setBounds(82, 11, 289, 139);
-		DrawEdgeMap sketch = new DrawEdgeMap(image,psPanel.getWidth(), psPanel.getHeight());
-		getContentPane().add(psPanel);
+		JPanel BtnPanel = new JPanel();
+		getContentPane().add(BtnPanel, BorderLayout.SOUTH);
+		BtnPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnGenerateMosaic = new JButton("Generate Mosaic");
-		btnGenerateMosaic.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0)
-			{
-				MosaicGUI mosaic = new MosaicGUI(sketch);
-				setVisible(false);
-				mosaic.setVisible(true);
-			}
-		});
-		btnGenerateMosaic.setBounds(254, 205, 139, 23);
-		contentPane.add(btnGenerateMosaic);
+		JButton backBtn = new JButton("Back");
+		BtnPanel.add(backBtn);
 		
-		psPanel.addMouseListener(new MouseListener() 
-		{
-		    public void mouseEntered(java.awt.event.MouseEvent evt) 
-		    {
-		    	java.awt.Toolkit tk = java.awt.Toolkit.getDefaultToolkit();
-				Image img = tk.getImage("C:\\Users\\SuThy\\Desktop\\DecorativeMosaic\\src\\main\\eraserCursor.png");
-				Point point = new Point(0,0);
-				java.awt.Cursor cursor = tk.createCustomCursor(img, point,"Erase");
-				psPanel.setCursor(cursor);
-		    }
-
-		    public void mouseExited(java.awt.event.MouseEvent evt) 
-		    {
-		    	psPanel.setCursor((new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR)));
-		    }
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-		});
+		JButton clearBtn = new JButton("Clear");
+		BtnPanel.add(clearBtn);
 		
-		JButton btnBck = new JButton("Back");
-		btnBck.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				MosaicGUI mosaic = new MosaicGUI(sketch);
-				setVisible(false);
-				mosaic.setVisible(true);
-			}
-		});
-		btnBck.setBounds(54, 205, 89, 23);
-		contentPane.add(btnBck);
+		JButton genMosaicBtn = new JButton("Generate Mosaic");
+		BtnPanel.add(genMosaicBtn);
 		
-		JButton clearButton = new JButton("Clear");
-		clearButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		clearButton.setBounds(54, 171, 89, 23);
-		contentPane.add(clearButton);
+		JPanel sketchPanel = new JPanel();
+		sketchPanel.setSize(new Dimension(200,200));
+		getContentPane().add(sketchPanel);
+		getContentPane().add(sketchPanel, BorderLayout.CENTER);
+		DrawEdgeMap pSketch = new DrawEdgeMap(image, sketchPanel.getWidth(), sketchPanel.getHeight());
+		System.out.println("THIS: " + sketchPanel.getWidth());
+		sketchPanel.add(pSketch);
+		pSketch.init();
 	}
 }

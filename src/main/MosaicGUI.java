@@ -51,15 +51,15 @@ public class MosaicGUI extends JFrame {
 		processingSketchPanel.add(sketch);
 		getContentPane().add(processingSketchPanel);
 		
-		JButton btnEditEdgeFeatures = new JButton("Edit Edge Features");
-		btnEditEdgeFeatures.addActionListener(new ActionListener() {
+		JButton editEdgeBtn = new JButton("Edit Edge Features");
+		editEdgeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
 				sketch.setEnabled(true);
 			}
 		});
-		btnEditEdgeFeatures.setBounds(41, 213, 145, 23);
-		contentPane.add(btnEditEdgeFeatures);
+		editEdgeBtn.setBounds(41, 213, 145, 23);
+		contentPane.add(editEdgeBtn);
 		
 		JButton btnNewButton = new JButton("Download Mosaic");
 		btnNewButton.setBounds(254, 213, 135, 23);
