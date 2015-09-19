@@ -58,6 +58,11 @@ public class MosaicWORKING extends PApplet {
 		// Draw edge curve				
 		
 	}
+	
+	public PImage getImage()
+	{
+		return img;
+	}
 
 	public void draw() {
 //		frame.setTitle((int)(frameRate) + " fps");

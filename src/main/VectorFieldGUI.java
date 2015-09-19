@@ -55,7 +55,7 @@ public class VectorFieldGUI extends JFrame {
 		this.setTitle("Mosaic Mecca");
 		
 		//set default tiles, iteratios and grout colour
-		  numTiles = 30;
+		  numTiles = 50;
 		  iterations = 15;
 		  groutColour = 125;
 		
@@ -92,11 +92,12 @@ public class VectorFieldGUI extends JFrame {
 		JButton genMosaicBtn = new JButton("Generate Mosaic");
 		
 		JPanel sketchPanel = new JPanel();
-		sketchPanel.setSize(new Dimension(200,200));
-		getContentPane().add(sketchPanel);
 		getContentPane().add(sketchPanel, BorderLayout.CENTER);
-		DrawEdgeMap pSketch = new DrawEdgeMap(image, sketchPanel.getWidth(), sketchPanel.getHeight());
+		System.out.println(sketchPanel.getWidth());
+		sketchPanel.setBackground(new Color(255,0,0));
+		MosaicWORKING pSketch = new MosaicWORKING(image, sketchPanel.getWidth(), sketchPanel.getHeight(), numTiles, iterations, groutColour);
 		sketchPanel.add(pSketch);
+		pSketch.setSize(new Dimension(pSketch.getImage().width,pSketch.getImage().height));
 		pSketch.init();
 		
 		sketchPanel.addMouseListener(new MouseListener() 
@@ -140,11 +141,11 @@ public class VectorFieldGUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0)
 			{
 				
-				Mosaic mosaic = new Mosaic(pSketch.getImage(), pSketch.getEdgeCurve(),numTiles, iterations,groutColour, sketchPanel.getHeight(), sketchPanel.getWidth());
-				mosaic.init();
+				//Mosaic mosaic = new Mosaic(pSketch.getImage(), pSketch.getEdgeCurve(),numTiles, iterations,groutColour, sketchPanel.getHeight(), sketchPanel.getWidth());
+				//mosaic.init();
 				
-				MosaicGUI mGUI = new MosaicGUI(mosaic);
-				mGUI.setVisible(true);
+				//MosaicGUI mGUI = new MosaicGUI(mosaic);
+				//mGUI.setVisible(true);
 			}
 		});
 		BtnPanel.add(genMosaicBtn);
