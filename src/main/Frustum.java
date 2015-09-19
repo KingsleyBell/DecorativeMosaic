@@ -21,8 +21,7 @@ public class Frustum {
 	
 	// Constructor
 	public Frustum(Integer x, Integer y, Integer baseWidth, Integer topWidth,
-			Integer h, Integer colour, PVector orientation) {
-		super();
+			Integer h, Integer colour, PVector orientation) {		
 		this.x = x;
 		this.y = y;
 		this.baseWidth = baseWidth;

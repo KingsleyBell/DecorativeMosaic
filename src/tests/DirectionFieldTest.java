@@ -32,7 +32,7 @@ public class DirectionFieldTest{
 		directionFieldObject = new DirectionField(width,height,edgeCurve);		
 	}
 	
-	@Test(timeout=10000)
+	@Test(timeout=1000)
 	public void testCreateSurFaceTime() {
 		PVector p;
 		edgeCurve = new EdgeCurve();
@@ -42,8 +42,7 @@ public class DirectionFieldTest{
 			p = new PVector(500-i, i);
 		}
 		edgeCurve.addPoint(null);
-		directionFieldObject = new DirectionField(500,500,edgeCurve);
-		System.out.println("pls");
+		directionFieldObject = new DirectionField(500,500,edgeCurve);		
 	}
 	
 	@Test
