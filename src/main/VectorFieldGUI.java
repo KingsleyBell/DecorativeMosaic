@@ -55,7 +55,7 @@ public class VectorFieldGUI extends JFrame {
 		this.setTitle("Mosaic Mecca");
 		
 		//set default tiles, iteratios and grout colour
-		  numTiles = 50;
+		  numTiles = 80;
 		  iterations = 15;
 		  groutColour = 125;
 		
