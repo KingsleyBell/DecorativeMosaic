@@ -93,11 +93,11 @@ public class VectorFieldGUI extends JFrame {
 		
 		JPanel sketchPanel = new JPanel();
 		getContentPane().add(sketchPanel, BorderLayout.CENTER);
-		System.out.println(sketchPanel.getWidth());
 		sketchPanel.setBackground(new Color(255,0,0));
 		MosaicWORKING pSketch = new MosaicWORKING(image, sketchPanel.getWidth(), sketchPanel.getHeight(), numTiles, iterations, groutColour);
 		sketchPanel.add(pSketch);
 		pSketch.setSize(new Dimension(pSketch.getImage().width,pSketch.getImage().height));
+		pSketch.setLocation(0,0);
 		pSketch.init();
 		
 		sketchPanel.addMouseListener(new MouseListener() 
