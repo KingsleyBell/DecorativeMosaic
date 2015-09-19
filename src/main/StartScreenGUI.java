@@ -41,6 +41,9 @@ public class StartScreenGUI extends JFrame {
 	public StartScreenGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		
+		this.setTitle("Mosaic Mecca");
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -65,7 +68,7 @@ public class StartScreenGUI extends JFrame {
 			    }
 			}
 		});
-		uploadImgBtn.setBounds(150, 153, 112, 23);
+		uploadImgBtn.setBounds(151, 228, 112, 23);
 		contentPane.add(uploadImgBtn);
 		
 		JButton nextBtn = new JButton("Next");

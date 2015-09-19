@@ -52,6 +52,8 @@ public class VectorFieldGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		
+		this.setTitle("Mosaic Mecca");
+		
 		//set default tiles, iteratios and grout colour
 		  numTiles = 30;
 		  iterations = 15;

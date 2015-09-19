@@ -46,6 +46,8 @@ public class MosaicGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		this.setTitle("Mosaic Mecca");
+		
 		JPanel processingSketchPanel = new JPanel();
 		processingSketchPanel.setBounds(46, 11, 328, 184);
 		processingSketchPanel.add(sketch);
