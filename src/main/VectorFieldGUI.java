@@ -97,6 +97,43 @@ public class VectorFieldGUI extends JFrame {
 		sketchPanel.add(pSketch);
 		pSketch.init();
 		
+		sketchPanel.addMouseListener(new MouseListener() 
+		{
+		    public void mouseEntered(java.awt.event.MouseEvent evt) 
+		    {
+		    	java.awt.Toolkit tk = java.awt.Toolkit.getDefaultToolkit();
+				Image img = tk.getImage("pencil-icon.png");
+				Point point = new Point(0,0);
+				java.awt.Cursor cursor = tk.createCustomCursor(img, point,"Erase");
+				pSketch.setCursor(cursor); //Set the cursor in the panel to a paintbrush
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) 
+		    {
+		    	//set the cursor back to the default cursor for the sketch panel - not needed
+		    	//sketchPanel.setCursor((new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR)));
+		    }
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+		});
+		
 		genMosaicBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
