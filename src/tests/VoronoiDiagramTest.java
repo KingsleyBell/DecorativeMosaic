@@ -41,8 +41,7 @@ public class VoronoiDiagramTest {
 			PVector p = new PVector(i,i);
 			edgeCurve.addPoint(p);
 			p = new PVector(500-i, i);
-		}
-		edgeCurve.addPoint(null);
+		}		
 		DirectionField directionFieldObject = new DirectionField(500,500,edgeCurve);
 		ArrayList<PVector> directions = directionFieldObject.getDirectionField();
 		ArrayList<PVector> points = voronoiDiagram.getPoints();
