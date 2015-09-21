@@ -1,6 +1,5 @@
 package main;
 
-import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,8 +22,8 @@ public class DirectionField {
 		this.imageWidth = imageWidth;
 		this.imageHeight = imageHeight;
 		this.edgeCurve = E;
-		this.dx = 2;
-		this.dy = 2;
+		this.dx = 1;
+		this.dy = 1;
 		this.surface = createSurface();
 		this.directionField = createDirectionField();		
 	}
