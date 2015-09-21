@@ -30,26 +30,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.io.File;
+import javax.swing.JSlider;
+import javax.swing.JLabel;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class VectorFieldGUI extends JFrame {
 	private String image;
 	private Integer tileSize;
 	private int iterations;
 	private int groutColour;
-
-	// THIS IS THE OLD INITIALISATION
-	// public static void main(String[] args) {
-	// EventQueue.invokeLater(new Runnable() {
-	// public void run() {
-	// try {
-	// vectorFieldGUI frame = new vectorFieldGUI();
-	// frame.setVisible(true);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// });
-	// }
+	private Mosaic mosaic = new Mosaic();
 
 	/**
 	 * Create the frame.
@@ -73,17 +64,66 @@ public class VectorFieldGUI extends JFrame {
 
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
-
-		JMenuItem mntmNumberOfTiles = new JMenuItem("Tile Size");
-		mnFile.add(mntmNumberOfTiles);		
-
-		JMenuItem mntmGroutColour = new JMenuItem("Grout Colour");
-		mnFile.add(mntmGroutColour);				
-
-		JMenuItem mntmNumberOfIterations = new JMenuItem("Number of Iterations");
-		mnFile.add(mntmNumberOfIterations);
+		
+		JLabel lblTileSize = new JLabel("Tile Size");
+		mnFile.add(lblTileSize);
+		
+		JSlider tileSlider = new JSlider();
+		tileSlider.setPaintTicks(true);
+		tileSlider.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent arg0) 
+			{
+				tileSize = tileSlider.getValue();
+				mosaic.setTileSize(tileSize);
+			}
+		});
+		tileSlider.setValue(30);
+		tileSlider.setPaintLabels(true);
+		tileSlider.setMinimum(10);
+		mnFile.add(tileSlider);
+		
+		JLabel lblGroutColour = new JLabel("Grout Colour");
+		mnFile.add(lblGroutColour);
+		
+		JSlider groutSlider = new JSlider();
+		groutSlider.setPaintTicks(true);
+		groutSlider.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt)
+			{
+				groutColour = groutSlider.getValue();
+				mosaic.setGroutColour(groutColour);
+			}
+		});
+		groutSlider.setValue(125);
+		groutSlider.setMaximum(255);
+		groutSlider.setPaintLabels(true);
+		mnFile.add(groutSlider);
+		
+		JLabel lblNumberOfIterations = new JLabel("Number of Iterations");
+		mnFile.add(lblNumberOfIterations);
+		
+		JSlider iterationSlider = new JSlider();
+		iterationSlider.setPaintTicks(true);
+		iterationSlider.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) 
+			{
+				iterations = iterationSlider.getValue();
+				mosaic.setIterations(iterations);
+			}
+		});
+		iterationSlider.setValue(15);
+		iterationSlider.setMaximum(50);
+		iterationSlider.setMinimum(1);
+		iterationSlider.setPaintLabels(true);
+		mnFile.add(iterationSlider);
 		
 		JMenuItem mntmQuit = new JMenuItem("Quit");
+		mntmQuit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				System.exit(0);
+			}
+		});
 		mnFile.add(mntmQuit);
 		
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -92,7 +132,7 @@ public class VectorFieldGUI extends JFrame {
 		
 		JPanel sketchPanel = new JPanel();
 		getContentPane().add(sketchPanel, BorderLayout.CENTER);
-		Mosaic mosaic = new Mosaic(image, sketchPanel.getWidth(), sketchPanel.getHeight(), tileSize, iterations,
+		mosaic = new Mosaic(image, sketchPanel.getWidth(), sketchPanel.getHeight(), tileSize, iterations,
 				groutColour);
 		sketchPanel.add(mosaic);
 		mosaic.setSize(new Dimension(mosaic.getImage().width, mosaic.getImage().height));
