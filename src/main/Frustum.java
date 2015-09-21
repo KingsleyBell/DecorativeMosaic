@@ -19,7 +19,10 @@ public class Frustum {
 	private Integer xNum;
 	private Integer yNum;	
 	
-	// Constructor
+	/**
+	 * Class representing frustum object in P3D
+	 * 
+	 */
 	public Frustum(Integer x, Integer y, Integer baseWidth, Integer topWidth,
 			Integer h, Integer colour, PVector orientation) {		
 		this.x = x;
@@ -39,7 +42,11 @@ public class Frustum {
 		this.yNum = 0;
 	}
 
-	// Return PShape representing this frustum
+	/**
+	 * 
+	 * @param pApp
+	 * @return PShape repretesting this frustum
+	 */
 	public PShape makeFrustum(PApplet pApp) {
 		PShape p = pApp.createShape(); 
 		
@@ -78,9 +85,13 @@ public class Frustum {
 
 	public void setOrientation(PVector direction) {
 		this.orientation = calculateOrientation(direction);
-//		System.out.println("set: " + orientation);
 	}
 
+	/**
+	 * 
+	 * @param point
+	 * @return float representing orientation 2D vector
+	 */
 	public Float calculateOrientation(PVector point) {
 		Float degree = -(float) Math.atan2(point.x, point.y);
 		return degree;
@@ -110,18 +121,28 @@ public class Frustum {
 		this.colour = c;
 	}
 
+	/**
+	 * Add value to xSum and increment xNum
+	 * @param x
+	 */
 	public void addToX(Integer x) {
 		xSum += x;
 		xNum++;
 	}
-
+	/**
+	 * Add value to ySum and increment yNum
+	 * @param y
+	 */
 	public void addToY(Integer y) {
 		ySum += y;
 		yNum++;
 	}
 
-	// Calculate new centroid of frustum based by averaging all x and y values
-	// that appear from this frustum
+	/**
+	 * Calculate new centroid of frustum based by averaging all x and y values
+	 that appear from this frustum
+	 * @return centroid of frustum
+	 */	 
 	public PVector getCentroid() {
 		if (xNum == 0 || yNum == 0) {
 			return new PVector(-1, -1);

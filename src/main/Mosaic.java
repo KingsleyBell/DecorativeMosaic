@@ -16,64 +16,51 @@ public class Mosaic extends PApplet {
 	private static final long serialVersionUID = 1L;
 	private PImage img;
 	private VoronoiDiagram voronoi;
-	private DirectionField directionFieldObject;
+	private DirectionField d;
 	private ArrayList<PVector> directionField;
 	private ArrayList<PVector> points;
 	private EdgeCurve edgeCurve;	
-	private Integer numTiles;
-	private double tileWidth;
+//	private Integer numTiles;	
+	private Integer tileSize;
 	private Integer iterations;
 	private ArrayList<Frustum> frustums;
 	private PVector [] positions;
-	private Integer [] colours;	
-	private Integer groutColor;
-	private Integer windowHeight;
-	private Integer windowWidth;
+	private Integer [] colours;
+	private Integer groutColour;
 	
-	
-
-	public Mosaic(PImage img, EdgeCurve edgeCurve, Integer numTiles, Integer iterations, Integer groutColor,
-			Integer windowHeight, Integer windowWidth) {
-		super();
-		this.img = img;
-		this.edgeCurve = edgeCurve;
-		this.numTiles = numTiles;
+	public Mosaic(String fileLoc, int width, int height, Integer tileSize, Integer iterations, Integer groutColour) {
+		this.img = loadImage(fileLoc);
+		this.width = width;
+		this.height = height;
+		this.tileSize = tileSize;
 		this.iterations = iterations;
-		this.groutColor = groutColor;
-		this.windowHeight = windowHeight;
-		this.windowWidth = windowWidth;
-		this.voronoi = new VoronoiDiagram(numTiles, iterations, width, height);		
-		this.points = voronoi.getRandomPoints();						
-		voronoi.getRandomColours();
-	}	
-
-	// Default
-	public Mosaic(PImage img, EdgeCurve edgeCurve, Integer windowHeight, Integer windowWidth) {
-		super();
-		this.img = img;
-		this.edgeCurve = edgeCurve;
-		this.windowHeight = windowHeight;
-		this.windowWidth = windowWidth;
-		
-		numTiles = 30;
-		iterations = 20;
-		groutColor = 125;
+		this.groutColour = groutColour;
 	}
 
 	/**
 	 * Main method generates frustums and then runs voronoi algorithm on them
 	 */
 	public void setup() {
-		
-		size(windowWidth, windowHeight, P3D);
-		
-		//Default tile size:
-		tileWidth = 0.8*(Math.sqrt((width*height) / (numTiles*numTiles)));
-		
+
+//		background(255);
+//		frameRate(200);
+		size(width, height, P3D);		
 		img.resize(width, height);
 		ortho(0, width, 0, height);
+
+		voronoi = new VoronoiDiagram(tileSize, iterations, width, height);		
+		points = voronoi.getRandomPoints();						
+		voronoi.getRandomColours();
+		
 		background(img);
-		iterate();
+		edgeCurve = new EdgeCurve();
+		// Draw edge curve				
+		
+	}
+	
+	public PImage getImage()
+	{
+		return img;
 	}
 
 	public void draw() {
@@ -83,8 +70,10 @@ public class Mosaic extends PApplet {
 
 	public void iterate() {
 
-		directionFieldObject = new DirectionField(width, height, edgeCurve);		
-		directionField = directionFieldObject.getDirectionField();
+		clear();										
+		d = new DirectionField(width, height, edgeCurve);		
+		directionField = d.getDirectionField();
+		
 		for (int i = 0; i < iterations; i++) {			
 			clear();		
 			frustums = voronoi.placeFrustums(points, directionField);
@@ -116,7 +105,8 @@ public class Mosaic extends PApplet {
 		clear();	 
 				 
 		 placeTiles(points, img);
-//		 drawEdgeCurve();
+		 
+		 drawEdgeCurve();
 		 
 		 saveFrame("tiles.jpeg");
 		 System.out.println("DONE");
@@ -139,61 +129,66 @@ public class Mosaic extends PApplet {
 		edgeCurve.addPoint(null);
 	}
 
-//	public void keyPressed() {
-//		if (key == ENTER) {
-//			iterate();			
-//		}
-//	}	
+	public void keyPressed() {
+		if (key == ENTER) {
+			iterate();			
+		}
+	}	
 	
 	public void drawEdgeCurve() {
 		strokeWeight(5);
-		for (int i = 1; i < directionFieldObject.getEdgeCurveSize(); i++) {
-			if(directionFieldObject.getEdgeCurveVector(i - 1) == null) {
+		for (int i = 1; i < d.getEdgeCurve().getSize(); i++) {
+			if(d.getEdgeCurve().getVector(i - 1) == null) {
 				continue;
 			}
-			else if (directionFieldObject.getEdgeCurveVector(i) == null) {
+			else if (d.getEdgeCurve().getVector(i) == null) {
 				continue;
 			}
 			else {
 				stroke(255);
 				//d.E is the vector field's EdgeCurve attribute
-				line(directionFieldObject.getEdgeCurveVector(i-1).x, directionFieldObject.getEdgeCurveVector(i-1).y, 10, directionFieldObject.getEdgeCurveVector(i).x, directionFieldObject.getEdgeCurveVector(i).y,10);				
+				line(d.getEdgeCurve().getVector(i-1).x, d.getEdgeCurve().getVector(i-1).y, 10, d.getEdgeCurve().getVector(i).x, d.getEdgeCurve().getVector(i).y,10);				
 			}
 		}		
 	}
 
 	public void placeTiles(ArrayList<PVector> points, PImage img) {
 
-		background(groutColor);
+		background(groutColour);
 		strokeWeight(1);
 		stroke(0);
-		
-		Float orientation;
-
-		for (int i = 0; i < frustums.size(); i++) {	
-			Frustum tempFrust = frustums.get(i);					
-			orientation = tempFrust.getOrientation();						
-			Float a = (float)tileWidth/(2.5F);
-			Integer x = tempFrust.getX();
-			Integer y = tempFrust.getY();
-			
+		Integer x;
+		Integer y;
+		Double actualTileSize = 0.8*Math.sqrt((height*width)/voronoi.getNumTiles());
+		Float orientation [] = new Float[frustums.size()];
+		PShape tiles = createShape(GROUP);
+		PVector [] positions = new PVector[frustums.size()];
+		int [] colors = new int[frustums.size()];
+		for (int i = 0; i < points.size(); i++) {	
+			positions[i] = new PVector((int)points.get(i).x,points.get(i).y);
+			orientation[i] = frustums.get(i).getOrientation();
+			colors[i] = frustums.get(i).getColour();
 			PShape tile = createShape();
-			tile.beginShape();		
-			tile.fill(img.get(x, y));
+			tile.beginShape();
+			tile.fill(img.get((int)positions[i].x, (int)positions[i].y));
+			Integer a = (int)(actualTileSize/2);
+			tile.beginShape();			
 			tile.vertex(-a, -a);
 			tile.vertex(+a, -a);
 			tile.vertex(+a, +a);
-			tile.vertex(-a, +a);
-			tile.vertex(-a, -a);
-			tile.rotate(orientation);
-			tile.endShape();												
-						
-			shape(tile, x, y);
+			tile.vertex(-a, +a);			
+			tile.endShape(CLOSE);
+//			shape(tile, positions[i].x, positions[i].y);
+			tiles.addChild(tile);		
 		}
-	}
-		
-	public void saveMosaic(String fileLoc) {			
-		saveFrame(fileLoc);
+//		this.fill(255);
+//		shape(tiles.getChild(0), positions[0].x, positions[0].y);
+//		rect(100,100,50,50);
+		for (int i = 0; i < tiles.getChildCount(); i++) {
+			PShape f = tiles.getChild(i);
+			f.rotate(orientation[i]);
+			shape(f, positions[i].x, positions[i].y);
+		}
 	}
 
 }
