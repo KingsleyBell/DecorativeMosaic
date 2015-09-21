@@ -13,6 +13,7 @@ import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.FlowLayout;
 
 public class StartScreenGUI extends JFrame {
 
@@ -40,19 +41,24 @@ public class StartScreenGUI extends JFrame {
 	 */
 	public StartScreenGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		this.setExtendedState(MAXIMIZED_BOTH);
 		
 		this.setTitle("Mosaic Mecca");
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		image = "test.jpg";
 		
-		JButton uploadImgBtn = new JButton("Upload Image");
-		uploadImgBtn.addActionListener(new ActionListener() {
+		contentPane.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel = new JPanel();
+		contentPane.add(panel, BorderLayout.SOUTH);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JButton uploadBtn = new JButton("Upload Image");
+		uploadBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
 				JFileChooser chooser = new JFileChooser();
@@ -68,28 +74,31 @@ public class StartScreenGUI extends JFrame {
 			    }
 			}
 		});
-		uploadImgBtn.setBounds(151, 228, 112, 23);
-		contentPane.add(uploadImgBtn);
+		panel.add(uploadBtn);
 		
-		JButton nextBtn = new JButton("Next");
-		nextBtn.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent arg0) 
+			
+			JButton nextBtn = new JButton("Next");
+			panel.add(nextBtn);
+			nextBtn.addActionListener(new ActionListener() 
 			{
-				if(image == null)
+				public void actionPerformed(ActionEvent arg0) 
 				{
-					JOptionPane.showInternalMessageDialog(contentPane, "Please upload an image before proceeding",
-							"Ok", JOptionPane.INFORMATION_MESSAGE);
-					
+					if(image == null)
+					{
+						JOptionPane.showInternalMessageDialog(contentPane, "Please upload an image before proceeding",
+								"Ok", JOptionPane.INFORMATION_MESSAGE);
+						
+					}
+					else
+					{
+						VectorFieldGUI vfGUI = new VectorFieldGUI(image);
+						vfGUI.setVisible(true);
+					}
 				}
-				else
-				{
-					VectorFieldGUI vfGUI = new VectorFieldGUI(image);
-					vfGUI.setVisible(true);
-				}
-			}
-		});
-		nextBtn.setBounds(335, 228, 89, 23);
-		contentPane.add(nextBtn);
+			});
+			nextBtn.setBounds(335, 228, 89, 23);
+		
+		
+		
 	}
 }
