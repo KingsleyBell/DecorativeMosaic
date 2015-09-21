@@ -6,6 +6,7 @@ import java.util.HashMap;
 import processing.core.PVector;
 
 /**
+ * @author Josh Buchalter
  * Class that handles the calculation of the vector field given a set of points
  * (x,y) on an edge line
  */
