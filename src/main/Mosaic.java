@@ -181,23 +181,19 @@ public class Mosaic extends PApplet {
 	public void mouseReleased() {
 		edgeCurve.addPoint(null);
 	}
-
-	/**
-	 * Generates mosaic on press of Return key
-	 */
-	public void keyPressed() {
-		if (key == ENTER) {
-			setupDirectionField();
-			iteration = 0;
-		}
-	}
 	
 	/**
 	 * Starts mosaic generation process
 	 */
-	public void startMosaic() {
-		setupDirectionField();
-		iteration = 0;
+	public boolean startMosaic() {
+		if(edgeCurve.getSize() == 0) {
+			return false;
+		}
+		else {
+			setupDirectionField();
+			iteration = 0;
+			return true;
+		}
 	}
 
 	/**
