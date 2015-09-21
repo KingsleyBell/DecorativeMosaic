@@ -8,10 +8,13 @@ import java.awt.Point;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import processing.core.PApplet;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -28,7 +31,6 @@ import java.awt.FlowLayout;
 
 public class VectorFieldGUI extends JFrame {
 	private String image;
-	private int numTiles;
 	private Integer tileSize;
 	private int iterations;
 	private int groutColour;
@@ -110,8 +112,17 @@ public class VectorFieldGUI extends JFrame {
 		BtnPanel.add(DLBtn);
 		DLBtn.setVisible(false);
 		DLBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
+			public void actionPerformed(ActionEvent arg0)
+			{
+				JFileChooser chooser = new JFileChooser();
+				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			    int returnVal = chooser.showOpenDialog(getParent());
+			    if(returnVal == JFileChooser.APPROVE_OPTION) {
+			    	JOptionPane.showInternalMessageDialog(getContentPane(), "You chose to save this mosaic to: " +
+				            chooser.getSelectedFile().getAbsolutePath(),
+							"Ok", JOptionPane.INFORMATION_MESSAGE);
+			       mosaic.setFileName(chooser.getSelectedFile().getAbsolutePath());
+			    }
 			}
 		});
 
