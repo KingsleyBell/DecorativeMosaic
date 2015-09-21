@@ -92,6 +92,7 @@ public class StartScreenGUI extends JFrame {
 					else
 					{
 						VectorFieldGUI vfGUI = new VectorFieldGUI(image);
+					    dispose();
 						vfGUI.setVisible(true);
 					}
 				}

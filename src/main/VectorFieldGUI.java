@@ -96,15 +96,35 @@ public class VectorFieldGUI extends JFrame {
 		BtnPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JButton backBtn = new JButton("Back");
+		backBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				StartScreenGUI start = new StartScreenGUI();
+				start.setVisible(true);
+				dispose();
+			}
+		});
 		BtnPanel.add(backBtn);
 
 		JButton clearBtn = new JButton("Clear");
+		clearBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				mosaic.clearEdgeCurve();
+			}
+		});
 		BtnPanel.add(clearBtn);
 
 		JButton genMosaicBtn = new JButton("Generate Mosaic");
 		BtnPanel.add(genMosaicBtn);
 
 		JButton editBtn = new JButton("Edit Edge Features");
+		editBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				mosaic.editEdgeCurve();
+			}
+		});
 		BtnPanel.add(editBtn);
 		editBtn.setVisible(false);
 
