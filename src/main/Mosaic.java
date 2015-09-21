@@ -186,6 +186,14 @@ public class Mosaic extends PApplet {
 			iteration = 0;
 		}
 	}
+	
+	/**
+	 * Starts mosaic generation process
+	 */
+	public void startMosaic() {
+		setupDirectionField();
+		iteration = 0;
+	}
 
 	/**
 	 * Draws edgeCurve lines over screen
