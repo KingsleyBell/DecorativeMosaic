@@ -27,6 +27,7 @@ import java.awt.FlowLayout;
 public class VectorFieldGUI extends JFrame {
 	private String image;
 	private int numTiles;
+	private Integer tileSize;
 	private int iterations;
 	private int groutColour;
 	
@@ -55,7 +56,7 @@ public class VectorFieldGUI extends JFrame {
 		this.setTitle("Mosaic Mecca");
 		
 		//set default tiles, iteratios and grout colour
-		  numTiles = 80;
+		  tileSize = 20;
 		  iterations = 15;
 		  groutColour = 125;
 		
@@ -94,7 +95,7 @@ public class VectorFieldGUI extends JFrame {
 		JPanel sketchPanel = new JPanel();
 		getContentPane().add(sketchPanel, BorderLayout.CENTER);
 		sketchPanel.setBackground(new Color(255,0,0));
-		MosaicWORKING pSketch = new MosaicWORKING(image, sketchPanel.getWidth(), sketchPanel.getHeight(), numTiles, iterations, groutColour);
+		MosaicWORKING pSketch = new MosaicWORKING(image, sketchPanel.getWidth(), sketchPanel.getHeight(), tileSize, iterations, groutColour);
 		sketchPanel.add(pSketch);
 		pSketch.setSize(new Dimension(pSketch.getImage().width,pSketch.getImage().height));
 		pSketch.setLocation(0,0);

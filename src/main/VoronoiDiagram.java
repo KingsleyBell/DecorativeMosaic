@@ -12,20 +12,24 @@ public class VoronoiDiagram {
 
 	private int width;
 	private int height;
-	private int numTiles;
+	private int widthTiles;
+	private int heightTiles;
+	private Integer tileSize;
 	private ArrayList<PVector> points;
 	private ArrayList<Frustum> frustums;
 	private HashMap<Integer,Integer> frustumColours;
 	private Random random;
 	
-	public VoronoiDiagram(int numTiles, int iterations, int width, int height) {
+	public VoronoiDiagram(int tileSize, int iterations, int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.numTiles = numTiles;		
+		this.tileSize = tileSize;
+		this.widthTiles = width/tileSize;
+		this.heightTiles = height/tileSize;
 		this.points = new ArrayList<PVector>();
 		this.frustums = new ArrayList<Frustum>();
-		for (int i = 0; i < numTiles*numTiles; i++) {
-			frustums.add(new Frustum(0, 0, width, width/numTiles, 10, 0, null));
+		for (int i = 0; i < widthTiles*heightTiles; i++) {
+			frustums.add(new Frustum(0, 0, width, tileSize, 10, 0, null));
 		}
 		this.frustumColours = new HashMap<Integer,Integer>();
 		this.random = new Random();
@@ -34,11 +38,11 @@ public class VoronoiDiagram {
 	public ArrayList<PVector> getRandomPoints() {
 		ArrayList<PVector> pVectorPoints = new ArrayList<PVector>();
 		PVector newPoint;
-		for (int i = 0; i < numTiles; i++) {
-			for (int j = 0; j < numTiles; j++) {
+		for (int i = 0; i < widthTiles; i++) {
+			for (int j = 0; j < heightTiles; j++) {
 				
-				float x = ((float)width/(float)numTiles)*(i+1) - random.nextFloat()*((float)width/(float)numTiles);
-				float y = ((float)height/(float)numTiles)*(j+1) - random.nextFloat()*((float)height/(float)numTiles);
+				float x = ((float)width/(float)widthTiles)*(i+1) - random.nextFloat()*((float)width/(float)widthTiles);
+				float y = ((float)height/(float)heightTiles)*(j+1) - random.nextFloat()*((float)height/(float)widthTiles);
 				
 				newPoint = new PVector(x, y);				
 
@@ -51,7 +55,7 @@ public class VoronoiDiagram {
 	}
 
 	public ArrayList<Frustum> getRandomColours() {
-		for (int i = 0; i < numTiles*numTiles; i++) {
+		for (int i = 0; i < widthTiles*heightTiles; i++) {
 			PApplet p = new PApplet();
 			Integer r = (int) (Math.random()*255);
 			Integer g = (int) (Math.random()*255);

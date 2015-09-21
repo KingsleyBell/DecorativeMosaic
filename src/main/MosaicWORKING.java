@@ -20,19 +20,19 @@ public class MosaicWORKING extends PApplet {
 	private ArrayList<PVector> directionField;
 	private ArrayList<PVector> points;
 	private EdgeCurve edgeCurve;	
-	private Integer numTiles;
-	private Integer tileWidth;
+//	private Integer numTiles;	
+	private Integer tileSize;
 	private Integer iterations;
 	private ArrayList<Frustum> frustums;
 	private PVector [] positions;
 	private Integer [] colours;
 	private Integer groutColour;
 	
-	public MosaicWORKING(String fileLoc, int width, int height, Integer numTiles, Integer iterations, Integer groutColour) {
+	public MosaicWORKING(String fileLoc, int width, int height, Integer tileSize, Integer iterations, Integer groutColour) {
 		this.img = loadImage(fileLoc);
 		this.width = width;
 		this.height = height;
-		this.numTiles = numTiles;
+		this.tileSize = tileSize;
 		this.iterations = iterations;
 		this.groutColour = groutColour;
 	}
@@ -44,12 +44,11 @@ public class MosaicWORKING extends PApplet {
 
 //		background(255);
 //		frameRate(200);
-		size(width, height, P3D);
-		tileWidth = width / (numTiles);
+		size(width, height, P3D);		
 		img.resize(width, height);
 		ortho(0, width, 0, height);
 
-		voronoi = new VoronoiDiagram(numTiles, iterations, width, height);		
+		voronoi = new VoronoiDiagram(tileSize, iterations, width, height);		
 		points = voronoi.getRandomPoints();						
 		voronoi.getRandomColours();
 		
@@ -171,7 +170,7 @@ public class MosaicWORKING extends PApplet {
 			PShape tile = createShape();
 			tile.beginShape();
 			tile.fill(img.get((int)positions[i].x, (int)positions[i].y));
-			Integer a = tileWidth/2;
+			Integer a = tileSize/2;
 			tile.beginShape();			
 			tile.vertex(-a, -a);
 			tile.vertex(+a, -a);
