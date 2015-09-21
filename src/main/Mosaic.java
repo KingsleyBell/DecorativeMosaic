@@ -81,10 +81,14 @@ public class Mosaic extends PApplet {
 			iterate(iteration);
 			iteration++;
 		}
-		else if(iteration == iterations+1) {
+		else if(iteration == iterations) {
 			if(outputFileName!=null) {
 				outputMosaic("mosaic.jpg");
 			}
+			outputMosaic(outputFileName);
+			iteration++;
+		}
+		else if(iteration == iterations+1) {
 			outputMosaic(outputFileName);
 			iteration++;
 		}
