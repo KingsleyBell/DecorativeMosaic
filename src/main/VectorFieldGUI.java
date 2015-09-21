@@ -108,6 +108,12 @@ public class VectorFieldGUI extends JFrame {
 		JButton DLBtn = new JButton("Download Mosaic");
 		BtnPanel.add(DLBtn);
 		DLBtn.setVisible(false);
+		DLBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				
+			}
+		});
 		
 		genMosaicBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
