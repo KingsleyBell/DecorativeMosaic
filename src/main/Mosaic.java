@@ -262,5 +262,22 @@ public class Mosaic extends PApplet {
 		this.outputFileName = fileName;
 		iteration++;
 	}
+	
+	public void clearEdgeCurve() {
+		edgeCurve.clearEdgeCurve();
+		background(img);
+		iteration = -1;
+		
+	}
+	
+	public void editEdgeCurve() {
+		background(img);
+		ArrayList<PVector> edgePoints = edgeCurve.getPoints();		
+		for(int i = 0; i < points.size()-1; i++){
+			if(points.get(i)!=null && points.get(i+1)!=null) {
+				line(points.get(i).x, points.get(i).y, 10, points.get(i+1).x, points.get(i+1).y, 10);				
+			}			
+		}
+	}
 
 }

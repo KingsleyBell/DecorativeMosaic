@@ -59,6 +59,10 @@ public class EdgeCurve {
 		return points.size();
 	}
 	
+	public ArrayList<PVector> getPoints() {
+		return points;
+	}
+	
 	/*
 	 * Method to return the vector at the given index in list
 	 * @args: int index => position in list wanted
@@ -94,6 +98,13 @@ public class EdgeCurve {
 	 */
 	public boolean containsPoint (PVector p) {
 		return points.contains(p);
+	}
+	
+	/**
+	 * Clears all points from edgeCurve
+	 */
+	public void clearEdgeCurve() {
+		points.clear();
 	}
 	
 	/*
