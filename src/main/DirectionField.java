@@ -46,8 +46,7 @@ public class DirectionField {
 		return tempSurface;
 	}
 
-	/*
-	 * ======= /** >>>>>>> gui-direction-field-impement Method to create the
+	/**Method to create the
 	 * direction field: for every point (x,y) there is a vector associated to it
 	 * In this case, for each centroid, associate vector pi = grad(z(ci))
 	 */
