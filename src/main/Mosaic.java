@@ -14,7 +14,7 @@ import processing.core.PVector;
  * @author Luke
  *
  */
-public class MosaicWORKING extends PApplet {
+public class Mosaic extends PApplet {
 
 	private static final long serialVersionUID = 1L;
 	private PImage img;
@@ -42,7 +42,7 @@ public class MosaicWORKING extends PApplet {
 	 * @param iterations
 	 * @param groutColour
 	 */
-	public MosaicWORKING(String fileLoc, int width, int height,
+	public Mosaic(String fileLoc, int width, int height,
 			Integer tileSize, Integer iterations, Integer groutColour) {
 		this.iteration = -1;
 		this.img = loadImage(fileLoc);
@@ -81,7 +81,7 @@ public class MosaicWORKING extends PApplet {
 			iterate(iteration);
 			iteration++;
 		}
-		else if(iteration == iterations) {
+		else if(iteration == iterations+1) {
 			if(outputFileName!=null) {
 				outputMosaic("mosaic.jpg");
 			}
@@ -249,8 +249,9 @@ public class MosaicWORKING extends PApplet {
 		}
 	}
 	
-	public void setFileName(String fileName) {
+	public void setFileName(String fileName) {		
 		this.outputFileName = fileName;
+		iteration++;
 	}
 
 }
