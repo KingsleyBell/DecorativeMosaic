@@ -118,5 +118,9 @@ public class VoronoiDiagram {
 	public ArrayList<PVector> getPoints() {
 		return points;
 	}
+	
+	public Integer getNumTiles() {
+		return heightTiles*widthTiles;
+	}
 
 }

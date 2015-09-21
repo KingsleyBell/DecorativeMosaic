@@ -49,7 +49,7 @@ public class StartScreenGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		image = "C:\\Users\\SuThy\\Desktop\\hahahaha.jpeg";
+		image = "test.jpg";
 		
 		JButton uploadImgBtn = new JButton("Upload Image");
 		uploadImgBtn.addActionListener(new ActionListener() {

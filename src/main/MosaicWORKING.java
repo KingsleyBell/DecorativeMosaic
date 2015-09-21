@@ -159,6 +159,7 @@ public class MosaicWORKING extends PApplet {
 		stroke(0);
 		Integer x;
 		Integer y;
+		Double actualTileSize = 0.8*Math.sqrt((height*width)/voronoi.getNumTiles());
 		Float orientation [] = new Float[frustums.size()];
 		PShape tiles = createShape(GROUP);
 		PVector [] positions = new PVector[frustums.size()];
@@ -170,7 +171,7 @@ public class MosaicWORKING extends PApplet {
 			PShape tile = createShape();
 			tile.beginShape();
 			tile.fill(img.get((int)positions[i].x, (int)positions[i].y));
-			Integer a = tileSize/2;
+			Integer a = (int)(actualTileSize/2);
 			tile.beginShape();			
 			tile.vertex(-a, -a);
 			tile.vertex(+a, -a);
