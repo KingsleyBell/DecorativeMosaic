@@ -51,7 +51,7 @@ public class VectorFieldGUI extends JFrame {
 	 */
 	public VectorFieldGUI(String img) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		this.setExtendedState(MAXIMIZED_BOTH);
 		
 		this.setTitle("Mosaic Mecca");
 		
@@ -80,6 +80,14 @@ public class VectorFieldGUI extends JFrame {
 		mnFile.add(mntmNumberOfIterations);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
+		JPanel sketchPanel = new JPanel();
+		getContentPane().add(sketchPanel, BorderLayout.CENTER);
+		Mosaic mosaic = new Mosaic(image, sketchPanel.getWidth(), sketchPanel.getHeight(), tileSize, iterations, groutColour);
+		sketchPanel.add(mosaic);
+		mosaic.setSize(new Dimension(mosaic.getImage().width,mosaic.getImage().height));
+		mosaic.setLocation(0,0);
+		mosaic.init();
+		
 		JPanel BtnPanel = new JPanel();
 		getContentPane().add(BtnPanel, BorderLayout.SOUTH);
 		BtnPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -91,15 +99,27 @@ public class VectorFieldGUI extends JFrame {
 		BtnPanel.add(clearBtn);
 		
 		JButton genMosaicBtn = new JButton("Generate Mosaic");
+		BtnPanel.add(genMosaicBtn);
 		
-		JPanel sketchPanel = new JPanel();
-		getContentPane().add(sketchPanel, BorderLayout.CENTER);
-		sketchPanel.setBackground(new Color(255,0,0));
-		MosaicWORKING pSketch = new MosaicWORKING(image, sketchPanel.getWidth(), sketchPanel.getHeight(), tileSize, iterations, groutColour);
-		sketchPanel.add(pSketch);
-		pSketch.setSize(new Dimension(pSketch.getImage().width,pSketch.getImage().height));
-		pSketch.setLocation(0,0);
-		pSketch.init();
+		JButton editBtn = new JButton("Edit Edge Features");
+		BtnPanel.add(editBtn);
+		editBtn.setVisible(false);
+		
+		JButton DLBtn = new JButton("Download Mosaic");
+		BtnPanel.add(DLBtn);
+		DLBtn.setVisible(false);
+		
+		genMosaicBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				mosaic.startMosaic();
+				backBtn.setVisible(false);
+				clearBtn.setVisible(false);
+				genMosaicBtn.setVisible(false);
+				DLBtn.setVisible(true);
+				editBtn.setVisible(true);
+			}
+		});
 		
 		sketchPanel.addMouseListener(new MouseListener() 
 		{
@@ -109,7 +129,7 @@ public class VectorFieldGUI extends JFrame {
 				Image img = tk.getImage("pencil-icon.png");
 				Point point = new Point(0,0);
 				java.awt.Cursor cursor = tk.createCustomCursor(img, point,"Erase");
-				pSketch.setCursor(cursor); //Set the cursor in the panel to a paintbrush
+				mosaic.setCursor(cursor); //Set the cursor in the panel to a paintbrush
 		    }
 
 		    public void mouseExited(java.awt.event.MouseEvent evt) 
@@ -137,18 +157,5 @@ public class VectorFieldGUI extends JFrame {
 			}
 
 		});
-		
-		genMosaicBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0)
-			{
-				
-				//Mosaic mosaic = new Mosaic(pSketch.getImage(), pSketch.getEdgeCurve(),numTiles, iterations,groutColour, sketchPanel.getHeight(), sketchPanel.getWidth());
-				//mosaic.init();
-				
-				//MosaicGUI mGUI = new MosaicGUI(mosaic);
-				//mGUI.setVisible(true);
-			}
-		});
-		BtnPanel.add(genMosaicBtn);
 	}
 }
