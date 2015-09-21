@@ -74,16 +74,22 @@ public class VectorFieldGUI extends JFrame {
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 
-		JMenuItem mntmNumberOfTiles = new JMenuItem("Number of Tiles");
-		mnFile.add(mntmNumberOfTiles);
+		JMenuItem mntmNumberOfTiles = new JMenuItem("Tile Size");
+		mnFile.add(mntmNumberOfTiles);		
 
 		JMenuItem mntmGroutColour = new JMenuItem("Grout Colour");
-		mnFile.add(mntmGroutColour);
+		mnFile.add(mntmGroutColour);				
 
 		JMenuItem mntmNumberOfIterations = new JMenuItem("Number of Iterations");
 		mnFile.add(mntmNumberOfIterations);
+		
+		JMenuItem mntmQuit = new JMenuItem("Quit");
+		mnFile.add(mntmQuit);
+		
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
+		
+		
 		JPanel sketchPanel = new JPanel();
 		getContentPane().add(sketchPanel, BorderLayout.CENTER);
 		Mosaic mosaic = new Mosaic(image, sketchPanel.getWidth(), sketchPanel.getHeight(), tileSize, iterations,
