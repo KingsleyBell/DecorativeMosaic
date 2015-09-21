@@ -33,13 +33,6 @@ public class Mosaic extends PApplet {
 	private String outputFileName;
 
 	/**
-	 * default constructor
-	 */
-	public Mosaic() {
-		
-	}
-	
-	/**
 	 * Constructor
 	 * 
 	 * @param fileLoc
@@ -99,6 +92,7 @@ public class Mosaic extends PApplet {
 		else if(iteration == iterations) {
 			if(outputFileName==null) {
 				outputMosaic("mosaic.jpg");
+				System.out.println(tileSize);
 			}
 			else
 				outputMosaic(outputFileName);
@@ -294,13 +288,13 @@ public class Mosaic extends PApplet {
 	public void setTileSize(int tileSize)
 	{
 		this.tileSize=tileSize;
+		voronoi = new VoronoiDiagram(tileSize, iterations, width, height);
+		points = voronoi.getRandomPoints();
+		voronoi.getRandomColours();
 	}
 	
 	public void editEdgeCurve() {
 		iteration=-2;
-		voronoi = new VoronoiDiagram(tileSize, iterations, width, height);
-		points = voronoi.getRandomPoints();
-		voronoi.getRandomColours();
 	}
 
 }

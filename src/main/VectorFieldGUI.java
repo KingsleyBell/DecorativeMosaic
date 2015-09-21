@@ -40,7 +40,6 @@ public class VectorFieldGUI extends JFrame {
 	private Integer tileSize;
 	private int iterations;
 	private int groutColour;
-	private Mosaic mosaic = new Mosaic();
 
 	/**
 	 * Create the frame.
@@ -59,6 +58,16 @@ public class VectorFieldGUI extends JFrame {
 		// set image to what was passed in
 		this.image = img;
 
+		getContentPane().setLayout(new BorderLayout(0, 0));
+		JPanel sketchPanel = new JPanel();
+		getContentPane().add(sketchPanel, BorderLayout.CENTER);
+		Mosaic mosaic = new Mosaic(image, sketchPanel.getWidth(), sketchPanel.getHeight(), tileSize, iterations,
+				groutColour);
+		sketchPanel.add(mosaic);
+		mosaic.setSize(new Dimension(mosaic.getImage().width, mosaic.getImage().height));
+		mosaic.setLocation(0, 0);
+		mosaic.init();
+		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -125,19 +134,6 @@ public class VectorFieldGUI extends JFrame {
 			}
 		});
 		mnFile.add(mntmQuit);
-		
-		getContentPane().setLayout(new BorderLayout(0, 0));
-
-		
-		
-		JPanel sketchPanel = new JPanel();
-		getContentPane().add(sketchPanel, BorderLayout.CENTER);
-		mosaic = new Mosaic(image, sketchPanel.getWidth(), sketchPanel.getHeight(), tileSize, iterations,
-				groutColour);
-		sketchPanel.add(mosaic);
-		mosaic.setSize(new Dimension(mosaic.getImage().width, mosaic.getImage().height));
-		mosaic.setLocation(0, 0);
-		mosaic.init();
 
 		JPanel BtnPanel = new JPanel();
 		getContentPane().add(BtnPanel, BorderLayout.SOUTH);
