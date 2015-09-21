@@ -44,7 +44,7 @@ public class Mosaic extends PApplet {
 	 */
 	public Mosaic(String fileLoc, int width, int height,
 			Integer tileSize, Integer iterations, Integer groutColour) {
-		this.iteration = -1;
+		this.iteration = -2;
 		this.img = loadImage(fileLoc);
 		this.width = width;
 		this.height = height;
@@ -74,10 +74,15 @@ public class Mosaic extends PApplet {
 	 * Main PApplet method runs continuously
 	 */
 	public void draw() {
-		if(iteration < 0) {
+		if(iteration < -1) {
 			clear();
 			background(img);
-//			drawEdgeCurve();
+			if(edgeCurve.getSize()!=0) {
+				drawEdgeCurve(0);
+			}
+			iteration++;
+		}
+		else if(iteration == -1) {
 			
 		}
 		else if(iteration < iterations){
@@ -155,7 +160,7 @@ public class Mosaic extends PApplet {
 
 		redraw();
 
-		drawEdgeCurve();
+		drawEdgeCurve(255);
 
 		System.out.println("saving frame " + i);
 		saveFrame("its" + File.separator + "it" + i + ".jpeg");
@@ -202,18 +207,18 @@ public class Mosaic extends PApplet {
 	/**
 	 * Draws edgeCurve lines over screen
 	 */
-	public void drawEdgeCurve() {
+	public void drawEdgeCurve(int stroke) {
 		strokeWeight(5);
-		for (int i = 1; i < d.getEdgeCurve().getSize(); i++) {
-			if (d.getEdgeCurve().getVector(i - 1) == null) {
+		for (int i = 1; i < edgeCurve.getSize(); i++) {
+			if (edgeCurve.getVector(i - 1) == null) {
 				continue;
-			} else if (d.getEdgeCurve().getVector(i) == null) {
+			} else if (edgeCurve.getVector(i) == null) {
 				continue;
 			} else {
-				stroke(255);
-				line(d.getEdgeCurve().getVector(i - 1).x, d.getEdgeCurve()
+				stroke(stroke);
+				line(edgeCurve.getVector(i - 1).x, edgeCurve
 						.getVector(i - 1).y, 10,
-						d.getEdgeCurve().getVector(i).x, d.getEdgeCurve()
+						edgeCurve.getVector(i).x, edgeCurve
 								.getVector(i).y, 10);
 			}
 		}
@@ -268,12 +273,12 @@ public class Mosaic extends PApplet {
 	
 	public void clearEdgeCurve() {
 		edgeCurve.clearEdgeCurve();
-		iteration = -1;
+		iteration = -2;
 		
 	}
 	
 	public void editEdgeCurve() {
-		iteration=-1;
+		iteration=-2;
 	}
 
 }

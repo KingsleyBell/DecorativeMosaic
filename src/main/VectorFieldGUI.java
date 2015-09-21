@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -28,6 +29,7 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.io.File;
 
 public class VectorFieldGUI extends JFrame {
 	private String image;
@@ -95,6 +97,10 @@ public class VectorFieldGUI extends JFrame {
 		getContentPane().add(BtnPanel, BorderLayout.SOUTH);
 		BtnPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
+		JButton DLBtn = new JButton("Download Mosaic");
+		BtnPanel.add(DLBtn);
+		DLBtn.setVisible(false);
+		
 		JButton backBtn = new JButton("Back");
 		backBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
@@ -123,22 +129,23 @@ public class VectorFieldGUI extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 				mosaic.editEdgeCurve();
+				backBtn.setVisible(true);
+				clearBtn.setVisible(true);
+				genMosaicBtn.setVisible(true);
+				DLBtn.setVisible(false);
+				editBtn.setVisible(false);
 			}
 		});
 		BtnPanel.add(editBtn);
 		editBtn.setVisible(false);
 
-		JButton DLBtn = new JButton("Download Mosaic");
-		BtnPanel.add(DLBtn);
-		DLBtn.setVisible(false);
 		DLBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-				JFileChooser chooser = new JFileChooser();
-				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			    int returnVal = chooser.showOpenDialog(getParent());
-			    if(returnVal == JFileChooser.APPROVE_OPTION) {
-			    	JOptionPane.showInternalMessageDialog(getContentPane(), "You chose to save this mosaic to: " +
+				JFileChooser chooser = new JFileChooser();				
+				int returnVal = chooser.showSaveDialog(getContentPane());							    
+			    if(returnVal == JFileChooser.APPROVE_OPTION) {			    
+			    	JOptionPane.showMessageDialog(null, "You chose to save this mosaic to: " +
 				            chooser.getSelectedFile().getAbsolutePath(),
 							"Ok", JOptionPane.INFORMATION_MESSAGE);
 			       mosaic.setFileName(chooser.getSelectedFile().getAbsolutePath());
@@ -149,8 +156,8 @@ public class VectorFieldGUI extends JFrame {
 		genMosaicBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean mosaicBoo = mosaic.startMosaic();
-				if (mosaicBoo == false) {
-					JOptionPane.showInternalMessageDialog(getContentPane(), "Please draw at least one edge curve ",
+				if (mosaicBoo == false) {					
+					JOptionPane.showMessageDialog(null, "Please draw at least one edge curve ",
 							"Ok", JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					backBtn.setVisible(false);
