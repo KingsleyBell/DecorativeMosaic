@@ -7,7 +7,12 @@ import java.util.Random;
 import processing.core.PApplet;
 import processing.core.PVector;
 
-// Class to perform voronoi algorithm on array of frustums given direction field
+ 
+/**
+ * Class to perform voronoi algorithm on array of frustums given direction field 
+ * @author Luke
+ *
+ */
 public class VoronoiDiagram {
 
 	private int width;
@@ -20,6 +25,13 @@ public class VoronoiDiagram {
 	private HashMap<Integer,Integer> frustumColours;
 	private Random random;
 	
+	/**
+	 * Constructor
+	 * @param tileSize
+	 * @param iterations
+	 * @param width
+	 * @param height
+	 */
 	public VoronoiDiagram(int tileSize, int iterations, int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -35,6 +47,10 @@ public class VoronoiDiagram {
 		this.random = new Random();
 	}
 
+	/**
+	 * Generate well-distributed random points 
+	 * @return points
+	 */
 	public ArrayList<PVector> getRandomPoints() {
 		ArrayList<PVector> pVectorPoints = new ArrayList<PVector>();
 		PVector newPoint;
@@ -54,6 +70,10 @@ public class VoronoiDiagram {
 		return pVectorPoints;
 	}
 
+	/**
+	 * Generate random colours for frustums
+	 * @return frustums with colours
+	 */
 	public ArrayList<Frustum> getRandomColours() {
 		for (int i = 0; i < widthTiles*heightTiles; i++) {
 			PApplet p = new PApplet();
@@ -67,12 +87,14 @@ public class VoronoiDiagram {
 		return frustums;
 	}
 
+	/**
+	 * Place frustums at points
+	 * @param points
+	 * @param directionField
+	 * @return
+	 */
 	public ArrayList<Frustum> placeFrustums(ArrayList<PVector> points,
-			ArrayList<PVector> directionField) {	
-//		if(points.size()!=directionField.size()) {			
-//			System.out.println("Points size: " + points.size() + ". DirectionField size: " + directionField.size());			
-//		}
-		// Put frustums on those points
+		ArrayList<PVector> directionField) {	
 		Integer x;
 		Integer y;		
 
@@ -88,8 +110,12 @@ public class VoronoiDiagram {
 		return frustums;
 	}
 
-	public ArrayList<PVector> calculateCentroids(PApplet p) {
-		int l = 0;
+	/**
+	 * Calculate centroids of frustums from colours
+	 * @param p
+	 * @return centroids
+	 */
+	public ArrayList<PVector> calculateCentroids(PApplet p) {		
 		p.loadPixels();
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {				
@@ -98,15 +124,9 @@ public class VoronoiDiagram {
 				if (index != null) {
 					frustums.get(index).addToX(i);
 					frustums.get(index).addToY(j);
-				} else {
-					l++;					
-//					System.out.println(l + ": FRUSTUM NOT FOUND for point: (" + i + "," + j + ") and colour: " + c);
 				}
-
 			}
-
-		}
-//		System.out.println("Points without associate frustum: " + l);		
+		}			
 		for (int i = 0; i < frustums.size(); i++) {
 			PVector centroid = frustums.get(i).getCentroid();
 			points.set(i, centroid);
@@ -119,8 +139,13 @@ public class VoronoiDiagram {
 		return points;
 	}
 	
+	/**
+	 * calculate total number of tiles
+	 * @return numTiles
+	 */
 	public Integer getNumTiles() {
-		return heightTiles*widthTiles;
+		Integer numTiles = heightTiles*widthTiles; 
+		return numTiles;
 	}
 
 }

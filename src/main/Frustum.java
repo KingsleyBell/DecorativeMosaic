@@ -4,6 +4,12 @@ import processing.core.PApplet;
 import processing.core.PShape;
 import processing.core.PVector;
 
+/**
+ * 
+ * Class representing frustum object in P3D
+ * @author Luke
+ *
+ */
 public class Frustum {
 
 	private Integer x;
@@ -18,10 +24,16 @@ public class Frustum {
 	private Integer ySum;
 	private Integer xNum;
 	private Integer yNum;	
-	
+		
 	/**
-	 * Class representing frustum object in P3D
-	 * 
+	 * Constructor
+	 * @param x
+	 * @param y
+	 * @param baseWidth
+	 * @param topWidth
+	 * @param h
+	 * @param colour
+	 * @param orientation
 	 */
 	public Frustum(Integer x, Integer y, Integer baseWidth, Integer topWidth,
 			Integer h, Integer colour, PVector orientation) {		

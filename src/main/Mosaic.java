@@ -8,11 +8,13 @@ import processing.core.PImage;
 import processing.core.PShape;
 import processing.core.PVector;
 
+/**
+ * PApplet class for generating mosaic from edgeCurve and voronoiDiagram objects
+ * @author Luke
+ *
+ */
 public class Mosaic extends PApplet {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private PImage img;
 	private VoronoiDiagram voronoi;
@@ -20,7 +22,6 @@ public class Mosaic extends PApplet {
 	private ArrayList<PVector> directionField;
 	private ArrayList<PVector> points;
 	private EdgeCurve edgeCurve;	
-//	private Integer numTiles;	
 	private Integer tileSize;
 	private Integer iterations;
 	private ArrayList<Frustum> frustums;
@@ -28,6 +29,15 @@ public class Mosaic extends PApplet {
 	private Integer [] colours;
 	private Integer groutColour;
 	
+	/**
+	 * Constructor
+	 * @param fileLoc
+	 * @param width
+	 * @param height
+	 * @param tileSize
+	 * @param iterations
+	 * @param groutColour
+	 */
 	public Mosaic(String fileLoc, int width, int height, Integer tileSize, Integer iterations, Integer groutColour) {
 		this.img = loadImage(fileLoc);
 		this.width = width;
@@ -42,8 +52,6 @@ public class Mosaic extends PApplet {
 	 */
 	public void setup() {
 
-//		background(255);
-//		frameRate(200);
 		size(width, height, P3D);		
 		img.resize(width, height);
 		ortho(0, width, 0, height);
@@ -53,21 +61,18 @@ public class Mosaic extends PApplet {
 		voronoi.getRandomColours();
 		
 		background(img);
-		edgeCurve = new EdgeCurve();
-		// Draw edge curve				
-		
+		edgeCurve = new EdgeCurve();						
 	}
 	
 	public PImage getImage()
 	{
 		return img;
-	}
+	}	
 
-	public void draw() {
-//		frame.setTitle((int)(frameRate) + " fps");
-		// empty
-	}
-
+	/**
+	 * Iterates over voronoi loop, diagram converges	
+	 * Places tiles after diagram has converged, forming a mosaic 
+	 */
 	public void iterate() {
 
 		clear();										
@@ -113,6 +118,9 @@ public class Mosaic extends PApplet {
 		 
 	}
 
+	/**
+	 * Draws edgeCurve line over screen
+	 */
 	public void mouseDragged() {
 		strokeWeight(3);
 		line(mouseX, mouseY, pmouseX, pmouseY);
@@ -125,16 +133,25 @@ public class Mosaic extends PApplet {
 		}
 	}
 	
+	/**
+	 * Adds null point to edgeCurve to sepearte edgeCurve segments
+	 */
 	public void mouseReleased() {
 		edgeCurve.addPoint(null);
 	}
 
+	/**
+	 * Generates mosaic on press of Return key
+	 */
 	public void keyPressed() {
 		if (key == ENTER) {
 			iterate();			
 		}
 	}	
 	
+	/**
+	 * Draws edgeCurve lines over screen
+	 */
 	public void drawEdgeCurve() {
 		strokeWeight(5);
 		for (int i = 1; i < d.getEdgeCurve().getSize(); i++) {
@@ -145,13 +162,18 @@ public class Mosaic extends PApplet {
 				continue;
 			}
 			else {
-				stroke(255);
-				//d.E is the vector field's EdgeCurve attribute
+				stroke(255);				
 				line(d.getEdgeCurve().getVector(i-1).x, d.getEdgeCurve().getVector(i-1).y, 10, d.getEdgeCurve().getVector(i).x, d.getEdgeCurve().getVector(i).y,10);				
 			}
 		}		
 	}
 
+	/**
+	 * Places tiles on screen at points
+	 * Forms mosaic of img
+	 * @param points
+	 * @param img
+	 */
 	public void placeTiles(ArrayList<PVector> points, PImage img) {
 
 		background(groutColour);
@@ -178,12 +200,8 @@ public class Mosaic extends PApplet {
 			tile.vertex(+a, +a);
 			tile.vertex(-a, +a);			
 			tile.endShape(CLOSE);
-//			shape(tile, positions[i].x, positions[i].y);
 			tiles.addChild(tile);		
-		}
-//		this.fill(255);
-//		shape(tiles.getChild(0), positions[0].x, positions[0].y);
-//		rect(100,100,50,50);
+		}		
 		for (int i = 0; i < tiles.getChildCount(); i++) {
 			PShape f = tiles.getChild(i);
 			f.rotate(orientation[i]);
