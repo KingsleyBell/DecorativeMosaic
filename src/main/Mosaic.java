@@ -1,7 +1,11 @@
 package main;
 
+import java.awt.Image;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 
@@ -37,17 +41,17 @@ public class Mosaic extends PApplet {
 	/**
 	 * Constructor
 	 * 
-	 * @param fileLoc
+	 * @param image
 	 * @param width
 	 * @param height
 	 * @param tileSize
 	 * @param iterations
 	 * @param groutColour
 	 */
-	public Mosaic(ImageIcon fileLoc, int width, int height,
+	public Mosaic(Image image, int width, int height,
 			Integer tileSize, Integer iterations, Integer groutColour) {
 		this.iteration = -2;
-		this.img = new PImage(fileLoc.getImage());		
+		this.img = new PImage(image);		
 		this.width = width;
 		this.height = height;
 		this.tileSize = tileSize;
@@ -93,7 +97,9 @@ public class Mosaic extends PApplet {
 		}
 		else if(iteration == iterations) {
 			if(outputFileName==null) {
-				outputMosaic("mosaic.jpg");
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+				Date date = new Date();				
+				outputMosaic("output/mosaic" + dateFormat.format(date) + ".jpg");
 			}
 			else
 				outputMosaic(outputFileName);

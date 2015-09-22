@@ -43,46 +43,52 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
 public class VectorFieldGUI extends JFrame {
-	private ImageIcon image;
+	private Image image;
 	private Integer tileSize;
 	private int iterations;
 	private int groutColour;
 
 	/**
 	 * Create the frame.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public VectorFieldGUI(String img) throws IOException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// set image to what was passed in
 		// and resize if necessary
-		File imgFile = new File(img);
-		BufferedImage bannerImage = ImageIO.read(imgFile);
-		ImageIcon imgIcon = new ImageIcon(bannerImage);
+		
+		
+		Image fullImg = Toolkit.getDefaultToolkit().getImage(img);		
+		ImageIcon imgIcon = new ImageIcon(fullImg);
 
-		if (imgIcon.getIconHeight() > getHeight()
-				|| imgIcon.getIconWidth() > getWidth()) {
-			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-			Integer screenWidth = (int) screenSize.getWidth();
-			Integer screenHeight = (int) screenSize.getHeight();
-
-			if (imgIcon.getIconHeight() > getHeight()) {
-				Image fullImg = imgIcon.getImage();
-				Image scaledImg = fullImg.getScaledInstance(
-						imgIcon.getIconWidth(), screenHeight - 200,
-						java.awt.Image.SCALE_SMOOTH);
-				imgIcon = new ImageIcon(scaledImg);
-			}
-			if (imgIcon.getIconWidth() > getWidth()) {
-				Image fullImg = imgIcon.getImage();
-				Image scaledImg = fullImg.getScaledInstance(screenWidth,
-						imgIcon.getIconHeight(), java.awt.Image.SCALE_SMOOTH);
-				imgIcon = new ImageIcon(scaledImg);
-			}
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Integer screenWidth = (int) screenSize.getWidth();
+		Integer screenHeight = (int) screenSize.getHeight();		
+		Image scaledImg = fullImg;
+		
+		if (imgIcon.getIconHeight() > screenHeight-200) {			
+			scaledImg = fullImg.getScaledInstance(imgIcon.getIconWidth(),
+					screenHeight - 200, java.awt.Image.SCALE_SMOOTH);
+			imgIcon = new ImageIcon(scaledImg);
 		}
-		this.setSize(imgIcon.getIconWidth(), imgIcon.getIconHeight() + 100);
-		this.image = imgIcon;
+		else {
+			scaledImg = fullImg;
+		}
+		if (imgIcon.getIconWidth() > screenWidth) {			
+			scaledImg = fullImg.getScaledInstance(screenWidth,
+					imgIcon.getIconHeight(), java.awt.Image.SCALE_SMOOTH);
+			imgIcon = new ImageIcon(scaledImg);
+		}						
+		else {
+			scaledImg = fullImg;
+		}
+		
+		if(imgIcon.getIconWidth() < 500) {
+			this.setSize(500, imgIcon.getIconHeight() + 100);
+		}		
+		this.image = scaledImg;
 
 		this.setLocationRelativeTo(null);
 
@@ -246,7 +252,7 @@ public class VectorFieldGUI extends JFrame {
 		sketchPanel.addMouseListener(new MouseListener() {
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
 				java.awt.Toolkit tk = java.awt.Toolkit.getDefaultToolkit();
-				Image img = tk.getImage("pencil-icon.png");
+				Image img = tk.getImage("resources/pencil-icon.png");
 				img = img.getScaledInstance(20, 20, Image.SCALE_DEFAULT);
 				Point point = new Point(0, 0);
 				java.awt.Cursor cursor = tk.createCustomCursor(img, point,

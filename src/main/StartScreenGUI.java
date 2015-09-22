@@ -59,7 +59,7 @@ public class StartScreenGUI extends JFrame {
 		
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		File bannerFile = new File("banner.jpg");
+		File bannerFile = new File("resources/banner.jpg");
 		try {
 			BufferedImage bannerImage = ImageIO.read(bannerFile);
 			JLabel northPanel = new JLabel(new ImageIcon(bannerImage));
