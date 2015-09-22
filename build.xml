@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="DecorativeMosaic">
+    <property environment="env"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="../../../Applications/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar"/>
+        <pathelement location="../../../Applications/eclipse/plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+    </path>
+    <path id="DecorativeMosaic.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="lib/core.jar"/>
+        <pathelement location="lib/gluegen-rt.jar"/>
+        <pathelement location="lib/jogl-all.jar"/>
+        <pathelement location="lib/jogl-all-natives-macosx-universal.jar"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="DirectionFieldTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="tests.DirectionFieldTest" todir="${junit.output.dir}"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </junit>
+    </target>
+    <target name="DrawEdgeMap">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="DrawEdgeMap.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="Driver">
+        <java classname="main.Driver" failonerror="true" fork="yes">
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="EdgeCurveTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="tests.EdgeCurveTest" todir="${junit.output.dir}"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </junit>
+    </target>
+    <target name="EdgeCurveTest.testGetClosestPointError">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="tests.EdgeCurveTest" todir="${junit.output.dir}"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </junit>
+    </target>
+    <target name="Frustum (1)">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="Frustum (1).html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="Frustum">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="Frustum.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="frustumTester">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="frustumTester.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="meshTest">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="meshTest.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="Mosaic">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="Mosaic.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="MosaicTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="tests.MosaicTest" todir="${junit.output.dir}"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </junit>
+    </target>
+    <target name="newVectorFieldTest">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="newVectorFieldTest.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="ok">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="ok.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="OrthoTest">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="OrthoTest.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="ProcessingDrawing1">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="ProcessingDrawing1.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="processingDrawing2">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="processingDrawing2.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="ProcessingDrawing3">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="ProcessingDrawing3.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="pyramid">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="pyramid.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="Star">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="Star.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="Test">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="Test.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="TestDriver">
+        <java classname="main.TestDriver" failonerror="true" fork="yes">
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="TestSuite">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="tests.TestSuite" todir="${junit.output.dir}"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </junit>
+    </target>
+    <target name="VectorField">
+        <java classname="main.VectorField" failonerror="true" fork="yes">
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="VoronoiDiagramTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="tests.VoronoiDiagramTest" todir="${junit.output.dir}"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </junit>
+    </target>
+    <target name="StartScreenGUI">
+        <java classname="main.StartScreenGUI" failonerror="true" fork="yes">
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="MosaicWORKING">
+        <java classname="sun.applet.AppletViewer" dir="." failonerror="true" fork="yes">
+            <arg line="MosaicWORKING.html"/>
+            <classpath refid="DecorativeMosaic.classpath"/>
+        </java>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
+</project>

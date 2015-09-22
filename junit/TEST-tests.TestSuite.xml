@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="1" failures="0" hostname="MacBook-Pro.local" name="tests.TestSuite" skipped="0" tests="16" time="16.608" timestamp="2015-09-22T13:37:42">
+  <properties>
+    <property name="java.vendor" value="Oracle Corporation" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="env.XPC_SERVICE_NAME" value="org.eclipse.platform.ide.39508" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+    <property name="os.name" value="Mac OS X" />
+    <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/classes" />
+    <property name="env.TMPDIR" value="/var/folders/qb/fyk2pzts049fy26p5l3gqcf40000gn/T/" />
+    <property name="user.country.format" value="SG" />
+    <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+    <property name="ant.home" value="/Applications/eclipse/plugins/org.apache.ant_1.9.2.v201404171502" />
+    <property name="java.runtime.version" value="1.8.0_40-b27" />
+    <property name="env.JAVA_MAIN_CLASS_17150" value="org.eclipse.ant.internal.launching.remote.InternalAntRunner" />
+    <property name="env.Apple_PubSub_Socket_Render" value="/private/tmp/com.apple.launchd.u6MlCgaMLn/Render" />
+    <property name="user.name" value="Luke" />
+    <property name="env.USER" value="Luke" />
+    <property name="env.SHELL" value="/bin/bash" />
+    <property name="env.__CF_USER_TEXT_ENCODING" value="0x1F5:0x0:0x0" />
+    <property name="env.PATH" value="/usr/bin:/bin:/usr/sbin:/sbin" />
+    <property name="user.language" value="en" />
+    <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib" />
+    <property name="ant.project.default-target" value="build" />
+    <property name="env.XPC_FLAGS" value="0x0" />
+    <property name="env.APP_ICON_11909" value="../Resources/Eclipse.icns" />
+    <property name="ant.project.name" value="DecorativeMosaic" />
+    <property name="java.version" value="1.8.0_40" />
+    <property name="user.timezone" value="Africa/Johannesburg" />
+    <property name="sun.arch.data.model" value="64" />
+    <property name="env.JAVA_STARTED_ON_FIRST_THREAD_11909" value="1" />
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/endorsed" />
+    <property name="sun.cpu.isalist" value="" />
+    <property name="sun.jnu.encoding" value="UTF-8" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="file.separator" value="/" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="java.class.version" value="52.0" />
+    <property name="user.country" value="US" />
+    <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre" />
+    <property name="java.vm.info" value="mixed mode" />
+    <property name="env.LOGNAME" value="Luke" />
+    <property name="ant.file" value="/Users/Luke/DecorativeMosaic/build.xml" />
+    <property name="os.version" value="10.10.4" />
+    <property name="path.separator" value=":" />
+    <property name="java.vm.version" value="25.40-b25" />
+    <property name="ant.library.dir" value="/Applications/eclipse/plugins/org.apache.ant_1.9.2.v201404171502/lib" />
+    <property name="junit.output.dir" value="junit" />
+    <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob" />
+    <property name="sun.io.unicode.encoding" value="UnicodeBig" />
+    <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit" />
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="user.home" value="/Users/Luke" />
+    <property name="target" value="1.8" />
+    <property name="ant.file.DecorativeMosaic" value="/Users/Luke/DecorativeMosaic/build.xml" />
+    <property name="java.specification.vendor" value="Oracle Corporation" />
+    <property name="java.library.path" value="/Users/Luke/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:." />
+    <property name="java.vendor.url" value="http://java.oracle.com/" />
+    <property name="java.vm.vendor" value="Oracle Corporation" />
+    <property name="gopherProxySet" value="false" />
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner tests.TestSuite filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Users/Luke/DecorativeMosaic/junit/TEST-tests.TestSuite.xml crashfile=/Users/Luke/DecorativeMosaic/junitvmwatcher7887640195988949494.properties propsfile=/Users/Luke/DecorativeMosaic/junit1064992083391970013.properties" />
+    <property name="java.class.path" value="/Users/Luke/DecorativeMosaic/bin:/Users/Luke/DecorativeMosaic/lib/core.jar:/Users/Luke/DecorativeMosaic/lib/gluegen-rt.jar:/Users/Luke/DecorativeMosaic/lib/jogl-all.jar:/Users/Luke/DecorativeMosaic/lib/jogl-all-natives-macosx-universal.jar:/Applications/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar:/Applications/eclipse/plugins/org.hamcrest.core_1.3.0.v201303031735.jar:/Applications/eclipse/plugins/org.apache.ant_1.9.2.v201404171502/lib/ant-launcher.jar:/Applications/eclipse/plugins/org.apache.ant_1.9.2.v201404171502/lib/ant.jar:/Applications/eclipse/plugins/org.apache.ant_1.9.2.v201404171502/lib/ant-junit.jar:/Applications/eclipse/plugins/org.apache.ant_1.9.2.v201404171502/lib/ant-junit4.jar" />
+    <property name="ant.version" value="Apache Ant(TM) version 1.9.2 compiled on July 8 2013" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="java.vm.specification.version" value="1.8" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="sun.os.patch.level" value="unknown" />
+    <property name="debuglevel" value="source,lines,vars" />
+    <property name="env.HOME" value="/Users/Luke" />
+    <property name="env.ANT_HOME" value="/Applications/eclipse/plugins/org.apache.ant_1.9.2.v201404171502" />
+    <property name="java.io.tmpdir" value="/var/folders/qb/fyk2pzts049fy26p5l3gqcf40000gn/T/" />
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/" />
+    <property name="env.SSH_AUTH_SOCK" value="/private/tmp/com.apple.launchd.s7p3aSe0gF/Listeners" />
+    <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment" />
+    <property name="os.arch" value="x86_64" />
+    <property name="java.ext.dirs" value="/Users/Luke/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java" />
+    <property name="user.dir" value="/Users/Luke/DecorativeMosaic" />
+    <property name="ant.file.type.DecorativeMosaic" value="file" />
+    <property name="line.separator" value="&#xa;" />
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+    <property name="basedir" value="/Users/Luke/DecorativeMosaic" />
+    <property name="ant.java.version" value="1.8" />
+    <property name="ant.core.lib" value="/Applications/eclipse/plugins/org.apache.ant_1.9.2.v201404171502/lib/ant.jar" />
+    <property name="source" value="1.8" />
+    <property name="file.encoding" value="UTF-8" />
+    <property name="env.JAVA_STARTED_ON_FIRST_THREAD_17150" value="1" />
+    <property name="java.specification.version" value="1.8" />
+    <property name="ant.project.invoked-targets" value="TestSuite,junitreport" />
+  </properties>
+  <testcase classname="tests.EdgeCurveTest" name="testGetClosestPointError" time="0.002" />
+  <testcase classname="tests.EdgeCurveTest" name="testToString" time="0.001" />
+  <testcase classname="tests.EdgeCurveTest" name="testGetSize" time="0.0" />
+  <testcase classname="tests.EdgeCurveTest" name="testContainsPoint" time="0.001" />
+  <testcase classname="tests.EdgeCurveTest" name="testGetClosestPoint" time="0.001" />
+  <testcase classname="tests.EdgeCurveTest" name="testGetVector" time="0.001" />
+  <testcase classname="tests.DirectionFieldTest" name="testGetEdgeCurveSize" time="0.009" />
+  <testcase classname="tests.DirectionFieldTest" name="testGetImageHeightWidth" time="0.005" />
+  <testcase classname="tests.DirectionFieldTest" name="testCalcGradOfSurface" time="0.007" />
+  <testcase classname="tests.DirectionFieldTest" name="testSurfacePoint" time="0.007" />
+  <testcase classname="tests.DirectionFieldTest" name="testGetEdgeCurveVector" time="0.003" />
+  <testcase classname="tests.DirectionFieldTest" name="testDirectionFieldPoint" time="0.013" />
+  <testcase classname="tests.DirectionFieldTest" name="testCreateSurfaceTime" time="1.037">
+    <error message="test timed out after 1000 milliseconds" type="java.lang.Exception">java.lang.Exception: test timed out after 1000 milliseconds
+	at main.EdgeCurve.getClosestPoint(EdgeCurve.java:33)
+	at main.DirectionField.getSurfaceValue(DirectionField.java:87)
+	at main.DirectionField.createSurface(DirectionField.java:43)
+	at main.DirectionField.&lt;init&gt;(DirectionField.java:27)
+	at tests.DirectionFieldTest.testCreateSurfaceTime(DirectionFieldTest.java:49)
+</error>
+  </testcase>
+  <testcase classname="tests.VoronoiDiagramTest" name="testGetRandomColours" time="0.57" />
+  <testcase classname="tests.VoronoiDiagramTest" name="testPlaceFrustums" time="14.796" />
+  <testcase classname="tests.VoronoiDiagramTest" name="testGetRandomPoints" time="0.002" />
+  <system-out><![CDATA[Inside testGetClosestPointError()
+Inside testToString()
+Inside testGetSize()
+Inside testContainsPoint()
+Inside testGetClosestPoint()
+Inside testGetVector()
+Inside testGetEdgeCurveSize()
+Inside testGetImageHeightWidth()
+Inside testCalcGradOfSurface()
+Inside testSurfacePoint()
+Inside testGetEdgeCurveVector()
+Inside testDirectionFieldPoint()
+Inside testCreateSurfaceTime()
+Inside testGetRandomColours()
+Inside testGetRandomPoints()
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
