@@ -99,15 +99,11 @@ public class Mosaic extends PApplet {
 				Date date = new Date();				
 				outputMosaic("output/mosaic" + dateFormat.format(date) + ".jpg");
 			}
-			else
+			else {
 				outputMosaic(outputFileName);
+			}
 			iteration++;
 		}
-		else if(iteration == iterations+2) {
-			outputMosaic(outputFileName);
-			iteration++;
-		}
-		
 	}
 
 	public PImage getImage() {
@@ -272,7 +268,7 @@ public class Mosaic extends PApplet {
 	
 	public void setFileName(String fileName) {		
 		this.outputFileName = fileName;
-		iteration++;
+		saveFrame(fileName);
 	}
 	
 	public void clearEdgeCurve() {

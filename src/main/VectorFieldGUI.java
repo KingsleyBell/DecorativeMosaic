@@ -13,7 +13,6 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -49,34 +48,32 @@ public class VectorFieldGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// set image to what was passed in
-		// and resize if necessary		
+		// and resize if necessary
 		java.net.URL url = new URL("file://" + img);
 		ImageIcon imgIcon = new ImageIcon(url);
-		Image fullImg = imgIcon.getImage();		
-//		ImageIcon imgIcon = new ImageIcon(fullImg);
+		Image fullImg = imgIcon.getImage();
+		// ImageIcon imgIcon = new ImageIcon(fullImg);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Integer screenWidth = (int) screenSize.getWidth();
-		Integer screenHeight = (int) screenSize.getHeight();		
+		Integer screenHeight = (int) screenSize.getHeight();
 		Image scaledImg = fullImg;
-		
-		if (imgIcon.getIconHeight() > screenHeight-200) {			
+
+		if (imgIcon.getIconHeight() > screenHeight - 200) {
 			scaledImg = fullImg.getScaledInstance(imgIcon.getIconWidth(),
 					screenHeight - 200, java.awt.Image.SCALE_SMOOTH);
 			imgIcon = new ImageIcon(scaledImg);
-		}
-		else {
+		} else {
 			scaledImg = fullImg;
 		}
-		if (imgIcon.getIconWidth() > screenWidth) {			
+		if (imgIcon.getIconWidth() > screenWidth) {
 			scaledImg = fullImg.getScaledInstance(screenWidth,
 					imgIcon.getIconHeight(), java.awt.Image.SCALE_SMOOTH);
 			imgIcon = new ImageIcon(scaledImg);
-		}						
-		else {
+		} else {
 			scaledImg = fullImg;
 		}
-	
+
 		this.setMinimumSize(new Dimension(500, 300));
 		this.setSize(imgIcon.getIconWidth(), imgIcon.getIconHeight() + 100);
 		this.image = scaledImg;
@@ -172,6 +169,21 @@ public class VectorFieldGUI extends JFrame {
 
 		JButton DLBtn = new JButton("Download Mosaic");
 		BtnPanel.add(DLBtn);
+		DLBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser chooser = new JFileChooser();
+				int returnVal = chooser.showSaveDialog(getContentPane());
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					JOptionPane.showMessageDialog(null,
+							"You chose to save this mosaic to: "
+									+ chooser.getSelectedFile()
+											.getAbsolutePath(), "Ok",
+							JOptionPane.INFORMATION_MESSAGE);
+					mosaic.setFileName(chooser.getSelectedFile()
+							.getAbsolutePath());
+				}
+			}
+		});
 		DLBtn.setVisible(false);
 
 		JButton backBtn = new JButton("Back");
@@ -208,23 +220,7 @@ public class VectorFieldGUI extends JFrame {
 		});
 		BtnPanel.add(editBtn);
 		editBtn.setVisible(false);
-
-		DLBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser chooser = new JFileChooser();
-				int returnVal = chooser.showSaveDialog(getContentPane());
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					JOptionPane.showMessageDialog(null,
-							"You chose to save this mosaic to: "
-									+ chooser.getSelectedFile()
-											.getAbsolutePath(), "Ok",
-							JOptionPane.INFORMATION_MESSAGE);
-					mosaic.setFileName(chooser.getSelectedFile()
-							.getAbsolutePath());
-				}
-			}
-		});
-
+		
 		genMosaicBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean mosaicBoo = mosaic.startMosaic();
@@ -245,7 +241,8 @@ public class VectorFieldGUI extends JFrame {
 		sketchPanel.addMouseListener(new MouseListener() {
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
 				java.awt.Toolkit tk = java.awt.Toolkit.getDefaultToolkit();
-				java.net.URL url = Main.class.getResource("/resources/Pencil-icon.png");
+				java.net.URL url = Main.class
+						.getResource("/resources/Pencil-icon.png");
 				ImageIcon icon = new ImageIcon(url);
 				Image img = icon.getImage();
 				img = img.getScaledInstance(20, 20, Image.SCALE_DEFAULT);
