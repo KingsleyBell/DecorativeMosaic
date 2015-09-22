@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -19,7 +21,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 
+import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -30,23 +34,57 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.io.File;
+import java.io.IOException;
+
 import javax.swing.JSlider;
 import javax.swing.JLabel;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
 public class VectorFieldGUI extends JFrame {
-	private String image;
+	private ImageIcon image;
 	private Integer tileSize;
 	private int iterations;
 	private int groutColour;
 
 	/**
 	 * Create the frame.
+	 * @throws IOException 
 	 */
-	public VectorFieldGUI(String img) {
+	public VectorFieldGUI(String img) throws IOException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setExtendedState(MAXIMIZED_BOTH);
+
+		// set image to what was passed in
+		// and resize if necessary
+		File imgFile = new File(img);
+		BufferedImage bannerImage = ImageIO.read(imgFile);
+		ImageIcon imgIcon = new ImageIcon(bannerImage);
+
+		if (imgIcon.getIconHeight() > getHeight()
+				|| imgIcon.getIconWidth() > getWidth()) {
+			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+			Integer screenWidth = (int) screenSize.getWidth();
+			Integer screenHeight = (int) screenSize.getHeight();
+
+			if (imgIcon.getIconHeight() > getHeight()) {
+				Image fullImg = imgIcon.getImage();
+				Image scaledImg = fullImg.getScaledInstance(
+						imgIcon.getIconWidth(), screenHeight - 200,
+						java.awt.Image.SCALE_SMOOTH);
+				imgIcon = new ImageIcon(scaledImg);
+			}
+			if (imgIcon.getIconWidth() > getWidth()) {
+				Image fullImg = imgIcon.getImage();
+				Image scaledImg = fullImg.getScaledInstance(screenWidth,
+						imgIcon.getIconHeight(), java.awt.Image.SCALE_SMOOTH);
+				imgIcon = new ImageIcon(scaledImg);
+			}
+		}
+		this.setSize(imgIcon.getIconWidth(), imgIcon.getIconHeight() + 100);
+		this.image = imgIcon;
+
+		this.setLocationRelativeTo(null);
 
 		this.setTitle("Mosaic Mecca");
 
@@ -55,33 +93,30 @@ public class VectorFieldGUI extends JFrame {
 		iterations = 15;
 		groutColour = 125;
 
-		// set image to what was passed in
-		this.image = img;
-
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		JPanel sketchPanel = new JPanel();
 		getContentPane().add(sketchPanel, BorderLayout.CENTER);
-		Mosaic mosaic = new Mosaic(image, sketchPanel.getWidth(), sketchPanel.getHeight(), tileSize, iterations,
-				groutColour);
+		Mosaic mosaic = new Mosaic(image, sketchPanel.getWidth(),
+				sketchPanel.getHeight(), tileSize, iterations, groutColour);
 		sketchPanel.add(mosaic);
-		mosaic.setSize(new Dimension(mosaic.getImage().width, mosaic.getImage().height));
+		mosaic.setSize(new Dimension(mosaic.getImage().width,
+				mosaic.getImage().height));
 		mosaic.setLocation(0, 0);
 		mosaic.init();
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
-		
+
 		JLabel lblTileSize = new JLabel("Tile Size");
 		mnFile.add(lblTileSize);
-		
+
 		JSlider tileSlider = new JSlider();
 		tileSlider.setPaintTicks(true);
 		tileSlider.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent arg0) 
-			{
+			public void propertyChange(PropertyChangeEvent arg0) {
 				tileSize = tileSlider.getValue();
 				mosaic.setTileSize(tileSize);
 			}
@@ -90,15 +125,14 @@ public class VectorFieldGUI extends JFrame {
 		tileSlider.setPaintLabels(true);
 		tileSlider.setMinimum(10);
 		mnFile.add(tileSlider);
-		
+
 		JLabel lblGroutColour = new JLabel("Grout Colour");
 		mnFile.add(lblGroutColour);
-		
+
 		JSlider groutSlider = new JSlider();
 		groutSlider.setPaintTicks(true);
 		groutSlider.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt)
-			{
+			public void propertyChange(PropertyChangeEvent evt) {
 				groutColour = groutSlider.getValue();
 				mosaic.setGroutColour(groutColour);
 			}
@@ -107,15 +141,14 @@ public class VectorFieldGUI extends JFrame {
 		groutSlider.setMaximum(255);
 		groutSlider.setPaintLabels(true);
 		mnFile.add(groutSlider);
-		
+
 		JLabel lblNumberOfIterations = new JLabel("Number of Iterations");
 		mnFile.add(lblNumberOfIterations);
-		
+
 		JSlider iterationSlider = new JSlider();
 		iterationSlider.setPaintTicks(true);
 		iterationSlider.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) 
-			{
+			public void propertyChange(PropertyChangeEvent evt) {
 				iterations = iterationSlider.getValue();
 				mosaic.setIterations(iterations);
 			}
@@ -125,11 +158,10 @@ public class VectorFieldGUI extends JFrame {
 		iterationSlider.setMinimum(1);
 		iterationSlider.setPaintLabels(true);
 		mnFile.add(iterationSlider);
-		
+
 		JMenuItem mntmQuit = new JMenuItem("Quit");
 		mntmQuit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				System.exit(0);
 			}
 		});
@@ -142,11 +174,10 @@ public class VectorFieldGUI extends JFrame {
 		JButton DLBtn = new JButton("Download Mosaic");
 		BtnPanel.add(DLBtn);
 		DLBtn.setVisible(false);
-		
+
 		JButton backBtn = new JButton("Back");
 		backBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
+			public void actionPerformed(ActionEvent e) {
 				StartScreenGUI start = new StartScreenGUI();
 				start.setVisible(true);
 				dispose();
@@ -156,8 +187,7 @@ public class VectorFieldGUI extends JFrame {
 
 		JButton clearBtn = new JButton("Clear");
 		clearBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				mosaic.clearEdgeCurve();
 			}
 		});
@@ -168,8 +198,7 @@ public class VectorFieldGUI extends JFrame {
 
 		JButton editBtn = new JButton("Edit Edge Features");
 		editBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				mosaic.editEdgeCurve();
 				backBtn.setVisible(true);
 				clearBtn.setVisible(true);
@@ -182,25 +211,28 @@ public class VectorFieldGUI extends JFrame {
 		editBtn.setVisible(false);
 
 		DLBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0)
-			{
-				JFileChooser chooser = new JFileChooser();				
-				int returnVal = chooser.showSaveDialog(getContentPane());							    
-			    if(returnVal == JFileChooser.APPROVE_OPTION) {			    
-			    	JOptionPane.showMessageDialog(null, "You chose to save this mosaic to: " +
-				            chooser.getSelectedFile().getAbsolutePath(),
-							"Ok", JOptionPane.INFORMATION_MESSAGE);
-			       mosaic.setFileName(chooser.getSelectedFile().getAbsolutePath());
-			    }
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser chooser = new JFileChooser();
+				int returnVal = chooser.showSaveDialog(getContentPane());
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					JOptionPane.showMessageDialog(null,
+							"You chose to save this mosaic to: "
+									+ chooser.getSelectedFile()
+											.getAbsolutePath(), "Ok",
+							JOptionPane.INFORMATION_MESSAGE);
+					mosaic.setFileName(chooser.getSelectedFile()
+							.getAbsolutePath());
+				}
 			}
 		});
 
 		genMosaicBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean mosaicBoo = mosaic.startMosaic();
-				if (mosaicBoo == false) {					
-					JOptionPane.showMessageDialog(null, "Please draw at least one edge curve ",
-							"Ok", JOptionPane.INFORMATION_MESSAGE);
+				if (mosaicBoo == false) {
+					JOptionPane.showMessageDialog(null,
+							"Please draw at least one edge curve ", "Ok",
+							JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					backBtn.setVisible(false);
 					clearBtn.setVisible(false);
@@ -215,8 +247,10 @@ public class VectorFieldGUI extends JFrame {
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
 				java.awt.Toolkit tk = java.awt.Toolkit.getDefaultToolkit();
 				Image img = tk.getImage("pencil-icon.png");
+				img = img.getScaledInstance(20, 20, Image.SCALE_DEFAULT);
 				Point point = new Point(0, 0);
-				java.awt.Cursor cursor = tk.createCustomCursor(img, point, "Erase");
+				java.awt.Cursor cursor = tk.createCustomCursor(img, point,
+						"Erase");
 				mosaic.setCursor(cursor); // Set the cursor in the panel to a
 											// paintbrush
 			}

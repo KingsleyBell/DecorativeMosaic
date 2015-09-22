@@ -3,6 +3,8 @@ package main;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PShape;
@@ -42,10 +44,10 @@ public class Mosaic extends PApplet {
 	 * @param iterations
 	 * @param groutColour
 	 */
-	public Mosaic(String fileLoc, int width, int height,
+	public Mosaic(ImageIcon fileLoc, int width, int height,
 			Integer tileSize, Integer iterations, Integer groutColour) {
 		this.iteration = -2;
-		this.img = loadImage(fileLoc);
+		this.img = new PImage(fileLoc.getImage());		
 		this.width = width;
 		this.height = height;
 		this.tileSize = tileSize;
@@ -92,7 +94,6 @@ public class Mosaic extends PApplet {
 		else if(iteration == iterations) {
 			if(outputFileName==null) {
 				outputMosaic("mosaic.jpg");
-				System.out.println(tileSize);
 			}
 			else
 				outputMosaic(outputFileName);
