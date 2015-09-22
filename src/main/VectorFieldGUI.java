@@ -13,6 +13,8 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,6 +27,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+
+import sun.applet.Main;
 
 public class VectorFieldGUI extends JFrame {
 	/**
@@ -45,11 +49,11 @@ public class VectorFieldGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// set image to what was passed in
-		// and resize if necessary
-		
-		
-		Image fullImg = Toolkit.getDefaultToolkit().getImage(img);		
-		ImageIcon imgIcon = new ImageIcon(fullImg);
+		// and resize if necessary		
+		java.net.URL url = new URL("file://" + img);
+		ImageIcon imgIcon = new ImageIcon(url);
+		Image fullImg = imgIcon.getImage();		
+//		ImageIcon imgIcon = new ImageIcon(fullImg);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Integer screenWidth = (int) screenSize.getWidth();
@@ -241,7 +245,9 @@ public class VectorFieldGUI extends JFrame {
 		sketchPanel.addMouseListener(new MouseListener() {
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
 				java.awt.Toolkit tk = java.awt.Toolkit.getDefaultToolkit();
-				Image img = tk.getImage("resources/pencil-icon.png");
+				java.net.URL url = Main.class.getResource("/resources/Pencil-icon.png");
+				ImageIcon icon = new ImageIcon(url);
+				Image img = icon.getImage();
 				img = img.getScaledInstance(20, 20, Image.SCALE_DEFAULT);
 				Point point = new Point(0, 0);
 				java.awt.Cursor cursor = tk.createCustomCursor(img, point,

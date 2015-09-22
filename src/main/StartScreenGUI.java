@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.imageio.ImageIO;
+import javax.print.DocFlavor.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,6 +14,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+
+import sun.applet.Main;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -48,90 +51,80 @@ public class StartScreenGUI extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public StartScreenGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize ( 800, 300 );
-		this.setLocationRelativeTo ( null );
-		
+		this.setSize(800, 300);
+		this.setLocationRelativeTo(null);
+
 		this.setTitle("Mosaic Mecca");
-		
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		File bannerFile = new File("resources/banner.jpg");
-		try {
-			BufferedImage bannerImage = ImageIO.read(bannerFile);
-			JLabel northPanel = new JLabel(new ImageIcon(bannerImage));
-			contentPane.add(northPanel, BorderLayout.NORTH);
-			northPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		}
-		catch (IOException e) {			
-			e.printStackTrace();
-		}				
-		
+
+		java.net.URL url = Main.class.getResource("/resources/banner.jpg");
+		ImageIcon icon = new ImageIcon(url);
+		JLabel northPanel = new JLabel(icon);
+		contentPane.add(northPanel, BorderLayout.NORTH);
+		northPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
 		JLabel fileLabel = new JLabel("Choose a File");
 		fileLabel.setHorizontalAlignment(JLabel.CENTER);
-		contentPane.add(fileLabel,BorderLayout.CENTER);
-		
+		contentPane.add(fileLabel, BorderLayout.CENTER);
+
 		JPanel southPanel = new JPanel();
 		contentPane.add(southPanel, BorderLayout.SOUTH);
 		southPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
+
 		JButton uploadBtn = new JButton("Upload Image");
 		uploadBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser chooser = new JFileChooser();
-			    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-			        "JPG & GIF Images", "jpg", "gif");
-			    chooser.setFileFilter(filter);
-			    int returnVal = chooser.showOpenDialog(getParent());
-			    if(returnVal == JFileChooser.APPROVE_OPTION) {
-			    	JOptionPane.showInternalMessageDialog(contentPane, "You chose to open this file: " +
-				            chooser.getSelectedFile().getAbsolutePath(),
-							"Ok", JOptionPane.INFORMATION_MESSAGE);
-			       image = chooser.getSelectedFile().getAbsolutePath();
-			       fileLabel.setText("File chosen: " + image);
-			    }
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(
+						"JPG & GIF Images", "jpg", "gif");
+				chooser.setFileFilter(filter);
+				int returnVal = chooser.showOpenDialog(getParent());
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					JOptionPane.showInternalMessageDialog(contentPane,
+							"You chose to open this file: "
+									+ chooser.getSelectedFile()
+											.getAbsolutePath(), "Ok",
+							JOptionPane.INFORMATION_MESSAGE);
+					image = chooser.getSelectedFile().getAbsolutePath();
+					fileLabel.setText("File chosen: " + image);
+				}
 			}
 		});
 		southPanel.add(uploadBtn);
-		
-			
-			JButton nextBtn = new JButton("Next");
-			southPanel.add(nextBtn);
-			nextBtn.addActionListener(new ActionListener() 
-			{
-				public void actionPerformed(ActionEvent arg0) 
-				{
-					if(image == null)
-					{
-						JOptionPane.showInternalMessageDialog(contentPane, "Please upload an image before proceeding",
-								"Ok", JOptionPane.INFORMATION_MESSAGE);
-						
+
+		JButton nextBtn = new JButton("Next");
+		southPanel.add(nextBtn);
+		nextBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (image == null) {
+					JOptionPane.showInternalMessageDialog(contentPane,
+							"Please upload an image before proceeding", "Ok",
+							JOptionPane.INFORMATION_MESSAGE);
+
+				} else {
+					VectorFieldGUI vfGUI = null;
+					try {
+						vfGUI = new VectorFieldGUI(image);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					else
-					{
-						VectorFieldGUI vfGUI = null;
-						try {
-							vfGUI = new VectorFieldGUI(image);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					    dispose();
-						vfGUI.setVisible(true);
-					}
+					dispose();
+					vfGUI.setVisible(true);
 				}
-			});
-			nextBtn.setBounds(335, 228, 89, 23);
-		
-		
-		
+			}
+		});
+		nextBtn.setBounds(335, 228, 89, 23);
+
 	}
 }

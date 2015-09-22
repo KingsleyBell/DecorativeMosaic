@@ -47,7 +47,7 @@ public class Mosaic extends PApplet {
 	 * @param groutColour
 	 */
 	public Mosaic(Image image, int width, int height,
-			Integer tileSize, Integer iterations, Integer groutColour) {
+			Integer tileSize, Integer iterations, Integer groutColour) {		
 		this.iteration = -2;
 		this.img = new PImage(image);		
 		this.width = width;
