@@ -84,10 +84,9 @@ public class VectorFieldGUI extends JFrame {
 		else {
 			scaledImg = fullImg;
 		}
-		
-		if(imgIcon.getIconWidth() < 500) {
-			this.setSize(500, imgIcon.getIconHeight() + 100);
-		}		
+	
+		this.setMinimumSize(new Dimension(500, 300));
+		this.setSize(imgIcon.getIconWidth(), imgIcon.getIconHeight() + 100);
 		this.image = scaledImg;
 
 		this.setLocationRelativeTo(null);
@@ -127,9 +126,10 @@ public class VectorFieldGUI extends JFrame {
 				mosaic.setTileSize(tileSize);
 			}
 		});
-		tileSlider.setValue(30);
+		tileSlider.setValue(20);
 		tileSlider.setPaintLabels(true);
-		tileSlider.setMinimum(10);
+		tileSlider.setMinimum(5);
+		tileSlider.setMaximum(100);
 		mnFile.add(tileSlider);
 
 		JLabel lblGroutColour = new JLabel("Grout Colour");
@@ -144,6 +144,7 @@ public class VectorFieldGUI extends JFrame {
 			}
 		});
 		groutSlider.setValue(125);
+		groutSlider.setMinimum(0);
 		groutSlider.setMaximum(255);
 		groutSlider.setPaintLabels(true);
 		mnFile.add(groutSlider);
