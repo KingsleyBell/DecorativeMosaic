@@ -23,6 +23,10 @@ import java.io.IOException;
 
 public class StartScreenGUI extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private String image;
 
@@ -59,7 +63,7 @@ public class StartScreenGUI extends JFrame {
 		
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		File bannerFile = new File("resources/banner.jpg");
+		File bannerFile = new File("main/resources/banner.jpg");
 		try {
 			BufferedImage bannerImage = ImageIO.read(bannerFile);
 			JLabel northPanel = new JLabel(new ImageIcon(bannerImage));

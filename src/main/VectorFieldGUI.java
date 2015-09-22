@@ -1,48 +1,36 @@
 package main;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import processing.core.PApplet;
-
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.io.File;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
-import javax.swing.JSlider;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
 
 public class VectorFieldGUI extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Image image;
 	private Integer tileSize;
 	private int iterations;
@@ -253,7 +241,7 @@ public class VectorFieldGUI extends JFrame {
 		sketchPanel.addMouseListener(new MouseListener() {
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
 				java.awt.Toolkit tk = java.awt.Toolkit.getDefaultToolkit();
-				Image img = tk.getImage("resources/pencil-icon.png");
+				Image img = tk.getImage("main/resources/pencil-icon.png");
 				img = img.getScaledInstance(20, 20, Image.SCALE_DEFAULT);
 				Point point = new Point(0, 0);
 				java.awt.Cursor cursor = tk.createCustomCursor(img, point,

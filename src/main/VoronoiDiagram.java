@@ -14,7 +14,6 @@ public class VoronoiDiagram {
 	private int height;
 	private int widthTiles;
 	private int heightTiles;
-	private Integer tileSize;
 	private ArrayList<PVector> points;
 	private ArrayList<Frustum> frustums;
 	private HashMap<Integer,Integer> frustumColours;
@@ -23,7 +22,6 @@ public class VoronoiDiagram {
 	public VoronoiDiagram(int tileSize, int iterations, int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.tileSize = tileSize;
 		this.widthTiles = width/tileSize;
 		this.heightTiles = height/tileSize;
 		this.points = new ArrayList<PVector>();
@@ -88,8 +86,7 @@ public class VoronoiDiagram {
 		return frustums;
 	}
 
-	public ArrayList<PVector> calculateCentroids(PApplet p) {
-		int l = 0;
+	public ArrayList<PVector> calculateCentroids(PApplet p) {		
 		p.loadPixels();
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {				
@@ -98,15 +95,10 @@ public class VoronoiDiagram {
 				if (index != null) {
 					frustums.get(index).addToX(i);
 					frustums.get(index).addToY(j);
-				} else {
-					l++;					
-//					System.out.println(l + ": FRUSTUM NOT FOUND for point: (" + i + "," + j + ") and colour: " + c);
 				}
-
 			}
 
-		}
-//		System.out.println("Points without associate frustum: " + l);		
+		}			
 		for (int i = 0; i < frustums.size(); i++) {
 			PVector centroid = frustums.get(i).getCentroid();
 			points.set(i, centroid);

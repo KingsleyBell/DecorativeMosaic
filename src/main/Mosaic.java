@@ -7,8 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.ImageIcon;
-
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PShape;
@@ -242,9 +240,7 @@ public class Mosaic extends PApplet {
 
 		background(groutColour);
 		strokeWeight(1);
-		stroke(0);
-		Integer x;
-		Integer y;
+		stroke(0);		
 		Double actualTileSize = 0.8 * Math.sqrt((height * width)
 				/ voronoi.getNumTiles());
 		Float orientation[] = new Float[frustums.size()];
