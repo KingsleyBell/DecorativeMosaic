@@ -28,7 +28,7 @@ public class VoronoiDiagramTest {
 		voronoiDiagram.getRandomPoints();
 	}
 	
-	@Test(timeout=600)
+	@Test(timeout=1000)
 	public void testGetRandomColours() {
 		System.out.println("Inside testGetRandomColours()");
 		voronoiDiagram.getRandomColours();	

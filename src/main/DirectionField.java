@@ -22,8 +22,8 @@ public class DirectionField {
 		this.imageWidth = imageWidth;
 		this.imageHeight = imageHeight;
 		this.edgeCurve = E;
-		this.dx = 1;
-		this.dy = 1;
+		this.dx = 2;
+		this.dy = 2;
 		this.surface = createSurface();
 		this.directionField = createDirectionField();		
 	}
@@ -144,5 +144,23 @@ public class DirectionField {
 		// TODO Auto-generated method stub
 		return edgeCurve;
 	}
+
+	public Integer getDx() {
+		return dx;
+	}
+
+	public void setDx(Integer dx) {
+		this.dx = dx;
+	}
+
+	public Integer getDy() {
+		return dy;
+	}
+
+	public void setDy(Integer dy) {
+		this.dy = dy;
+	}
+	
+	
 	
 }

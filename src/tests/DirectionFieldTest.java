@@ -30,7 +30,9 @@ public class DirectionFieldTest{
 			edgeCurve.addPoint(p);
 		}
 		edgeCurve.addPoint(null);
-		directionFieldObject = new DirectionField(width,height,edgeCurve);		
+		directionFieldObject = new DirectionField(width,height,edgeCurve);
+		directionFieldObject.setDx(2);
+		directionFieldObject.setDy(2);
 	}
 	
 	@Test(timeout=1000)
