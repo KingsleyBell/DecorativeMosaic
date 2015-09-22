@@ -241,7 +241,7 @@ public class VectorFieldGUI extends JFrame {
 		sketchPanel.addMouseListener(new MouseListener() {
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
 				java.awt.Toolkit tk = java.awt.Toolkit.getDefaultToolkit();
-				Image img = tk.getImage("main/resources/pencil-icon.png");
+				Image img = tk.getImage("resources/pencil-icon.png");
 				img = img.getScaledInstance(20, 20, Image.SCALE_DEFAULT);
 				Point point = new Point(0, 0);
 				java.awt.Cursor cursor = tk.createCustomCursor(img, point,
